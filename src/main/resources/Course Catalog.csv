@@ -1,0 +1,55 @@
+Course ID,Course Full Name,Course Type
+ALG1-OL,On Level Algebra 1,Math
+ALG1-H,Honors Algebra 1,Math
+GEOM-OL,On Level Geometry,Math
+GEOM-H,Honors Geometry,Math
+ALG2-OL,On Level Algebra 2,Math
+ALG2-H,Honors Algebra 2,Math
+PREC-OL,On Level Precalculus,Math
+PREC-AP,AP Precalculus,Math
+CALC-AB,AP Calculus AB,Math
+CALC-BC,AP Calculus BC,Math
+CALC-MV,Multivariable Calculus,Math
+STAT-AP,AP Statistics,Math
+CHEM-OL,On Level Chemistry,Science
+CHEM-H,Honors Chemistry,Science
+CHEM-AP,AP Chemistry,Science
+CHEM-O,Organic Chemistry,Science
+BIO-OL,On Level Biology,Science
+BIO-H,Honors Biology,Science
+BIO-AP,AP Biology,Science
+DNA/GEN-ADV,Advanced DNA/Genetics,Science
+PHY-OL,On Level Physics,Science
+PHY-H,Honors Physics,Science
+PHY-AP1,AP Physics 1,Science
+PHY-AP2,AP Physics 2,Science
+PHY-APC-MECH,AP Physics C - Mechanics,Science
+PHY-APC-E&M,AP Physics C - E&M,Science
+CSP-AP,AP Comp Sci Principles,Science
+CSA-AP,AP Comp Sci A,Science
+HEALTH-INT,Intro to Healthcare,Science
+HEALTH-ESS,Essentials of Healthcare,Science
+CNA,Advanced CNA,Science
+EMR,Advanced EMR,Science
+ENG-INT,Intro to Engineering,Science
+ENG-ESS,Essentials of Engineering,Science
+ENG-APP,Applied Engineering,Science
+HUM-AP,AP Human Geography,History
+WORLD-OL,On Level World History,History
+WORLD-H,Honors World History,History
+WORLD-AP,AP World History,History
+USH-OL,On Level US History,History
+USH-H,Honors US History,History
+USH-AP,AP US History,History
+GOV/ECON-OL,On Level Gov/Economics,History
+GOV/ECON-AP,AP Gov/Economics,History
+9LIT-OL,On Level 9th Lit,ELA
+9LIT-H,Honors 9th lit,ELA
+10LIT-OL,On Level 10th Lit,ELA
+10LIT-H,Honors 10th Lit,ELA
+LANG-OL,On Level Lang,ELA
+LANG-H,Honors Lang,ELA
+LANG-AP,AP Lang,ELA
+LIT-OL,On Level Senior Lit,ELA
+LIT-H,Honors Senior Lit,ELA
+LIT-AP,AP Senior Lit,ELA
