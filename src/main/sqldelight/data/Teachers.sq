@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS teacher (
+    teacher_name TEXT NOT NULL,
+    room_number TEXT NOT NULL,
+    room_capacity TEXT NOT NULL
+);
+
+selectAllTeachers:
+SELECT *
+FROM teacher;
+
+insertTeacherObject:
+INSERT INTO teacher(teacher_name, room_number, room_capacity)
+VALUES ?;

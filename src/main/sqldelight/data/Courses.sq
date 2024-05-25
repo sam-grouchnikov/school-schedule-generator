@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS course (
+    course_id TEXT NOT NULL,
+    course_name TEXT NOT NULL,
+    course_type TEXT NOT NULL
+);
+
+selectAllCourses:
+SELECT *
+FROM course;
+
+insertCourseObject:
+INSERT INTO course(course_id, course_name, course_type)
+VALUES ?;

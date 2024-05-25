@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS request (
+    student_id TEXT NOT NULL,
+    student_name TEXT NOT NULL,
+    c1 TEXT NOT NULL,
+    c2 TEXT NOT NULL,
+    c3 TEXT NOT NULL,
+    c4 TEXT NOT NULL
+);
+
+selectAllRequests:
+SELECT *
+FROM request;
+
+insertRequestObject:
+INSERT INTO request(student_id, student_name, c1, c2, c3, c4)
+VALUES ?;
