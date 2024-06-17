@@ -135,6 +135,21 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             paddingRight = LinearDimension("15px")
 
         }
+        rule(".steps-navigator-container") {
+            textAlign = TextAlign.center
+            marginLeft = LinearDimension("33.7%")
+            padding = "2%"
+            display = Display.inlineBlock
+            width = LinearDimension("27%")
+            border = "10px solid"
+            borderRadius = LinearDimension("20px")
+        }
+        rule(".steps-navigator-button") {
+            display = Display.inlineBlock
+            padding = "1% 2%"
+            margin = ("1%")
+            cursor = Cursor.pointer
+        }
         rule(".schedwizheader") {
             marginLeft = LinearDimension("4%")
         }
@@ -159,6 +174,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
         }
         rule(".lptextbox") {
             fontSize = LinearDimension("20px")
+        }
+        rule("steps-button-fontsize") {
+            fontSize = LinearDimension("30px")
         }
         rule(".steps-font") {
             fontFamily = "Poppins, sans-serif"

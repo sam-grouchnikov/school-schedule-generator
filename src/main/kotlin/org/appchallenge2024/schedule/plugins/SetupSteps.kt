@@ -90,9 +90,20 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
 
             }
             br()
-            a(href = "/step2") {
-                +"Step 2"
+            div(classes = "steps-navigator-container steps-button-fontsize") {
+                a(href = "/") {
+                    button (classes = "steps-navigator-button") {
+                        +"Home"
+                    }
+                }
+                +" Step 1 "
+                a(href = "/step2") {
+                    button(classes = "steps-navigator-button"){
+                        +"Step 2"
+                    }
+                }
             }
+
             br()
             div {
                 table(classes = "steps-table") {
@@ -209,6 +220,20 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                 }
 
 
+            }
+            br()
+            div(classes = "steps-navigator-container steps-button-fontsize") {
+                a(href = "/step1") {
+                    button (classes = "steps-navigator-button") {
+                        +"Step 1"
+                    }
+                }
+                +" Step 2 "
+                a(href = "/step3") {
+                    button(classes = "steps-navigator-button"){
+                        +"Step 3"
+                    }
+                }
             }
             br()
             div {
