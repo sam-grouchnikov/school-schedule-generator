@@ -29,6 +29,12 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             justifyContent = JustifyContent.center
             marginLeft = LinearDimension("0.5%")
         }
+        rule(".textbox-container-sp") {
+            display = Display.flex
+            marginTop = LinearDimension("1%")
+            justifyContent = JustifyContent.center
+            marginLeft = LinearDimension("0.5%")
+        }
         rule(".textbox-container-lp-step2") {
             display = Display.block
             justifyContent = JustifyContent.center
@@ -43,7 +49,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             builder.colorStop(Color.darkOrange)
             builder.colorStop(Color.red)
             builder.colorStop(Color.purple)
-            background = builder.build("to right bottom", false).value
+//            background = builder.build("to right bottom", false).value
             color = Color.black
             border = "10px solid"
             borderRadius = LinearDimension("20px")
@@ -102,6 +108,17 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             textAlign = TextAlign.left
             padding = "0.2%"
         }
+        rule(".schedulepage-td-th") {
+            border = "2px solid #000000"
+            textAlign = TextAlign.left
+            padding = "0.2%"
+            hover {
+                backgroundColor = Color.lightSeaGreen
+            }
+        }
+        rule(".sp-table") {
+            width = LinearDimension("100%")
+        }
         rule(".steps-table") {
             width = LinearDimension("100%")
         }
@@ -143,6 +160,16 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             width = LinearDimension("27%")
             border = "10px solid"
             borderRadius = LinearDimension("20px")
+        }
+        rule(".sp-navigator-container") {
+            textAlign = TextAlign.center
+            marginLeft = LinearDimension("33.7%")
+            padding = "2%"
+            display = Display.inlineBlock
+            width = LinearDimension("27%")
+            border = "10px solid"
+            borderRadius = LinearDimension("20px")
+            marginTop = LinearDimension("12%")
         }
         rule(".steps-navigator-button") {
             display = Display.inlineBlock

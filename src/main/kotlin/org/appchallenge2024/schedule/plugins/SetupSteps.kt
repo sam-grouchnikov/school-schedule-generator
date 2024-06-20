@@ -354,8 +354,18 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
 
             }
             br()
-            a(href = "/step2") {
-                +"Step 2"
+            div(classes = "steps-navigator-container steps-button-fontsize") {
+                a(href = "/step2") {
+                    button (classes = "steps-navigator-button") {
+                        +"Step 2"
+                    }
+                }
+                +" Step 3 "
+                a(href = "/schedulePage?courseView=yes&toExpand=none") {
+                    button(classes = "steps-navigator-button"){
+                        +"Schedule Page"
+                    }
+                }
             }
             br()
             div {

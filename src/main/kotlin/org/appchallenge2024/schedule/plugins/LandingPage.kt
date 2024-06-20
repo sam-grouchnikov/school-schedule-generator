@@ -22,7 +22,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
         }
 
         body(classes = "tealaquagradient poppinsfont") {
-            div(classes = "topbar yellowredpurplegradient") {
+            div(classes = "topbar") {
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader") {
                         +"Schedwiz"

@@ -27,5 +27,8 @@ fun Application.mainRouting() {
         get("/step3") {
             step3(database)
         }
+        get("/schedulePage") {
+            schedulePage(database)
+        }
     }
 }
