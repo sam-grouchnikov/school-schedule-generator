@@ -1,12 +1,13 @@
 package org.appchallenge2024.schedule.plugins
 
+import data.School
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
-public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
+public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
     database: Database
 ) {
     call.respondHtml {
@@ -19,20 +20,18 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
         }
+        val school = call.parameters["school"]!!
+        val courses = database.coursesQueries.selectAllFromSchool(school).executeAsList()
+        val requests = database.requestsQueries.selectAllFromSchool(school).executeAsList()
+        val teachers = database.teachersQueries.selectAllFromSchool(school).executeAsList()
 
-        val solution = arrayListOf(
-            Classroom("ALG2-H", "John Smith", 1, listOf("0", "3")),
-            Classroom("PHY-AP1", "Richard Anderson", 2, listOf("0", "5")),
-            Classroom("WORLD-AP", "Daniel Clark", 3, listOf("0", "1")),
-            Classroom("10LIT-OL", "Emily Green", 4, listOf("0", "1", "2", "4")),
-            Classroom("PREC-OL", "Mary Johnson", 1, listOf("1")),
-            Classroom("CHEM-AP", "Susan Thomas", 2, listOf("1", "2", "3", "4")),
-            Classroom("ALG2-OL", "James Williams", 1, listOf("2")),
-            Classroom("WORLD-OL", "Margaret Lewis", 3, listOf("2", "3", "4", "5", "5", "5", "5", "5", "5", "5", "5")),
-            Classroom("10LIT-H", "Mark Adams", 4, listOf("3", "5")),
-            Classroom("PREC-AP", "John Williams", 1, listOf("4", "5"))
-        )
+        val rawLists = getPossibleCombinations(courses, requests, teachers, database, school)
+        val handler = PrintCombinationHandler(requests, teachers)
+        val solution = convertStudentToCourseView(database.schedulesQueries.selectAllFromSchool(school).executeAsList())
 
+        if (call.parameters["psw"] != null) {
+            database.schoolsQueries.insertSchoolObject(School(call.parameters["school"]!!, call.parameters["psw"]!!))
+        }
         body(classes = "tealaquagradient poppinsfont") {
             div(classes = "topbar yellowredpurplegradient") {
                 h1(classes = "headercontainer") {
@@ -45,30 +44,36 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                 }
             }
             div(classes = "sp-navigator-container steps-button-fontsize") {
-                a(href = "/step3") {
-                    button(classes = "steps-navigator-button") {
-                        +"Step 3"
-                    }
-                }
+                val params = call.parameters
                 +" Schedule Page "
                 if (call.parameters["courseView"] == "yes") {
-                    a(href = "/schedulePage?courseView=no&toExpand=none") {
+                    a(href = "/adminPage?courseView=no&toExpand=none&school=${params["school"]}") {
                         button(classes = "steps-navigator-button") {
                             +"Student View"
                         }
                     }
                 } else {
-                    a(href = "/schedulePage?courseView=yes&toExpand=none") {
+                    a(href = "/adminPage?courseView=yes&toExpand=none&school=${school}") {
                         button(classes = "steps-navigator-button") {
                             +"Course View"
                         }
                     }
                 }
             }
+            if (solution.isNullOrEmpty()) {
+                div(classes = "textbox-container-sp") {
+                    +"no schedule created"
+                    br()
+                    a(href = "/step1?school=${school}") {
+                        +"Create schedule"
+                    }
+                }
+
+            } else {
             div(classes = "textbox-container-sp") {
-                val courseView = call.parameters["courseView"]!!
-                val studentToExpand = call.parameters["toExpand"]!!
-                if (courseView == "yes") {
+                val courseView = call.parameters["courseView"]
+                val studentToExpand = call.parameters["toExpand"]
+                if (courseView == null || courseView == "yes") {
                     table(classes = "sp-table") {
                         tr(classes = "schedulepage-td-th") {
                             th { +"Course Name" }
@@ -79,13 +84,14 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                         for (i in solution.indices) {
                             tr(classes = "schedulepage-td-th") {
                                 td {
-                                    +database.coursesQueries.selectNameForCourseID(solution[i].courseID).executeAsOne()
+                                    +database.coursesQueries.selectNameForCourseID(solution[i].courseID, school)
+                                        .executeAsOne()
                                 }
                                 td { +solution[i].teacherName }
                                 td { +"${solution[i].period}" }
-                                if (studentToExpand != i.toString()) {
+                                if (studentToExpand != null && studentToExpand != i.toString()) {
                                     td {
-                                        a(href = "/schedulePage?courseView=${courseView}&toExpand=${i}") {
+                                        a(href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}") {
                                             +"Expand Students"
                                         }
                                     }
@@ -93,13 +99,17 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                                     td {
                                         solution[i].students.forEach {
                                             +"$it "
+                                            br()
+                                        }
+                                        a(href = "/adminPage?courseView=yes&toExpand=none&school=${school}") {
+                                            +"Collapse Students"
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                } else {
+                } else if (courseView == "no") {
                     table(classes = "sp-table") {
                         tr(classes = "schedulepage-td-th") {
                             th { +"Student ID" }
@@ -111,9 +121,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                         }
 
                         getAllRequests(database).forEach {
-                            val schedule = getStudentScheduleFromSolution(solution, it.id)
+                            val schedule = getStudentScheduleFromSolution(solution, it.student_id)
                             tr(classes = "schedulepage-td-th") {
-                                td { +it.id }
+                                td { +it.student_id }
                                 td { +it.student_name }
                                 td {
                                     +schedule.c1
@@ -140,11 +150,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.schedulePage(
                     }
                 }
             }
+            }
         }
     }
 }
-
-data class Classroom2(val courseID: String, val teacherName: String, var period: Int, val students: List<String>)
 
 data class CourseSet(
     var c1: String, var c2: String, var c3: String, var c4: String,
@@ -176,3 +185,32 @@ fun getStudentScheduleFromSolution(solution: List<Classroom>, target: String): C
     }
     return result
 }
+
+fun convertStudentToCourseView(schedule: List<data.Schedule>): List<Classroom> {
+    val result = arrayListOf<Classroom>()
+    schedule.forEach {
+        val student = it.student_id
+        var i = 1
+        listOf(Room(it.c1, it.t1), Room(it.c2, it.t2), Room(it.c3, it.t3), Room(it.c4, it.t4)).forEach {
+            val indexOfClass = findClass(result, it.course, it.teacher)
+            if (indexOfClass == -1) {
+                result.add(Classroom(it.course, it.teacher, i, arrayListOf(student)))
+            } else {
+                result[i].students.add(student)
+            }
+            i ++
+        }
+    }
+    return result
+}
+
+fun findClass(classes: List<Classroom>, course: String, teacher: String): Int {
+    for (i in classes.indices) {
+        if (classes[i].courseID == course && classes[i].teacherName == teacher) {
+            return i
+        }
+    }
+    return -1
+}
+
+data class Room(val course: String, val teacher: String)

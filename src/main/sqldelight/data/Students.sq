@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS student (
+    school TEXT NOT NULL,
+    id TEXT NOT NULL,
+    password TEXT NOT NULL
+);
+
+insertStudentObject:
+INSERT INTO student(school, id, password)
+VALUES ?;
+
+
+deleteAll:
+DELETE FROM student;
+
+selectAllStudents:
+SELECT * FROM student;
+
+deleteAllFromSchool:
+DELETE FROM student WHERE :school = school;

@@ -63,7 +63,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                         br {}
                         br{}
                         br{}
-                        a(href = "/step1", classes = "getstartedbutton") {
+                        a(href = "/signInLanding", classes = "getstartedbutton") {
                             +"Get Started"
                         }
                     }

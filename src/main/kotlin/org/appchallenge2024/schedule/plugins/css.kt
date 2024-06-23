@@ -116,6 +116,33 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
                 backgroundColor = Color.lightSeaGreen
             }
         }
+        rule(".studentpage-flex-container") {
+            marginTop = LinearDimension("13%")
+            display = Display.flex
+        }
+        rule(".studentpage-leftbox") {
+            width = LinearDimension("49%")
+            height = LinearDimension("100%")
+            border = "10px solid #000000"
+            borderRadius = LinearDimension("15px")
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+        }
+        rule (".studentpage-rightboxes") {
+            display = Display.flex
+            flexDirection = FlexDirection.column
+            width = LinearDimension("49%")
+            marginTop = LinearDimension("-0.45%")
+            marginLeft = LinearDimension("0.5%")
+        }
+        rule(".studentpage-rightbox") {
+            border = "10px solid #000000"
+            borderRadius = LinearDimension("15px")
+            display = Display.flex
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+            margin = "1%"
+        }
         rule(".sp-table") {
             width = LinearDimension("100%")
         }

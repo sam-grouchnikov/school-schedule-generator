@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS school (
+    school_name TEXT NOT NULL,
+    admin_password TEXT NOT NULL
+);
+
+deleteAll:
+DELETE FROM school;
+
+selectAllSchools:
+SELECT * FROM school;
+
+insertSchoolObject:
+INSERT INTO school(school_name, admin_password)
+VALUES ?;

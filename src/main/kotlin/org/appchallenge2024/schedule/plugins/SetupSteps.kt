@@ -10,6 +10,9 @@ import org.appchallenge2024.schedule.sqldelight.data.Database
 import data.Course
 import data.Request
 import data.Teacher
+import io.ktor.server.response.*
+import org.jetbrains.annotations.Async
+import org.jetbrains.annotations.Async.Schedule
 
 val submittedCourses = arrayListOf<Course>()
 val submittedRequests = arrayListOf<Request>()
@@ -28,6 +31,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
         }
+        val school = call.parameters["school"]!!
         body(classes = "tealaquagradient steps-font") {
             div(classes = "topbar ") {
                 h1(classes = "headercontainer") {
@@ -83,6 +87,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                     }
                     form(action = "/step1", method = FormMethod.get) {
                         textArea { name = "courses"; placeholder = "Enter your message" }
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                            )
+                        }
                         br()
                         submitInput { value = "Submit" }
                     }
@@ -97,7 +106,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                     }
                 }
                 +" Step 1 "
-                a(href = "/step2") {
+                a(href = "/step2?school=${school}") {
                     button(classes = "steps-navigator-button"){
                         +"Step 2"
                     }
@@ -114,10 +123,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                     }
 
                     val courses = call.parameters["courses"]
-                    submittedCourses.clear()
+                    database.coursesQueries.deleteAllFromSchool(school)
                     courses?.split("\r\n")?.forEach {
                         val info = it.split(",")
-                        submittedCourses.add(Course(info[0], info[1], info[2]))
+                        database.coursesQueries.insertCourseObject(Course(school, info[0], info[1], info[2]))
                         tr(classes = "steps-td-th") {
                             td(classes = "steps-td-th") { +info[0] }
                             td(classes = "steps-td-th") { +info[1] }
@@ -144,6 +153,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
         }
+        val school = call.parameters["school"]!!
         body(classes = "tealaquagradient steps-font") {
             div(classes = "topbar ") {
                 h1(classes = "headercontainer") {
@@ -173,6 +183,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     }
                     div {
                         form(action = "/step2", method = FormMethod.get) {
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                )
+                            }
                             textArea { name = "requests"; placeholder = "Enter your message" }
                             br()
                             submitInput { value = "Submit" }
@@ -184,37 +199,35 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                         +"Example"
                     }
                     div {
-                        +"0,Andrew Parker,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL"
+                        +"0,Amanda Miller,ALG2-OL,PHY-AP1,WORLD-AP,10LIT-H"
                         br()
-                        +"1,Brenda Chavez,PREC-OL,CHEM-AP,WORLD-AP,10LIT-OL"
+                        +"1,Donna Roberts,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL"
                         br()
-                        +"2,Brandon Wright,ALG2-OL,CHEM-AP,WORLD-OL,10LIT-OL"
+                        +"2,Alexander Hughes,ALG2-H,PHY-OL,WORLD-OL,10LIT-H"
                         br()
-                        +"3,Kathleen Gomez,ALG2-H,CHEM-AP,WORLD-OL,10LIT-H"
+                        +"3,Dennis Torres,ALG2-OL,PHY-OL,WORLD-OL,10LIT-H"
                         br()
-                        +"4,Gregory Gomez,PREC-AP,CHEM-AP,WORLD-OL,10LIT-OL"
+                        +"4,Stephen Jackson,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-H"
                         br()
-                        +"5,Daniel Morris,PREC-AP,PHY-AP1,WORLD-OL,10LIT-H"
+                        +"5,Jessica Brooks,ALG2-H,PHY-OL,WORLD-AP,10LIT-H"
                         br()
-                        +"6,Joseph Scott,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-H"
+                        +"6,Helen Ruiz,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-OL"
                         br()
-                        +"7,Michelle Johnson,ALG2-H,PHY-AP1,WORLD-OL,10LIT-H"
+                        +"7,Debra Young,ALG2-OL,PHY-OL,WORLD-AP,10LIT-OL"
                         br()
-                        +"8,Emily Richardson,ALG2-H,PHY-AP1,WORLD-OL,10LIT-H"
+                        +"8,Jessica Lopez,ALG2-OL,PHY-OL,WORLD-OL,10LIT-OL"
                         br()
-                        +"9,Mark Wilson,ALG2-OL,PHY-OL,WORLD-OL,10LIT-H"
+                        +"9,Timothy Carter,ALG2-H,PHY-AP1,WORLD-AP,10LIT-H"
                         br()
-                        +"10,Jerry Peterson,ALG2-OL,PHY-AP1,WORLD-AP,10LIT-OL"
+                        +"10,Scott Cooper,ALG2-H,PHY-OL,WORLD-OL,10LIT-OL"
                         br()
-                        +"11,William Young,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL"
+                        +"11,Ronald Bennett,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-H"
                         br()
-                        +"12,Cynthia Jackson,ALG2-H,PHY-OL,WORLD-OL,10LIT-OL"
+                        +"12,Matthew Ward,ALG2-OL,PHY-OL,WORLD-AP,10LIT-OL"
                         br()
-                        +"13,Katherine Lewis,ALG2-H,PHY-OL,WORLD-AP,10LIT-OL"
+                        +"13,Emily Ruiz,ALG2-OL,PHY-OL,WORLD-AP,10LIT-H"
                         br()
-                        +"14,Janet Castillo,ALG2-OL,PHY-AP1,WORLD-AP,10LIT-OL"
-                        br()
-                        +"15,Jack Williams,ALG2-H,PHY-OL,WORLD-OL,10LIT-H"
+                        +"14,Alexander Peterson,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL"
                     }
 
                 }
@@ -223,13 +236,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
             }
             br()
             div(classes = "steps-navigator-container steps-button-fontsize") {
-                a(href = "/step1") {
+                a(href = "/step1?school=${school}") {
                     button (classes = "steps-navigator-button") {
                         +"Step 1"
                     }
                 }
                 +" Step 2 "
-                a(href = "/step3") {
+                a(href = "/step3?school=${school}") {
                     button(classes = "steps-navigator-button"){
                         +"Step 3"
                     }
@@ -248,10 +261,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     }
 
                     val requests = call.parameters["requests"]
-                    submittedRequests.clear()
+                    database.requestsQueries.deletAllFromSchool(school)
                     requests?.split("\r\n")?.forEach {
                         val info = it.split(",")
-                        submittedRequests.add(Request(info[0], info[1], info[2], info[3], info[4], info[5]))
+                        database.requestsQueries.insertRequestObject(Request(school, info[0], info[1], info[2], info[3], info[4], info[5]))
                         tr(classes = "steps-td-th") {
                             td(classes = "steps-td-th") { +info[0] }
                             td(classes = "steps-td-th") { +info[1] }
@@ -281,6 +294,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
         }
+        val school = call.parameters["school"]!!
         body(classes = "tealaquagradient steps-font") {
             div(classes = "topbar ") {
                 h1(classes = "headercontainer") {
@@ -346,6 +360,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         +"Copy Teachers Here"
                     }
                     form(action = "/step3", method = FormMethod.get) {
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                            )
+                        }
                         textArea { name = "teachers"; placeholder = "Enter your message" }
                         br()
                         submitInput { value = "Submit" }
@@ -356,14 +375,19 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
             br()
             div(classes = "steps-navigator-container steps-button-fontsize") {
                 a(href = "/step2") {
+                    unsafe {
+                        raw(
+                            "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                        )
+                    }
                     button (classes = "steps-navigator-button") {
                         +"Step 2"
                     }
                 }
                 +" Step 3 "
-                a(href = "/schedulePage?courseView=yes&toExpand=none") {
+                a(href = "/addSchedToDB?school=${school}") {
                     button(classes = "steps-navigator-button"){
-                        +"Schedule Page"
+                        +"Submit Schedule"
                     }
                 }
             }
@@ -378,10 +402,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                     }
 
                     val teachers = call.parameters["teachers"]
-                    submittedCourses.clear()
+                    database.teachersQueries.deleteAllFromSchool(school)
                     teachers?.split("\r\n")?.forEach {
                         val info = it.split(",")
-                        submittedTeachers.add(Teacher(info[0], info[1], info[2], info[3]))
+                        database.teachersQueries.insertTeacherObject(Teacher(school, info[0], info[1], info[2], info[3]))
                         tr(classes = "steps-td-th") {
                             td(classes = "steps-td-th") { +info[0] }
                             td(classes = "steps-td-th") { +info[1] }
@@ -396,3 +420,22 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
     }
 }
 
+public suspend fun PipelineContext<Unit, ApplicationCall>.addSchedToDB(
+    database: Database
+) {
+    val school = call.parameters["school"]!!
+    val courses = database.coursesQueries.selectAllFromSchool(school).executeAsList()
+    val requests = database.requestsQueries.selectAllFromSchool(school).executeAsList()
+    val teachers = database.teachersQueries.selectAllFromSchool(school).executeAsList()
+
+    val rawLists = getPossibleCombinations(courses, requests, teachers, database, school)
+    val handler = PrintCombinationHandler(requests, teachers)
+    val solution = combineLists(rawLists, requests, teachers, handler)!!
+    database.schedulesQueries.deleteAllFromSchool(school)
+    requests.forEach {
+        val schedule = getStudentScheduleFromSolution(solution, it.student_id)
+        val final = data.Schedule(school, it.student_id, schedule.c1, schedule.t1, schedule.c2, schedule.t2, schedule.c3, schedule.t3, schedule.c4, schedule.t4)
+        database.schedulesQueries.insertScheduleObject(final)
+    }
+    call.respondRedirect("/adminPage?school=${call.parameters["school"]!!}&toExpand=none")
+}

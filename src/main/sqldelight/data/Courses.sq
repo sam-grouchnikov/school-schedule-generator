@@ -1,13 +1,29 @@
 CREATE TABLE IF NOT EXISTS course (
-    course_id TEXT NOT NULL,
-    course_name TEXT NOT NULL,
-    course_type TEXT NOT NULL
+    school_name TEXT NOT NULL,
+    id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    type TEXT NOT NULL
 );
+
+deleteAll:
+DELETE FROM course;
+
+deleteAllFromSchool:
+DELETE FROM course WHERE :name = school_name;
 
 selectAllCourses:
 SELECT *
 FROM course;
 
+selectAllFromSchool:
+SELECT * FROM course WHERE :name = school_name;
+
 insertCourseObject:
-INSERT INTO course(course_id, course_name, course_type)
+INSERT INTO course(school_name, id, name, type)
 VALUES ?;
+
+selectTypeForCourse:
+SELECT type FROM course WHERE :id = id AND :school = school_name;
+
+selectNameForCourseID:
+SELECT name FROM course WHERE id = :id AND :school = school_name;

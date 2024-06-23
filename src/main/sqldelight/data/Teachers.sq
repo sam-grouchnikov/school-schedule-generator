@@ -1,13 +1,39 @@
 CREATE TABLE IF NOT EXISTS teacher (
-    teacher_name TEXT NOT NULL,
-    room_number TEXT NOT NULL,
-    room_capacity TEXT NOT NULL
+    school_name TEXT NOT NULL,
+    name TEXT NOT NULL,
+    room TEXT NOT NULL,
+    room_capacity TEXT NOT NULL,
+    type TEXT NOT NULL
 );
+
+deleteAll:
+DELETE FROM teacher;
+
+deleteAllFromSchool:
+DELETE FROM teacher WHERE :name = name;
 
 selectAllTeachers:
 SELECT *
 FROM teacher;
 
+selectAllFromSchool:
+SELECT * FROM teacher WHERE :name = school_name;
+
 insertTeacherObject:
-INSERT INTO teacher(teacher_name, room_number, room_capacity)
+INSERT INTO teacher(school_name, name, room, room_capacity, type)
 VALUES ?;
+
+selectCapcityForRoom:
+SELECT DISTINCT room_capacity FROM teacher WHERE room = :number;
+
+selectTeacherForRoom:
+SELECT DISTINCT room FROM teacher WHERE name = :name;
+
+selectAllTeacherNames:
+SELECT name FROM teacher;
+
+selectTeacherForSubject:
+SELECT name FROM teacher WHERE :subject = type AND :school = school_name;
+
+selectTypeForName:
+SELECT type FROM teacher WHERE name = :name;

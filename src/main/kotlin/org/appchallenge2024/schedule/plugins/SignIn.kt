@@ -5,6 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.response.*
 import io.ktor.util.pipeline.*
+import kotlinx.css.TagSelector
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
@@ -43,33 +44,41 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         h3(classes = "textaligncenter") {
                             +"Sign In"
                         }
-                        form(action = "/adminpage", method = FormMethod.get) {
+                        form(action = "/adminPage", method = FormMethod.get) {
                             +"School Name"
                             br()
-                            input(type = InputType.text, name = "name")
+                            input(type = InputType.text, name = "school")
                             br()
                             +"Admin Password"
                             br()
                             input(type = InputType.text, name = "psw")
                             br()
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                                )
+                            }
                             button(type = ButtonType.submit) {
                                 +"Login"
                             }
-                            input(type = InputType.text, name = "new")
-
                         }
                         h3(classes = "textaligncenter") {
                             +"Register School"
                         }
-                        form(action = "/addSchoolToDB", method = FormMethod.get) {
+                        form(action = "/adminPage", method = FormMethod.get) {
                             +"School Name"
                             br()
-                            input(type = InputType.text, name = "name")
+                            input(type = InputType.text, name = "school")
                             br()
                             +"Password"
                             br()
                             input(type = InputType.text, name = "psw")
                             br()
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                                )
+                            }
                             button(type = ButtonType.submit) {
                                 +"Register"
                             }
@@ -77,16 +86,34 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                     }
                 }
             }
+            div(classes = "textbox-container-lp") {
+                div(classes = "textbox-lp") {
+                    h2(classes = "textaligncenter") {
+                        +"Students"
+                    }
+                    div(classes = "lptextbox textaligncenter") {
+                        h3(classes = "textaligncenter") {
+                            +"Sign In"
+                        }
+                        form(action = "/studentPage", method = FormMethod.get) {
+                            +"School Name"
+                            input(type = InputType.text, name = "school")
+                            br()
+                            +"Student ID"
+                            br()
+                            input(type = InputType.text, name = "id")
+                            br()
+                            +"Password"
+                            br()
+                            input(type = InputType.text, name = "psw")
+                            br()
+                            button(type = ButtonType.submit) {
+                                +"Login"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-}
-
-public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
-    database: Database
-) {
-    val parameters = call.parameters
-//    parameters["name"]?.let { parameters["psw"]?.let { it1 -> School(it, it1) } }
-//        ?.let { database.schoolsQueries.insertSchoolObject(it) }
-    call.respondRedirect(url = "/adminpage?name=${parameters["name"]}&psw=${parameters["psw"]}", permanent = false)
-
 }

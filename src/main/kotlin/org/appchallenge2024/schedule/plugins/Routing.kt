@@ -3,9 +3,10 @@ package org.appchallenge2024.schedule.plugins
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.ktor.server.application.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
+import io.ktor.server.http.content.*
+import java.io.File
 
 fun Application.mainRouting() {
     val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
@@ -27,8 +28,19 @@ fun Application.mainRouting() {
         get("/step3") {
             step3(database)
         }
-        get("/schedulePage") {
-            schedulePage(database)
+        get("/signInLanding") {
+            signInLanding(database)
         }
+        get("/adminPage") {
+            adminPage(database)
+        }
+        get("/studentPage") {
+            studentPage(database)
+        }
+        get("/addSchedToDB") {
+            addSchedToDB(database)
+        }
+        staticFiles("/images", File("C:\\Users\\Sam\\IdeaProjects\\school-schedule-generator\\src\\main\\kotlin\\org\\appchallenge2024\\schedule\\images\\logo.png"))
+
     }
 }

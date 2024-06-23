@@ -1,16 +1,32 @@
 CREATE TABLE IF NOT EXISTS request (
+    school_name TEXT NOT NULL,
     student_id TEXT NOT NULL,
     student_name TEXT NOT NULL,
-    c1 TEXT NOT NULL,
-    c2 TEXT NOT NULL,
-    c3 TEXT NOT NULL,
-    c4 TEXT NOT NULL
+    course1 TEXT NOT NULL,
+    course2 TEXT NOT NULL,
+    course3 TEXT NOT NULL,
+    course4 TEXT NOT NULL
 );
+
+deleteAll:
+DELETE FROM request;
+
+deletAllFromSchool:
+DELETE FROM request WHERE :name = school_name;
+
+selectAllFromSchool:
+SELECT * FROM request WHERE :name = school_name;
 
 selectAllRequests:
 SELECT *
 FROM request;
 
 insertRequestObject:
-INSERT INTO request(student_id, student_name, c1, c2, c3, c4)
+INSERT INTO request(school_name, student_id, student_name, course1, course2, course3, course4)
 VALUES ?;
+
+selectAllIDsForCourse:
+SELECT student_id FROM request WHERE (:course = course1 OR :course = course2 OR :course = course3 OR :course = course4) AND :school = school_name;
+
+selectRequestsForStudent:
+SELECT course1, course2, course3, course4 FROM request WHERE :id = student_id;
