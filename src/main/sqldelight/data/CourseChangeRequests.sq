@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS courseChangeRequest (
+    school TEXT NOT NULL,
+    student TEXT NOT NULL,
+    old_course TEXT NOT NULL,
+    new_course TEXT NOT NULL,
+    special_request TEXT NOT NULL
+);
+
+insertRequestObject:
+INSERT INTO courseChangeRequest(school, student, old_course, new_course, special_request)
+VALUES ?;

@@ -38,6 +38,29 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
             div(classes = "textbox-container-lp") {
                 div(classes = "textbox-lp") {
                     h2(classes = "textaligncenter") {
+                        +"Register School"
+                    }
+                    form(action = "/adminPage", method = FormMethod.get, classes = "textaligncenter") {
+                        +"School Name"
+                        br()
+                        input(type = InputType.text, name = "school")
+                        br()
+                        +"Password"
+                        br()
+                        input(type = InputType.text, name = "psw")
+                        br()
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                            )
+                        }
+                        button(type = ButtonType.submit) {
+                            +"Register"
+                        }
+                    }
+                }
+                div(classes = "textbox-lp") {
+                    h2(classes = "textaligncenter") {
                         +"Admins"
                     }
                     div(classes = "lptextbox textaligncenter") {
@@ -62,31 +85,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                                 +"Login"
                             }
                         }
-                        h3(classes = "textaligncenter") {
-                            +"Register School"
-                        }
-                        form(action = "/adminPage", method = FormMethod.get) {
-                            +"School Name"
-                            br()
-                            input(type = InputType.text, name = "school")
-                            br()
-                            +"Password"
-                            br()
-                            input(type = InputType.text, name = "psw")
-                            br()
-                            unsafe {
-                                raw(
-                                    "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
-                                )
-                            }
-                            button(type = ButtonType.submit) {
-                                +"Register"
-                            }
-                        }
                     }
                 }
-            }
-            div(classes = "textbox-container-lp") {
                 div(classes = "textbox-lp") {
                     h2(classes = "textaligncenter") {
                         +"Students"
@@ -97,6 +97,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         }
                         form(action = "/studentPage", method = FormMethod.get) {
                             +"School Name"
+                            br()
                             input(type = InputType.text, name = "school")
                             br()
                             +"Student ID"
@@ -114,6 +115,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                     }
                 }
             }
+
         }
     }
 }

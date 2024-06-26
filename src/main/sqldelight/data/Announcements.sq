@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS announcement (
+    school TEXT NOT NULL,
+    content TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXT NOT NULL,
+    announcement_id TEXT NOT NULL
+);
+
+insetAnnouncementObject:
+INSERT INTO announcement(school, content, date, time, announcement_id)
+VALUES ?;
+
+selectForSchool:
+SELECT * FROM announcement WHERE :school = school;
+
+deleteAll:
+DELETE FROM announcement WHERE :school = school;
+
+deleteSpecific:
+DELETE FROM announcement WHERE :school = school AND :id = announcement_id;

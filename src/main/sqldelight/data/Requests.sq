@@ -29,4 +29,4 @@ selectAllIDsForCourse:
 SELECT student_id FROM request WHERE (:course = course1 OR :course = course2 OR :course = course3 OR :course = course4) AND :school = school_name;
 
 selectRequestsForStudent:
-SELECT course1, course2, course3, course4 FROM request WHERE :id = student_id;
+SELECT course1, course2, course3, course4 FROM request WHERE :id = student_id AND :school = school_name;

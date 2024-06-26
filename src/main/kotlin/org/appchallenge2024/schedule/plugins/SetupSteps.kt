@@ -423,19 +423,19 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
 public suspend fun PipelineContext<Unit, ApplicationCall>.addSchedToDB(
     database: Database
 ) {
-    val school = call.parameters["school"]!!
-    val courses = database.coursesQueries.selectAllFromSchool(school).executeAsList()
-    val requests = database.requestsQueries.selectAllFromSchool(school).executeAsList()
-    val teachers = database.teachersQueries.selectAllFromSchool(school).executeAsList()
-
-    val rawLists = getPossibleCombinations(courses, requests, teachers, database, school)
-    val handler = PrintCombinationHandler(requests, teachers)
-    val solution = combineLists(rawLists, requests, teachers, handler)!!
-    database.schedulesQueries.deleteAllFromSchool(school)
-    requests.forEach {
-        val schedule = getStudentScheduleFromSolution(solution, it.student_id)
-        val final = data.Schedule(school, it.student_id, schedule.c1, schedule.t1, schedule.c2, schedule.t2, schedule.c3, schedule.t3, schedule.c4, schedule.t4)
-        database.schedulesQueries.insertScheduleObject(final)
-    }
-    call.respondRedirect("/adminPage?school=${call.parameters["school"]!!}&toExpand=none")
+//    val school = call.parameters["school"]!!
+//    val courses = database.coursesQueries.selectAllFromSchool(school).executeAsList()
+//    val requests = database.requestsQueries.selectAllFromSchool(school).executeAsList()
+//    val teachers = database.teachersQueries.selectAllFromSchool(school).executeAsList()
+//
+//    val rawLists = getPossibleCombinations(courses, requests, teachers, database, school)
+//    val handler = PrintCombinationHandler(requests, teachers)
+//    val solution = combineLists(rawLists, requests, teachers, handler)!!
+//    database.schedulesQueries.deleteAllFromSchool(school)
+//    requests.forEach {
+//        val schedule = getStudentScheduleFromSolution(solution, it.student_id)
+//        val final = data.Schedule(school, it.student_id, schedule.c1, schedule.t1, schedule.c2, schedule.t2, schedule.c3, schedule.t3, schedule.c4, schedule.t4)
+//        database.schedulesQueries.insertScheduleObject(final)
+//    }
+//    call.respondRedirect("/adminPage?school=${call.parameters["school"]!!}&toExpand=none")
 }

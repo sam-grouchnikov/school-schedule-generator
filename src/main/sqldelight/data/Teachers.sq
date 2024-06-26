@@ -10,7 +10,7 @@ deleteAll:
 DELETE FROM teacher;
 
 deleteAllFromSchool:
-DELETE FROM teacher WHERE :name = name;
+DELETE FROM teacher WHERE :name = school_name;
 
 selectAllTeachers:
 SELECT *
@@ -23,17 +23,23 @@ insertTeacherObject:
 INSERT INTO teacher(school_name, name, room, room_capacity, type)
 VALUES ?;
 
+selectTeachersForType:
+SELECT * FROM teacher WHERE type = :type AND :name = school_name;
+
 selectCapcityForRoom:
-SELECT DISTINCT room_capacity FROM teacher WHERE room = :number;
+SELECT DISTINCT room_capacity FROM teacher WHERE room = :number AND :name = school_name;
 
 selectTeacherForRoom:
-SELECT DISTINCT room FROM teacher WHERE name = :name;
+SELECT DISTINCT room FROM teacher WHERE name = :name AND :name = school_name;
+
+selectCapacityForTeacher:
+SELECT DISTINCT room_capacity FROM teacher WHERE :name = name AND :school = school_name;
 
 selectAllTeacherNames:
-SELECT name FROM teacher;
+SELECT name FROM teacher WHERE :name = school_name;
 
 selectTeacherForSubject:
 SELECT name FROM teacher WHERE :subject = type AND :school = school_name;
 
 selectTypeForName:
-SELECT type FROM teacher WHERE name = :name;
+SELECT type FROM teacher WHERE name = :name  AND :school = school_name;

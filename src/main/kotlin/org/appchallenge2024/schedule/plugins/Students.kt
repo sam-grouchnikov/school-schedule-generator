@@ -2,9 +2,13 @@ package org.appchallenge2024.schedule.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.html.*
+import io.ktor.server.response.*
 import io.ktor.util.pipeline.*
+import kotlinx.css.TagSelector
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
+import data.CourseChangeRequest
+
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.studentPage(
     database: Database
@@ -39,10 +43,15 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.studentPage(
                         +"Schedule"
                     }
                     var i = 1
-                    listOf(Room(schedule.c1, schedule.t1), Room(schedule.c2, schedule.t2), Room(schedule.c3, schedule.t3), Room(schedule.c4, schedule.t4)).forEach {
+                    listOf(
+                        Room(schedule.c1, schedule.t1),
+                        Room(schedule.c2, schedule.t2),
+                        Room(schedule.c3, schedule.t3),
+                        Room(schedule.c4, schedule.t4)
+                    ).forEach {
                         +"${i}: ${it.course}"
                         br()
-                        +"${it.teacher}"
+                        +it.teacher
                         br()
                         i++
                     }
@@ -52,10 +61,51 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.studentPage(
                         h2(classes = "textaligncenter") {
                             +"Announcements"
                         }
+                        val announcements = database.announcementsQueries.selectForSchool(school).executeAsList()
+                        announcements.forEach {
+                            h3 {
+                                +it.date
+                                +" at "
+                                +it.time
+                            }
+                            +it.content
+                        }
+                    }
+                    val new = call.parameters["new"]
+                    val old = call.parameters["old"]
+                    var special = call.parameters["special"]
+                    if (special == null) {
+                        special = ""
+                    }
+                    if (new != null && old != null) {
+                        val request = CourseChangeRequest(school, id, old, new, special)
+                        database.courseChangeRequestsQueries.insertRequestObject(request)
                     }
                     div(classes = "studentpage-rightbox") {
                         h2(classes = "textaligncenter") {
                             +"Request Course Change"
+                        }
+                        form(action = "/studentPage", method = FormMethod.get) {
+                            unsafe {
+                                raw("<input type=\"hidden\" name=\"school\" value=\"${school}\">")
+                                raw("<br>")
+                                raw("\"<input type=\"hidden\" name=\"id\" value=\"${id}\">\"\n")
+                            }
+                            br()
+                            +"Course to Replace"
+                            br()
+                            input(InputType.text, name = "old")
+                            br()
+                            +"New Course"
+                            br()
+                            input(InputType.text, name ="new")
+                            br()
+                            +"Special Request"
+                            br()
+                            input(InputType.text, name="special")
+                            button(type = ButtonType.submit) {
+                                +"Submit Request"
+                            }
                         }
                     }
                 }

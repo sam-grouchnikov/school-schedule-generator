@@ -32,7 +32,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
         rule(".textbox-container-sp") {
             display = Display.flex
             marginTop = LinearDimension("1%")
-            justifyContent = JustifyContent.center
             marginLeft = LinearDimension("0.5%")
         }
         rule(".textbox-container-lp-step2") {
@@ -116,6 +115,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
                 backgroundColor = Color.lightSeaGreen
             }
         }
+
         rule(".studentpage-flex-container") {
             marginTop = LinearDimension("13%")
             display = Display.flex
@@ -143,8 +143,36 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             justifyContent = JustifyContent.center
             margin = "1%"
         }
+        rule(".adminpage-flex-container") {
+            display = Display.flex
+            marginTop = LinearDimension("14%")
+            marginLeft = LinearDimension("1.5%")
+        }
+        rule(".adminpage-leftbox") {
+            width = LinearDimension("65%")
+            height = LinearDimension("100%")
+            border = "10px solid #000000"
+            borderRadius = LinearDimension("15px")
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+        }
+        rule (".adminpage-rightboxes") {
+            display = Display.flex
+            flexDirection = FlexDirection.column
+            width = LinearDimension("30%")
+            marginTop = LinearDimension("-0.45%")
+            marginLeft = LinearDimension("2%")
+        }
+        rule(".adminpage-rightbox") {
+            border = "10px solid #000000"
+            borderRadius = LinearDimension("15px")
+            display = Display.flex
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+            margin = "1%"
+        }
         rule(".sp-table") {
-            width = LinearDimension("100%")
+            width = LinearDimension("65%")
         }
         rule(".steps-table") {
             width = LinearDimension("100%")
@@ -190,12 +218,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
         }
         rule(".sp-navigator-container") {
             textAlign = TextAlign.center
-            marginLeft = LinearDimension("33.7%")
-            padding = "2%"
+            marginLeft = LinearDimension("14%")
+            padding = "1%"
             display = Display.inlineBlock
-            width = LinearDimension("27%")
-            border = "10px solid"
-            borderRadius = LinearDimension("20px")
+            width = LinearDimension("20%")
             marginTop = LinearDimension("12%")
         }
         rule(".steps-navigator-button") {
@@ -236,6 +262,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.css() {
             fontFamily = "Poppins, sans-serif"
             fontStyle = FontStyle.normal
             fontSize = LinearDimension("20px")
+        }
+        rule(".flex") {
+            display = Display.flex
         }
     }
 }
