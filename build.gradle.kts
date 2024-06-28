@@ -33,18 +33,15 @@ sqldelight {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("app.cash.sqldelight:sqlite-driver:2.0.0")
-        implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
-        implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.15.2")
-        implementation("org.wikidata.wdtk:wdtk-datamodel:0.8.0")
-        implementation("org.wikidata.wdtk:wdtk-dumpfiles:0.8.0")
-        implementation("org.wikidata.wdtk:wdtk-rdf:0.8.0")
-        implementation("org.wikidata.wdtk:wdtk-wikibaseapi:0.8.0")
-        implementation("com.google.ortools:ortools-java:9.10.4067")
-        implementation("io.ktor:ktor-server-core:$ktor_version")
-            implementation("io.ktor:ktor-server-netty:$ktor_version")
+
+    implementation("com.google.ortools:ortools-java:9.10.4067")
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
             implementation("ch.qos.logback:logback-classic:$logback_version")
             implementation("io.ktor:ktor-server-html-builder:$ktor_version")
             implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.473")
+            testImplementation("junit:junit:4.13.2")
+
 }
 
 
@@ -60,4 +57,6 @@ tasks.test {
 
 kotlin {
     jvmToolchain(8)
+
+
 }

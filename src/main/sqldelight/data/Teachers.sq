@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS teacher (
     school_name TEXT NOT NULL,
+    id TEXT NOT NULL,
     name TEXT NOT NULL,
     room TEXT NOT NULL,
     room_capacity TEXT NOT NULL,
@@ -20,7 +21,7 @@ selectAllFromSchool:
 SELECT * FROM teacher WHERE :name = school_name;
 
 insertTeacherObject:
-INSERT INTO teacher(school_name, name, room, room_capacity, type)
+INSERT INTO teacher(school_name, id, name, room, room_capacity, type)
 VALUES ?;
 
 selectTeachersForType:
@@ -43,3 +44,5 @@ SELECT name FROM teacher WHERE :subject = type AND :school = school_name;
 
 selectTypeForName:
 SELECT type FROM teacher WHERE name = :name  AND :school = school_name;
+
+

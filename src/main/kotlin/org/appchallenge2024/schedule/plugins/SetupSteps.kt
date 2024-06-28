@@ -326,31 +326,31 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         +"Example"
                     }
                     div {
-                        +"John Smith,101,30,Math"
+                        +"1, John Smith,101,30,Math"
                         br()
-                        +"Mary Johnson,102,25,Math"
+                        +"2, Mary Johnson,102,25,Math"
                         br()
-                        +"James Williams,103,20,Math"
+                        +"3, James Williams,103,20,Math"
                         br()
-                        +"John Williams,104,20,Math"
+                        +"4, John Williams,104,20,Math"
                         br()
-                        +"Ron Donald,113,20,Science"
+                        +"5, Ron Donald,113,20,Science"
                         br()
-                        +"Susan Thomas,114,35,Science"
+                        +"6, Susan Thomas,114,35,Science"
                         br()
-                        +"Charles Taylor,115,40,Science"
+                        +"7, Charles Taylor,115,40,Science"
                         br()
-                        +"Daniel Clark,123,20,History"
+                        +"8, Daniel Clark,123,20,History"
                         br()
-                        +"Margaret Lewis,124,35,History"
+                        +"9, Margaret Lewis,124,35,History"
                         br()
-                        +"Matthew Robinson,125,40,History"
+                        +"10, Matthew Robinson,125,40,History"
                         br()
-                        +"Emily Green,132,25,ELA"
+                        +"11, Emily Green,132,25,ELA"
                         br()
-                        +"Mark Adams,133,20,ELA"
+                        +"12, Mark Adams,133,20,ELA"
                         br()
-                        +"Amanda Baker,134,35,ELA"
+                        +"13, Amanda Baker,134,35,ELA"
 
                     }
 
@@ -395,6 +395,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
             div {
                 table(classes = "steps-table") {
                     tr(classes = "steps-td-th") {
+                        th(classes = "steps-td-th") { +"Teacher ID"}
                         th(classes = "steps-td-th") { +"Teacher Name" }
                         th(classes = "steps-td-th") { +"Room Number" }
                         th(classes = "steps-td-th") { +"Room Capacity" }
@@ -405,12 +406,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                     database.teachersQueries.deleteAllFromSchool(school)
                     teachers?.split("\r\n")?.forEach {
                         val info = it.split(",")
-                        database.teachersQueries.insertTeacherObject(Teacher(school, info[0], info[1], info[2], info[3]))
+                        database.teachersQueries.insertTeacherObject(Teacher(school, info[0], info[1], info[2], info[3], info[4]))
                         tr(classes = "steps-td-th") {
                             td(classes = "steps-td-th") { +info[0] }
                             td(classes = "steps-td-th") { +info[1] }
                             td(classes = "steps-td-th") { +info[2] }
                             td(classes = "steps-td-th") { +info[3] }
+                            td(classes = "steps-td-th") { +info[4]}
                         }
                     }
                 }
