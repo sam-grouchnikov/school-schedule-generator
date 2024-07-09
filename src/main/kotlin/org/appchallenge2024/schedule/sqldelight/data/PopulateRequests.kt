@@ -11,7 +11,7 @@
 //    val requests: List<Request> = readAllRequests("/student_course_requests.csv")
 //    println("Read ${requests.size} requests")
 //
-//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
+//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
 //    Database.Schema.create(driver)
 //    populateRequestsDatabase(driver, requests)
 //}

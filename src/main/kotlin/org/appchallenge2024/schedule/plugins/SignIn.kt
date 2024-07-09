@@ -5,7 +5,6 @@ import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.response.*
 import io.ktor.util.pipeline.*
-import kotlinx.css.TagSelector
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
@@ -14,7 +13,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
 ) {
     call.respondHtml {
         head {
-            link(rel = "stylesheet", href = "styles.css")
+            link(rel = "stylesheet", href = "cssSignIn")
             link(rel = "preconnect", href = "https://fonts.googleapis.com")
             link(rel = "preconnect", href = "https://fonts.gstatic.com")
             link(
@@ -23,10 +22,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
             )
         }
 
-        body(classes = "tealaquagradient poppinsfont") {
-            div(classes = "topbar") {
+        body(classes = "signin-background-dark poppinsfont") {
+            div(classes = "topbar-dark") {
                 h1(classes = "headercontainer") {
-                    div(classes = "textaligncenter shedwizheader") {
+                    div(classes = "textaligncenter shedwizheader-dark") {
                         +"Schedwiz"
                         img(src = "http://localhost:8080/images/logo.png") {
                             this.width = "50"
@@ -35,12 +34,12 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                     }
                 }
             }
-            div(classes = "textbox-container-lp") {
-                div(classes = "textbox-lp") {
+            div(classes = "textbox-container-signin-dark") {
+                div(classes = "textbox-signin-dark") {
                     h2(classes = "textaligncenter") {
                         +"Register School"
                     }
-                    form(action = "/adminPage", method = FormMethod.get, classes = "textaligncenter") {
+                    form(action = "/addSchoolToDB", method = FormMethod.get, classes = "textaligncenter") {
                         +"School Name"
                         br()
                         input(type = InputType.text, name = "school")
@@ -49,17 +48,16 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         br()
                         input(type = InputType.text, name = "psw")
                         br()
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
-                            )
-                        }
+                        +"Default Student Password"
+                        br()
+                        input(type = InputType.text, name = "defaultpsw")
+                        br()
                         button(type = ButtonType.submit) {
                             +"Register"
                         }
                     }
                 }
-                div(classes = "textbox-lp") {
+                div(classes = "textbox-signin-dark") {
                     h2(classes = "textaligncenter") {
                         +"Admins"
                     }
@@ -78,7 +76,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             br()
                             unsafe {
                                 raw(
-                                    "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                                    "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
                                 )
                             }
                             button(type = ButtonType.submit) {
@@ -87,7 +85,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         }
                     }
                 }
-                div(classes = "textbox-lp") {
+                div(classes = "textbox-signin-dark") {
                     h2(classes = "textaligncenter") {
                         +"Students"
                     }
@@ -118,4 +116,14 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
 
         }
     }
+}
+
+public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
+    database: Database
+) {
+    val school = call.parameters["school"]!!
+    val psw = call.parameters["psw"]!!
+    val defaultpsw = call.parameters["defaultpsw"]!!
+    database.schoolsQueries.insertSchoolObject(School(school, psw, defaultpsw))
+    call.respondRedirect("/adminPage?school=${school}&courseView=true")
 }

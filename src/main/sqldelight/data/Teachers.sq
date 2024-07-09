@@ -45,4 +45,7 @@ SELECT name FROM teacher WHERE :subject = type AND :school = school_name;
 selectTypeForName:
 SELECT type FROM teacher WHERE name = :name  AND :school = school_name;
 
+selectNameForID:
+SELECT name FROM teacher WHERE id = :id AND :school = school_name;
+
 

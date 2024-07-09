@@ -11,7 +11,7 @@
 //    val teachers: List<Teacher> = readAllTeachers("/teacher_list.csv")
 //    println("Read ${teachers.size} teachers")
 //
-//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
+//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
 //    Database.Schema.create(driver)
 //    populateTeachersDatabase(driver, teachers)
 //}

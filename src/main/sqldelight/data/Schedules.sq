@@ -1,18 +1,14 @@
 CREATE TABLE IF NOT EXISTS schedule (
     school_name TEXT NOT NULL,
     student_id TEXT NOT NULL,
-    c1 TEXT NOT NULL,
-    t1 TEXT NOT NULL,
-    c2 TEXT NOT NULL,
-    t2 TEXT NOT NULL,
-    c3 TEXT NOT NULL,
-    t3 TEXT NOT NULL,
-    c4 TEXT NOT NULL,
-    t4 TEXT NOT NULL
+    course TEXT NOT NULL,
+    teacher TEXT NOT NULL,
+    period TEXT NOT NULL,
+    semester TEXT NOT NULL
 );
 
 insertScheduleObject:
-INSERT INTO schedule(school_name, student_id, c1, t1, c2, t2, c3, t3, c4, t4)
+INSERT INTO schedule(school_name, student_id, course, teacher, period, semester)
 VALUES ?;
 
 deleteAll:

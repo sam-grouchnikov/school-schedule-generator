@@ -6,10 +6,13 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 import io.ktor.server.http.content.*
+import org.appchallenge2024.schedule.plugins.styles.cssAdminPage
+import org.appchallenge2024.schedule.plugins.styles.cssSignIn
+import org.appchallenge2024.schedule.plugins.styles.cssSteps
 import java.io.File
 
 fun Application.mainRouting() {
-    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
     Database.Schema.create(driver)
     val database = Database(driver)
     routing {
@@ -18,6 +21,21 @@ fun Application.mainRouting() {
         }
         get("/styles.css") {
             css()
+        }
+        get("/cssLanding") {
+            cssLanding()
+        }
+        get("/cssSignIn") {
+            cssSignIn()
+        }
+        get("/cssAdminPage") {
+            cssAdminPage()
+        }
+        get("/cssSteps") {
+            cssSteps()
+        }
+        get("/addSchoolToDB") {
+            addSchoolToDB(database)
         }
         get("/step1") {
             step1(database)
@@ -28,15 +46,18 @@ fun Application.mainRouting() {
         get("/step3") {
             step3(database)
         }
+        get("/step4") {
+            step4(database)
+        }
         get("/signInLanding") {
             signInLanding(database)
         }
         get("/adminPage") {
             adminPage(database)
         }
-        get("/studentPage") {
-            studentPage(database)
-        }
+//        get("/studentPage") {
+//            studentPage(database)
+//        }
         get("/addSchedToDB") {
             addSchedToDB(database)
         }

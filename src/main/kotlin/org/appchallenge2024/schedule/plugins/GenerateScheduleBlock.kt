@@ -8,7 +8,7 @@ import data.Teacher
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
 fun main() {
-    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
     Database.Schema.create(driver)
 
     val database = Database(driver)

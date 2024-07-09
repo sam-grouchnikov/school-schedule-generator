@@ -11,7 +11,7 @@
 //    val courses: List<Course> = readAllCourses("/course_catalog.csv")
 //    println("Read ${courses.size} players")
 //
-//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:atp.db")
+//    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
 //    Database.Schema.create(driver)
 //    populateCoursesDatabase(driver, courses)
 //}
