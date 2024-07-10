@@ -27,17 +27,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader-dark") {
                         +"Schedwiz"
-                        img(src = "http://localhost:8080/images/logo.png") {
-                            this.width = "50"
-                        }
-
                     }
                 }
             }
             div(classes = "textbox-container-signin-dark") {
                 div(classes = "textbox-signin-dark") {
                     h2(classes = "textaligncenter") {
-                        +"Register School"
+                        +"Sign Up"
                     }
                     form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter") {
                         +"School Name"
@@ -46,10 +42,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         br()
                         +"Password"
                         br()
-                        input(type = InputType.text, name = "psw")
+                        input(type = InputType.password, name = "psw")
                         br()
                         button(type = ButtonType.submit) {
-                            +"Register"
+                            +"Sign Up"
                         }
                     }
                     div (classes = "textaligncenter") {
@@ -68,9 +64,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             br()
                             input(type = InputType.text, name = "school")
                             br()
-                            +"Admin Password"
+                            +"Password"
                             br()
-                            input(type = InputType.text, name = "psw")
+                            input(type = InputType.password, name = "psw")
                             br()
                             unsafe {
                                 raw(

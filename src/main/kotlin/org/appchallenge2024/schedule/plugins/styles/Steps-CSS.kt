@@ -147,6 +147,10 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
         }
+        rule(".periods-input") {
+            width = LinearDimension("7%")
+        }
+
         rule(".textbox-step1-2") {
             marginRight = LinearDimension("10px")
             padding = "10px"
@@ -174,6 +178,13 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
                 boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
+            paddingLeft = LinearDimension("20px")
+            paddingRight = LinearDimension("20px")
+
+        }
+        rule(".steps-textarea") {
+            width = LinearDimension("-webkit-fill-available")
+            height = LinearDimension("100%")
         }
         rule(".textbox-step2-1") {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
@@ -188,6 +199,25 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
                 boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
+        }
+        rule(".steps-form-height") {
+            height = LinearDimension("50%")
+        }
+        rule(".textbox-step2-3") {
+            backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+            marginRight = LinearDimension("10px")
+            padding = "2%"
+            width = LinearDimension("20%")
+            color = Color.white
+            borderRadius = LinearDimension("20px")
+            hover {
+                transitionDuration = Time("0.3s")
+                border = "5px rgb(25, 25, 112)"
+                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
+                    blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
+            }
+            paddingLeft = LinearDimension("20px")
+            paddingRight = LinearDimension("20px")
         }
         rule(".steps-navigator-padding") {
             padding = "2%"
@@ -206,16 +236,13 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
         }
-        rule(".steps-textarea") {
-            backgroundColor = Color.aqua
-            borderRadius = LinearDimension("15px")
-        }
         rule(".steps-td-th") {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
             borderRadius = LinearDimension("10px")
             textAlign = TextAlign.left
             padding = "0.2%"
             color = Color.white
+
             hover {
                 transitionDuration = Time("0.3s")
                 border = "5px rgb(25, 25, 112)"

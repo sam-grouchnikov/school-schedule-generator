@@ -35,8 +35,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                     +school
                 }
             }
-            div (classes = "flex-outer-1") {
-                div (classes = "table-container white") {
+            div(classes = "flex-outer-1") {
+                div(classes = "table-container white") {
                     form(action = "/adminPage", classes = "textaligncenter", method = FormMethod.get) {
                         unsafe {
                             raw(
@@ -110,7 +110,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                     th { +"Teacher Name" }
                                     th { +"Semester" }
                                     th { +"Period" }
-                                    th { +"Students (Click to expand)" }
+                                    th(classes = "students-column") { +"Students (Click to expand)" }
                                 }
                                 for (i in solution.indices) {
                                     tr(classes = "schedulepage-td-th") {
@@ -134,17 +134,24 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                                 }
                                             }
                                         } else {
+
                                             td {
-                                                solution[i].students.forEach {
-                                                    +it
-                                                    +", "
-                                                }
                                                 a(
                                                     href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
                                                     classes = "white"
                                                 ) {
                                                     +"Collapse Students"
                                                 }
+                                                br()
+//                                                +solution[i].students.joinToString()
+                                                val names = arrayListOf<String>()
+                                                solution[i].students.forEach { id ->
+                                                    names.add(
+                                                        database.requestsQueries.selectNameForID(id, school)
+                                                            .executeAsOne()
+                                                    )
+                                                }
+                                                +names.joinToString()
                                             }
                                         }
                                     }
@@ -158,32 +165,50 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                     th { +"Courses" }
                                 }
 
-                                val ids = database.requestsQueries.selectAllIDsForSchool(school).executeAsList().toSet().toList()
+                                val ids = database.requestsQueries.selectAllIDsForSchool(school).executeAsList().toSet()
+                                    .toList()
                                 ids.forEach {
                                     tr(classes = "adminpage-td-th") {
-                                        th { +it }
-                                        th { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
+
+                                        td(classes = "bold") { +it }
+                                        td(classes = "bold") { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
                                         val schedule = getStudentScheduleFromSolution(solution, it)
                                         schedule.forEach { course ->
 
-                                            th {
-                                                +"Class: ${
-                                                    database.coursesQueries.selectNameForCourseID(
-                                                        course.course,
-                                                        school
-                                                    ).executeAsOne()
-                                                }"
+                                            td {
+                                                div(classes = "flex2") {
+                                                    div(classes = "bold") {
+                                                        +"Class: "
+                                                    }
+                                                    +" "
+                                                    +database.coursesQueries.selectNameForCourseID(course.course, school)
+                                                        .executeAsOne()
+                                                }
                                                 br()
-                                                +"Teacher: ${
-                                                    database.teachersQueries.selectNameForID(
+                                                div(classes = "flex2") {
+                                                    div(classes = "bold") {
+                                                        +"Teacher: "
+                                                    }
+
+                                                    +database.teachersQueries.selectNameForID(
                                                         course.teacher,
                                                         school
                                                     ).executeAsOne()
-                                                }"
+                                                }
                                                 br()
-                                                +"Semester: ${course.semester}"
+                                                div(classes = "flex2") {
+                                                    div(classes = "bold") {
+                                                        +"Semester: "
+                                                    }
+                                                    +"${course.semester}"
+                                                }
                                                 br()
-                                                +"Period: ${course.period}"
+                                                div(classes = "flex2") {
+                                                    div(classes = "bold") {
+                                                        +"Period: "
+                                                    }
+                                                    +"${course.period}"
+                                                }
                                             }
                                         }
                                     }

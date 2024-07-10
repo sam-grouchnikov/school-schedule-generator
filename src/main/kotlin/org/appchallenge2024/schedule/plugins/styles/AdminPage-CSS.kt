@@ -30,6 +30,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         rule(".flex") {
             display = Display.flex
         }
+        rule(".flex2") {
+            display = Display.flex
+        }
         h2 {
             fontSize = LinearDimension("35px")
         }
@@ -79,10 +82,19 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             builder3.colorStop(Color("rgba(0, 0, 0) 85%"))
             background = builder3.build(false).value
         }
+        td {
+            paddingTop = LinearDimension("1.5%")
+            paddingBottom = LinearDimension("1.5%")
+        }
         rule(".flex-outer-1") {
             display = Display.flex
             justifyContent = JustifyContent.spaceEvenly
             marginTop = LinearDimension("13%")
+        }
+        rule(".bold") {
+            fontWeight = FontWeight.bold
+            paddingRight = LinearDimension("2%")
+            paddingLeft = LinearDimension("2%")
         }
         rule(".flex-outer-2") {
             display = Display.flex
@@ -106,6 +118,12 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             }
             padding = "2%"
         }
+        tr {
+            nthChild("even") {
+                backgroundColor = Color("rgba(27, 27, 120, 0.5)")
+            }
+            paddingTop = LinearDimension("2%")
+        }
         rule(".sp-table") {
             width = LinearDimension("-webkit-fill-available")
             textAlign = TextAlign.center
@@ -127,6 +145,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
                 background = builder2.build(false).value
                 border = "10px solid rgba(255, 255, 255, 0.0)"
             }
+        }
+        rule(".students-column") {
+            width = LinearDimension("30%")
         }
         rule (".right-boxes") {
             display = Display.flex

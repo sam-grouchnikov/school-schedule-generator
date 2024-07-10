@@ -25,9 +25,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                     h1(classes = "headercontainer") {
                         div(classes = "textaligncenter shedwizheader-dark") {
                             +"Schedwiz"
-                            img(src = "http://localhost:8080/images/logo.png") {
-                                this.width = "50"
-                            }
                         }
                     }
                 }
