@@ -20,111 +20,95 @@ fun main() {
 //
     val database = Database(driver)
     println(database.schoolsQueries.selectAllSchools().executeAsList())
-//
-////    val courses = database.coursesQueries.selectAllFromSchool("1").executeAsList()
-////    val requests = database.requestsQueries.selectAllFromSchool("1").executeAsList()
-////    val teachers = database.teachersQueries.selectAllFromSchool("1").executeAsList()
-////    val dataMap = getHashMapData(database, "1")
-//
-//    val coursesManual = listOf(
-//        Course("1", "ALG2-OL", "OL Alg 2", "Math"),
-//        Course("1", "ALG2-H", "H Alg 2", "Math"),
-//        Course("1", "PHY-OL", "OL Phy", "Science"),
-//        Course("1", "PHY-AP", "Ap phy", "Science"),
-//        Course("1", "WORLD-OL", "OL World", "History"),
-//        Course("1", "WORLD-AP", "Ap world", "History"),
-//        Course("1", "10LIT-OL", "OL Lit", "ELA"),
-//        Course("1", "10LIT-H", "H Lit", "ELA"),
-//        Course("1", "BIO-OL", "OL Bio", "Science"),
-//        Course("1", "BIO-AP", "AP Bio", "Science"),
-//        Course("1", "CALC-AB", "Calc AB", "Math"),
-//        Course("1", "CALC-BC", "Calc BC", "Math"),
-//        Course("1", "USH-AP", "APUSH", "History"),
-//        Course("1", "USH-OL", "OL USH", "History"),
-//        Course("1", "11LIT-OL", "OL Lit", "ELA"),
-//        Course("1", "11LIT-H", "H Lit", "ELA"),
-//    )
-//    val coursesMap = hashMapOf<String, Course>()
-//    coursesManual.forEach {
-//        coursesMap[it.id] = it
-//    }
-//
-//    val requestsManual = listOf(
-//        Request("1", "0", "Student 0", "ALG2-H"),
-//        Request("1", "0", "Student 0", "PHY-OL"),
-//        Request("1", "0", "Student 0", "WORLD-AP"),
-//        Request("1", "0", "Student 0", "10LIT-OL"),
-//        Request("1", "0", "Student 0", "CALC-AB"),
-//        Request("1", "0", "Student 0", "BIO-OL"),
-//        Request("1", "0", "Student 0", "USH-AP"),
-//        Request("1", "0", "Student 0", "11LIT-OL"),
-//        Request("1", "1", "Student 1", "ALG2-OL"),
-//        Request("1", "1", "Student 1", "PHY-OL"),
-//        Request("1", "1", "Student 1", "WORLD-OL"),
-//        Request("1", "1", "Student 1", "10LIT-OL"),
-//        Request("1", "1", "Student 1", "CALC-BC"),
-//        Request("1", "1", "Student 1", "BIO-OL"),
-//        Request("1", "1", "Student 1", "USH-OL"),
-//        Request("1", "1", "Student 1", "11LIT-H"),
-////        Request("1", "2", "Student 2", "ALG2-H"),
-////        Request("1", "2", "Student 2", "PHY-AP"),
-////        Request("1", "2", "Student 2", "WORLD-AP"),
-////        Request("1", "2", "Student 2", "10LIT-H"),
-////        Request("1", "3", "Student 3", "ALG2-OL"),
-////        Request("1", "3", "Student 3", "PHY-AP"),
-////        Request("1", "3", "Student 3", "WORLD-AP"),
-////        Request("1", "3", "Student 3", "10LIT-H"),
-////        Request("1", "4", "Student 4", "ALG2-OL"),
-////        Request("1", "4", "Student 4", "PHY-AP"),
-////        Request("1", "4", "Student 4", "WORLD-AP"),
-////        Request("1", "4", "Student 4", "10LIT-OL"),
-////        Request("1", "5", "Student 5", "ALG2-H"),
-////        Request("1", "5", "Student 5", "PHY-AP"),
-////        Request("1", "5", "Student 5", "WORLD-AP"),
-////        Request("1", "5", "Student 5", "10LIT-H"),
-////        Request("1", "6", "Student 6", "ALG2-H"),
-////        Request("1", "6", "Student 6", "PHY-AP"),
-////        Request("1", "6", "Student 6", "WORLD-OL"),
-////        Request("1", "6", "Student 6", "10LIT-H"),
-////        Request("1", "7", "Student 7", "ALG2-OL"),
-////        Request("1", "7", "Student 7", "PHY-OL"),
-////        Request("1", "7", "Student 7", "WORLD-OL"),
-////        Request("1", "7", "Student 7", "10LIT-H"),
-////        Request("1", "8", "Student 8", "ALG2-H"),
-////        Request("1", "8", "Student 8", "PHY-OL"),
-////        Request("1", "8", "Student 8", "WORLD-OL"),
-////        Request("1", "8", "Student 8", "10LIT-OL"),
-////        Request("1", "9", "Student 9", "ALG2-OL"),
-////        Request("1", "9", "Student 9", "PHY-AP"),
-////        Request("1", "9", "Student 9", "WORLD-OL"),
-////        Request("1", "9", "Student 9", "10LIT-H"),
-//
-//        )
-//    val compressedRequests = convertSingleToMultipleRequests(requestsManual)
-//    val requestsMap = hashMapOf<String, RequestCompressed>()
-//    compressedRequests.forEach {
-//        requestsMap[it.studentID] = it
-//    }
-//
-//    val teachersManual = listOf(
-//        Teacher("1", "0", "Robert (Math)", "100", "5", "Math"),
-//        Teacher("1", "1", "John (Science)", "101", "4", "Science"),
-//        Teacher("1", "2", "James (History)", "102", "5", "History"),
-//        Teacher("1", "3", "Justin (ELA)", "103", "4", "ELA"),
-//    )
-//    val teachersMap = hashMapOf<String, Teacher>()
-//    teachersManual.forEach {
-//        teachersMap[it.id] = it
-//    }
-//    val manualDBMap = HashMapData(coursesMap, requestsMap, teachersMap)
-//    val formatInfo = ScheduleFormatInfo(ScheduleLayout.BLOCK, 4, 4)
-//    val schedule =
-//        generateSchedule("1", coursesManual, compressedRequests, teachersManual, mutableListOf(), database, manualDBMap, formatInfo)
-//    val ordered = orderByTeacher(listOf("0", "1", "2", "3"), schedule)
-//    for (classroom in ordered) {
-//        println(classroom)
-//    }
-//    println(isValidScheduleTraditional(ordered, coursesManual, compressedRequests, teachersManual))
+
+//    val courses = database.coursesQueries.selectAllFromSchool("1").executeAsList()
+//    val requests = database.requestsQueries.selectAllFromSchool("1").executeAsList()
+//    val teachers = database.teachersQueries.selectAllFromSchool("1").executeAsList()
+//    val dataMap = getHashMapData(database, "1")
+
+    val coursesManual = listOf(
+        Course("1", "ALG2-OL", "OL Alg 2", "Math"),
+        Course("1", "ALG2-H", "H Alg 2", "Math"),
+        Course("1", "PHY-OL", "OL Phy", "Science"),
+        Course("1", "PHY-AP", "Ap phy", "Science"),
+        Course("1", "WORLD-OL", "OL World", "History"),
+        Course("1", "WORLD-AP", "Ap world", "History"),
+        Course("1", "10LIT-OL", "OL Lit", "ELA"),
+        Course("1", "10LIT-H", "H Lit", "ELA"),
+    )
+    val coursesMap = hashMapOf<String, Course>()
+    coursesManual.forEach {
+        coursesMap[it.id] = it
+    }
+
+    val requestsManual = listOf(
+        Request("1", "0", "Student 0", "ALG2-OL"),
+        Request("1", "0", "Student 0", "PHY-AP"),
+        Request("1", "0", "Student 0", "WORLD-AP"),
+        Request("1", "0", "Student 0", "10LIT-H"),
+        Request("1", "1", "Student 1", "ALG2-H"),
+        Request("1", "1", "Student 1", "PHY-AP"),
+        Request("1", "1", "Student 1", "WORLD-AP"),
+        Request("1", "1", "Student 1", "10LIT-OL"),
+//        Request("1", "2", "Student 2", "ALG2-H"),
+//        Request("1", "2", "Student 2", "PHY-AP"),
+//        Request("1", "2", "Student 2", "WORLD-AP"),
+//        Request("1", "2", "Student 2", "10LIT-H"),
+//        Request("1", "3", "Student 3", "ALG2-OL"),
+//        Request("1", "3", "Student 3", "PHY-AP"),
+//        Request("1", "3", "Student 3", "WORLD-AP"),
+//        Request("1", "3", "Student 3", "10LIT-H"),
+//        Request("1", "4", "Student 4", "ALG2-OL"),
+//        Request("1", "4", "Student 4", "PHY-AP"),
+//        Request("1", "4", "Student 4", "WORLD-AP"),
+//        Request("1", "4", "Student 4", "10LIT-OL"),
+//        Request("1", "5", "Student 5", "ALG2-H"),
+//        Request("1", "5", "Student 5", "PHY-AP"),
+//        Request("1", "5", "Student 5", "WORLD-AP"),
+//        Request("1", "5", "Student 5", "10LIT-H"),
+//        Request("1", "6", "Student 6", "ALG2-H"),
+//        Request("1", "6", "Student 6", "PHY-AP"),
+//        Request("1", "6", "Student 6", "WORLD-OL"),
+//        Request("1", "6", "Student 6", "10LIT-H"),
+//        Request("1", "7", "Student 7", "ALG2-OL"),
+//        Request("1", "7", "Student 7", "PHY-OL"),
+//        Request("1", "7", "Student 7", "WORLD-OL"),
+//        Request("1", "7", "Student 7", "10LIT-H"),
+//        Request("1", "8", "Student 8", "ALG2-H"),
+//        Request("1", "8", "Student 8", "PHY-OL"),
+//        Request("1", "8", "Student 8", "WORLD-OL"),
+//        Request("1", "8", "Student 8", "10LIT-OL"),
+//        Request("1", "9", "Student 9", "ALG2-OL"),
+//        Request("1", "9", "Student 9", "PHY-AP"),
+//        Request("1", "9", "Student 9", "WORLD-OL"),
+//        Request("1", "9", "Student 9", "10LIT-H"),
+
+        )
+    val compressedRequests = convertSingleToMultipleRequests(requestsManual)
+    val requestsMap = hashMapOf<String, RequestCompressed>()
+    compressedRequests.forEach {
+        requestsMap[it.studentID] = it
+    }
+
+    val teachersManual = listOf(
+        Teacher("1", "0", "Robert (Math)", "100", "5", "Math"),
+        Teacher("1", "1", "John (Science)", "101", "4", "Science"),
+        Teacher("1", "2", "James (History)", "102", "5", "History"),
+        Teacher("1", "3", "Justin (ELA)", "103", "4", "ELA"),
+    )
+    val teachersMap = hashMapOf<String, Teacher>()
+    teachersManual.forEach {
+        teachersMap[it.id] = it
+    }
+    val manualDBMap = HashMapData(coursesMap, requestsMap, teachersMap)
+    val formatInfo = ScheduleFormatInfo(ScheduleLayout.BLOCK, 2, 2)
+    val schedule =
+        generateSchedule("1", coursesManual, compressedRequests, teachersManual, mutableListOf(), database, manualDBMap, formatInfo)
+    val ordered = orderByTeacher(listOf("0", "1", "2", "3"), schedule)
+    for (classroom in ordered) {
+        println(classroom)
+    }
+    println(isValidScheduleTraditional(ordered, coursesManual, compressedRequests, teachersManual))
 
 }
 
@@ -234,18 +218,14 @@ fun generateSchedule(
     lastTimestamp = System.nanoTime()
     count++
     // generates all valid next assignments
-    var nextPossibleMoves = emptyList<List<Classroom>>()
+    val nextPossibleMoves: List<List<Classroom>>
     if (formatInfo.layout == ScheduleLayout.TRADITIONAL) {
-        nextPossibleMoves =
-            getAllPossibleNextAssignmentsTraditional(hashMapData, school, requests, teachers, currentCombination, database, formatInfo.firstSemesPeriods)
+        nextPossibleMoves = getAllPossibleNextAssignmentsTraditional(hashMapData, school, requests, teachers, currentCombination, database, formatInfo.firstSemesPeriods)
     } else {
-        nextPossibleMoves =
-            getAllPossibleNextAssignmentsBlock(hashMapData, school, requests, teachers, currentCombination, database, formatInfo.firstSemesPeriods, formatInfo.secondSemesPeriods)
+        nextPossibleMoves = getAllPossibleNextAssignmentsBlock(hashMapData, school, requests, teachers, currentCombination, database, formatInfo.firstSemesPeriods, formatInfo.secondSemesPeriods)
     }
      nextPossibleMoves.forEach {
-
-        val currentBranch =
-            generateSchedule(school, courses, requests, teachers, it as MutableList<Classroom>, database, hashMapData, formatInfo)
+        val currentBranch = generateSchedule(school, courses, requests, teachers, it as MutableList<Classroom>, database, hashMapData, formatInfo)
         // if the generation from this point is not empty, it has reached the needed depth of the branch
         if (currentBranch.isNotEmpty()) {
             return currentBranch

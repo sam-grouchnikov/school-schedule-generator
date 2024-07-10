@@ -55,6 +55,12 @@ fun Application.mainRouting() {
         get("/adminPage") {
             adminPage(database)
         }
+        get("/verifyCredentials") {
+            verifyCredentials(database)
+        }
+        get("/verifyNewSchool") {
+            verifyNewSchool(database)
+        }
 //        get("/studentPage") {
 //            studentPage(database)
 //        }

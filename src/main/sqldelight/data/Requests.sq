@@ -24,3 +24,9 @@ FROM request;
 insertRequestObject:
 INSERT INTO request(school_name, student_id, student_name, course)
 VALUES ?;
+
+selectAllIDsForSchool:
+SELECT student_id FROM request WHERE :school = school_name;
+
+selectNameForID:
+SELECT DISTINCT student_name FROM request WHERE :id = student_id AND :school = school_name;

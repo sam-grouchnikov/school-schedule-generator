@@ -105,7 +105,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                         +"Home"
                     }
                 }
-                +" Step 1 "
+                div (classes="steps-navigator-padding") {
+                    +" Step 1 "
+                }
                 a(href = "/step2?school=${school}") {
                     button(classes = "steps-navigator-button") {
                         +"Step 2"
@@ -189,23 +191,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                         }
                         +"."
                     }
-                    h1(classes = "textaligncenter") {
-                        +"Copy Requests Here"
-                    }
-                    div {
-                        form(action = "/step2", method = FormMethod.get) {
-                            unsafe {
-                                raw(
-                                    "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                                )
-                            }
-                            textArea { name = "requests"; placeholder = "Enter your message" }
-                            br()
-                            submitInput { value = "Submit" }
-                        }
-                    }
                 }
-                div(classes = "textbox-step2-1") {
+                div(classes = "textbox-step2-2") {
                     h2(classes = "textaligncenter") {
                         +"Example"
                     }
@@ -242,6 +229,23 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     }
 
                 }
+                div(classes = "textbox-step2-1") {
+                    h2(classes = "textaligncenter") {
+                        +"Copy Requests Here"
+                    }
+                    div {
+                        form(action = "/step2", method = FormMethod.get) {
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                )
+                            }
+                            textArea { name = "requests"; placeholder = "Enter your message" }
+                            br()
+                            submitInput { value = "Submit" }
+                        }
+                    }
+                }
 
 
             }
@@ -252,7 +256,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                         +"Step 1"
                     }
                 }
-                +"  Step 2  "
+                div (classes="steps-navigator-padding") {
+                    +"Step 2"
+                }
                 a(href = "/step3?school=${school}") {
                     button(classes = "steps-navigator-button") {
                         +"Step 3"
@@ -437,8 +443,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         }
                     }
                 }
-                div("font-45px") {
-                    +" Step 3 "
+                div (classes="steps-navigator-padding") {
+                    +"Step 3"
                 }
                 a(href = "/step4?school=${school}") {
                     button(classes = "steps-navigator-button") {
@@ -458,19 +464,22 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                     }
 
                     val teachers = call.parameters["teachers"]
-                    database.teachersQueries.deleteAllFromSchool(school)
+                    if (teachers != null) {
+                        database.teachersQueries.deleteAllFromSchool(school)
+                    }
+                    val existing = database.teachersQueries.selectAllFromSchool(school).executeAsList()
+                    existing.forEach {
+                        tr(classes = "steps-td-th") {
+                            td(classes = "steps-td-th") { +it.id }
+                            td(classes = "steps-td-th") { +it.name }
+                            td(classes = "steps-td-th") { +it.room }
+                            td(classes = "steps-td-th") { +it.room_capacity }
+                            td(classes = "steps-td-th") { +it.type }
+                        }
+                    }
                     teachers?.split("\r\n")?.forEach {
                         val info = it.split(",")
-                        database.teachersQueries.insertTeacherObject(
-                            Teacher(
-                                school,
-                                info[0],
-                                info[1],
-                                info[2],
-                                info[3],
-                                info[4]
-                            )
-                        )
+                        database.teachersQueries.insertTeacherObject(Teacher(school, info[0], info[1], info[2], info[3], info[4]))
                         tr(classes = "steps-td-th") {
                             td(classes = "steps-td-th") { +info[0] }
                             td(classes = "steps-td-th") { +info[1] }
@@ -519,7 +528,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                         +"(year long) schedule."
                     }
                 }
-                div(classes = "textbox-step1-1") {
+                div(classes = "textbox-step1-1-center") {
                     form(action = "/addSchedToDB", method = FormMethod.get) {
                         h2(classes = "textaligncenter") {
                             +"Configure"
@@ -540,8 +549,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                             +" Periods (per semester): "
                             input(type = InputType.number, name = "periods")
                         }
-                        button(type = ButtonType.submit, classes = "steps-navigator-button") {
-                            +"Submit"
+                        br()
+                        button(type = ButtonType.submit, classes = "steps-navigator-button textaligncenter") {
+                            +"Create Schedule"
                         }
                     }
                 }
@@ -554,13 +564,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                         }
                     }
                 }
-                div("font-45px") {
-                    +" Step 4 "
-                }
-                a(href = "/addSchedToDB?school=${school}") {
-                    button(classes = "steps-navigator-button") {
-                        +"Create Schedule"
-                    }
+                div (classes="steps-navigator-padding") {
+                    +"Step 4"
                 }
             }
         }
@@ -585,7 +590,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.addSchedToDB(
         firstSemesPeriods = periods.toInt(),
         secondSemesPeriods = periods.toInt()
     )
-    database.schedulesQueries.deleteAllFromSchool(school)
     val schedule = generateSchedule(school, courses, convertSingleToMultipleRequests(requests), teachers, mutableListOf(), database, map, info)
     database.schedulesQueries.deleteAllFromSchool(school)
     schedule.forEach { classroom ->
@@ -593,5 +597,5 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.addSchedToDB(
             database.schedulesQueries.insertScheduleObject(data.Schedule(school, student, classroom.courseID, classroom.teacherID, classroom.period.toString(), classroom.semester.toString()))
         }
     }
-    call.respondRedirect("/adminPage?school=${call.parameters["school"]!!}&toExpand=none")
+    call.respondRedirect("/adminPage?school=${call.parameters["school"]!!}&toExpand=none&courseView=yes")
 }

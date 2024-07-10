@@ -39,7 +39,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                     h2(classes = "textaligncenter") {
                         +"Register School"
                     }
-                    form(action = "/addSchoolToDB", method = FormMethod.get, classes = "textaligncenter") {
+                    form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter") {
                         +"School Name"
                         br()
                         input(type = InputType.text, name = "school")
@@ -48,24 +48,22 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         br()
                         input(type = InputType.text, name = "psw")
                         br()
-                        +"Default Student Password"
-                        br()
-                        input(type = InputType.text, name = "defaultpsw")
-                        br()
                         button(type = ButtonType.submit) {
                             +"Register"
+                        }
+                    }
+                    div (classes = "textaligncenter") {
+                        if (call.parameters["error"] == "schoolExists") {
+                            +"That School Name Already Exists"
                         }
                     }
                 }
                 div(classes = "textbox-signin-dark") {
                     h2(classes = "textaligncenter") {
-                        +"Admins"
+                        +"Sign In"
                     }
                     div(classes = "lptextbox textaligncenter") {
-                        h3(classes = "textaligncenter") {
-                            +"Sign In"
-                        }
-                        form(action = "/adminPage", method = FormMethod.get) {
+                        form(action = "/verifyCredentials", method = FormMethod.get) {
                             +"School Name"
                             br()
                             input(type = InputType.text, name = "school")
@@ -84,38 +82,48 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             }
                         }
                     }
-                }
-                div(classes = "textbox-signin-dark") {
-                    h2(classes = "textaligncenter") {
-                        +"Students"
-                    }
-                    div(classes = "lptextbox textaligncenter") {
-                        h3(classes = "textaligncenter") {
-                            +"Sign In"
+                    div (classes = "textaligncenter") {
+                        if (call.parameters["error"] == "wrongPsw") {
+                            +"Incorrect Password"
                         }
-                        form(action = "/studentPage", method = FormMethod.get) {
-                            +"School Name"
-                            br()
-                            input(type = InputType.text, name = "school")
-                            br()
-                            +"Student ID"
-                            br()
-                            input(type = InputType.text, name = "id")
-                            br()
-                            +"Password"
-                            br()
-                            input(type = InputType.text, name = "psw")
-                            br()
-                            button(type = ButtonType.submit) {
-                                +"Login"
-                            }
+                        if (call.parameters["error"] == "invalidSchool") {
+                            +"That School Does Not Exist"
                         }
                     }
                 }
             }
-
         }
     }
+}
+
+public suspend fun PipelineContext<Unit, ApplicationCall>.verifyNewSchool(
+    database: Database
+) {
+    val school = call.parameters["school"]!!
+    val psw = call.parameters["psw"]!!
+    if (database.schoolsQueries.selectAllSchools().executeAsList().contains(school)) {
+        call.respondRedirect("/signInLanding?error=schoolExists")
+    } else {
+        call.respondRedirect("/addSchoolToDB?school=$school&psw=$psw&courseView=yes&toExpand=none")
+    }
+}
+
+public suspend fun PipelineContext<Unit, ApplicationCall>.verifyCredentials(
+    database: Database
+) {
+    var error: String? = null
+    val school = call.parameters["school"]!!
+    val psw = call.parameters["psw"]!!
+    val allSchools = database.schoolsQueries.selectAllSchools().executeAsList() as List<*>
+    if (!allSchools.contains(school)) {
+        call.respondRedirect("/signInLanding?error=invalidSchool")
+    } else {
+        val actualPsw = database.schoolsQueries.selectPSWForSchool(school).executeAsOne()
+        if (psw != actualPsw) {
+            call.respondRedirect("/signInLanding?error=wrongPsw")
+        }
+    }
+    call.respondRedirect("/adminPage?school=$school&courseView=yes&toExpand=none")
 }
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
@@ -123,7 +131,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
 ) {
     val school = call.parameters["school"]!!
     val psw = call.parameters["psw"]!!
-    val defaultpsw = call.parameters["defaultpsw"]!!
-    database.schoolsQueries.insertSchoolObject(School(school, psw, defaultpsw))
+    database.schoolsQueries.insertSchoolObject(School(school, psw))
     call.respondRedirect("/adminPage?school=${school}&courseView=true")
 }

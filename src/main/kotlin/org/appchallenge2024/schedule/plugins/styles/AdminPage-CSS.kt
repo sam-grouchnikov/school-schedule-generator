@@ -51,6 +51,22 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             justifyContent = JustifyContent.spaceEvenly
         }
 
+        rule(".adminpage-td-th") {
+            borderRadius = LinearDimension("10px")
+            textAlign = TextAlign.left
+            padding = "0.2%"
+            color = Color.white
+            paddingTop = LinearDimension("1%")
+            paddingBottom = LinearDimension("1%")
+            hover {
+                transitionDuration = Time("0.3s")
+                border = "5px rgb(25, 25, 112)"
+                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
+                    blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
+                padding = "0.5%"
+            }
+        }
+
         rule(".schedwiz-header-dark") {
             marginLeft = LinearDimension("4%")
             color = Color.white
@@ -59,22 +75,29 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         rule(".adminpage-background-dark") {
             background = "#000000"
             val builder3 = RadialGradientBuilder()
-            builder3.colorStop(Color("rgba(25, 25, 112) 15%"))
+            builder3.colorStop(Color("rgba(18, 18, 84) 15%"))
             builder3.colorStop(Color("rgba(0, 0, 0) 85%"))
             background = builder3.build(false).value
         }
-        rule(".flex-outer") {
+        rule(".flex-outer-1") {
+            display = Display.flex
+            justifyContent = JustifyContent.spaceEvenly
+            marginTop = LinearDimension("13%")
+        }
+        rule(".flex-outer-2") {
             display = Display.flex
             justifyContent = JustifyContent.center
-            marginTop = LinearDimension("13%")
+            marginTop = LinearDimension("2%")
         }
         rule(".table-container") {
             color = Color.white
-            width = LinearDimension("60%")
+            width = LinearDimension("70%")
             height = LinearDimension("100%")
             borderRadius = LinearDimension("15px")
             justifyContent = JustifyContent.center
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+            display = Display.flex
+            justifyContent = JustifyContent.spaceAround
             hover {
                 transitionDuration = Time("0.3s")
                 border = "10px rgb(25, 25, 112)"
@@ -82,6 +105,13 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
             padding = "2%"
+        }
+        rule(".sp-table") {
+            width = LinearDimension("-webkit-fill-available")
+            textAlign = TextAlign.center
+        }
+        rule(".white") {
+            color = Color.white
         }
         rule(".adminpage-button") {
             border = "10px solid"

@@ -74,16 +74,35 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             justifyContent = JustifyContent.center
         }
         rule(".steps-navigator-button") {
-            fontSize = LinearDimension("25px")
-            borderRadius = LinearDimension(("15px"))
-            alignItems = Align.center
-            fontWeight = FontWeight.bold
-            backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+//            fontSize = LinearDimension("25px")
+//            borderRadius = LinearDimension(("15px"))
+//            alignItems = Align.center
+//            fontWeight = FontWeight.bold
+//            backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+//            color = Color.white
+//            hover {
+//                transitionDuration = Time("0.3s")
+//                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
+//                    blurRadius = LinearDimension("8px"), spreadRadius = LinearDimension("8px"))}
+//            }
+            border = "10px solid"
+            borderColor = Color.midnightBlue
+            backgroundColor = Color.midnightBlue
+            borderRadius = LinearDimension("15px")
+            fontSize = LinearDimension("23px")
             color = Color.white
             hover {
-                transitionDuration = Time("0.3s")
-                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
-                    blurRadius = LinearDimension("8px"), spreadRadius = LinearDimension("8px"))}
+                val builder2 = RadialGradientBuilder()
+                builder2.colorStop(Color.magenta)
+                builder2.colorStop(Color.blue)
+                background = builder2.build(false).value
+                border = "10px solid rgba(255, 255, 255, 0.0)"
+                boxShadow = boxShadow.apply {
+                    boxShadow(
+                        color = Color.blue, offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
+                        blurRadius = LinearDimension("8px"), spreadRadius = LinearDimension("8px")
+                    )
+                }
             }
         }
         rule(".steps-fontsize") {
@@ -101,6 +120,22 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             marginRight = LinearDimension("10px")
             padding = "10px"
             width = LinearDimension("30%")
+            color = Color.white
+            backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+//            border = "10px solid"
+            borderRadius = LinearDimension("20px")
+            hover {
+                transitionDuration = Time("0.3s")
+                border = "5px rgb(25, 25, 112)"
+                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
+                    blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
+            }
+        }
+        rule(".textbox-step1-1-center") {
+            textAlign = TextAlign.center
+            marginRight = LinearDimension("10px")
+            padding = "10px"
+            width = LinearDimension("40%")
             color = Color.white
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
 //            border = "10px solid"
@@ -144,7 +179,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
             marginRight = LinearDimension("10px")
             padding = "2%"
-            width = LinearDimension("45%")
+            width = LinearDimension("20%")
             color = Color.white
             borderRadius = LinearDimension("20px")
             hover {
@@ -154,11 +189,14 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
             }
         }
+        rule(".steps-navigator-padding") {
+            padding = "2%"
+        }
         rule(".textbox-step2-2") {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
             marginRight = LinearDimension("10px")
             padding = "2%"
-            width = LinearDimension("45%")
+            width = LinearDimension("40%")
             color = Color.white
             borderRadius = LinearDimension("20px")
             hover {

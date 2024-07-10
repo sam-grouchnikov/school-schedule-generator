@@ -51,7 +51,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
             paddingRight = LinearDimension("3%")
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.spaceBetween
+            justifyContent = JustifyContent.center
         }
         rule(".textbox-signin-dark") {
             marginRight = LinearDimension("10px")

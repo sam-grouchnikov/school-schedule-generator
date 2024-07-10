@@ -30,18 +30,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                             }
                         }
                     }
-                    div (classes = "lp-buttons-container") {
-                        form(action = "/features", method = FormMethod.get) {
-                            button(type = ButtonType.submit, classes = "lp-modeswitch-dark") {
-                                +"Features"
-                            }
-                        }
-                        div(classes = "lp-modeswitch-dark") {
-                            unsafe {
-                                raw("<button onclick=\"window.location.href='https://github.com/sam-hoodie/school-schedule-generator';\" classes = lp-modeswitch-dark>Source Code</button>")
-                            }
-                        }
-                    }
                 }
                 div(classes = "textbox-container-lp-dark") {
                     div(classes = "textbox-lp-dark") {
@@ -60,8 +48,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                         }
                         div(classes = "lptextbox-dark") {
                             +"At many schools, administrators and counselors spend hours upon hours creating schedules,"
-                            +" taking away from time they could be completing all their tasks or taking a vacation. Schedwiz is a solution to this,"
-                            +" allowing for hours of manual labor to be replaced by second of computer work."
+                            +" taking away from time they could be completing all other tasks or taking a vacation. Schedwiz is a solution to this,"
+                            +" allowing for hours of manual labor to be replaced by seconds of computer work."
                         }
                     }
                     div(classes = "textbox-lp-dark") {

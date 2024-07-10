@@ -31,31 +31,72 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                         +"Schedwiz"
                     }
                 }
-                h1(classes = "headercontainer") {
+                h1 {
                     +school
                 }
             }
-            div(classes = "flex-outer") {
+            div (classes = "flex-outer-1") {
+                div (classes = "table-container white") {
+                    form(action = "/adminPage", classes = "textaligncenter", method = FormMethod.get) {
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                            )
+                        }
+                        if (call.parameters["courseView"]!! == "yes") {
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"courseView\" value=\"no\">"
+                                )
+                            }
+                        } else {
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
+                                )
+                            }
+                        }
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                            )
+                        }
+                        button(type = ButtonType.submit, classes = "adminpage-button") {
+                            +"Switch View"
+                        }
+                    }
+                    form(
+                        action = "/step1?school=${school}",
+                        classes = "textaligncenter",
+                        method = FormMethod.get
+                    ) {
+                        unsafe {
+                            raw(
+                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                            )
+                        }
+                        button(type = ButtonType.submit, classes = "adminpage-button") {
+                            +"Create New Schedule"
+                        }
+                    }
+                    form(
+                        action = "/signInLanding",
+                        classes = "textaligncenter",
+                        method = FormMethod.get
+                    ) {
+                        button(type = ButtonType.submit, classes = "adminpage-button") {
+                            +"Sign Out"
+                        }
+                    }
+                }
+            }
+            div(classes = "flex-outer-2") {
                 div(classes = "table-container white")
                 {
                     if (solution.isEmpty()) {
                         div(classes = "whitetext") {
                             h1(classes = "textaligncenter") {
-                                +"No Schedule Created"
-                            }
-                            form(
-                                action = "/step1?school=${school}",
-                                classes = "textaligncenter",
-                                method = FormMethod.get
-                            ) {
-                                unsafe {
-                                    raw(
-                                        "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                                    )
-                                }
-                                button(type = ButtonType.submit, classes = "adminpage-button") {
-                                    +"Create Schedule"
-                                }
+                                +"Click Above To Create Schedule"
                             }
                         }
                     } else {
@@ -67,6 +108,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                 tr(classes = "schedulepage-td-th") {
                                     th { +"Course Name" }
                                     th { +"Teacher Name" }
+                                    th { +"Semester" }
                                     th { +"Period" }
                                     th { +"Students (Click to expand)" }
                                 }
@@ -76,23 +118,31 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                             +database.coursesQueries.selectNameForCourseID(solution[i].courseID, school)
                                                 .executeAsOne()
                                         }
-                                        td { database.teachersQueries.selectNameForID(solution[i].teacherID, school).executeAsOne() }
+                                        td {
+                                            +database.teachersQueries.selectNameForID(solution[i].teacherID, school)
+                                                .executeAsOne()
+                                        }
+                                        td { +"${solution[i].semester}" }
                                         td { +"${solution[i].period}" }
                                         if (studentToExpand != null && studentToExpand != i.toString()) {
                                             td {
-                                                a(href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}") {
+                                                a(
+                                                    href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}",
+                                                    classes = "white"
+                                                ) {
                                                     +"Expand Students"
                                                 }
                                             }
                                         } else {
                                             td {
                                                 solution[i].students.forEach {
-                                                    +"$it"
-                                                    if (i != solution.size - 1) {
-                                                        +", "
-                                                    }
+                                                    +it
+                                                    +", "
                                                 }
-                                                a(href = "/adminPage?courseView=yes&toExpand=none&school=${school}") {
+                                                a(
+                                                    href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
+                                                    classes = "white"
+                                                ) {
                                                     +"Collapse Students"
                                                 }
                                             }
@@ -102,39 +152,39 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                             }
                         } else if (courseView == "no") {
                             table(classes = "sp-table") {
-                                tr(classes = "schedulepage-td-th") {
+                                tr(classes = "adminpage-td-th") {
                                     th { +"Student ID" }
                                     th { +"Student Name" }
-                                    th { +"Course 1" }
-                                    th { +"Course 2" }
-                                    th { +"Course 3" }
-                                    th { +"Course 4" }
+                                    th { +"Courses" }
                                 }
 
-                                database.requestsQueries.selectAllFromSchool(school).executeAsList().forEach {
-                                    val schedule = getStudentScheduleFromSolution(solution, it.student_id)
-                                    tr(classes = "schedulepage-td-th") {
-                                        td { +it.student_id }
-                                        td { +it.student_name }
-                                        td {
-                                            +schedule.c1
-                                            +" - "
-                                            +schedule.t1
-                                        }
-                                        td {
-                                            +schedule.c2
-                                            +" - "
-                                            +schedule.t2
-                                        }
-                                        td {
-                                            +schedule.c3
-                                            +" - "
-                                            +schedule.t3
-                                        }
-                                        td {
-                                            +schedule.c4
-                                            +" - "
-                                            +schedule.t4
+                                val ids = database.requestsQueries.selectAllIDsForSchool(school).executeAsList().toSet().toList()
+                                ids.forEach {
+                                    tr(classes = "adminpage-td-th") {
+                                        th { +it }
+                                        th { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
+                                        val schedule = getStudentScheduleFromSolution(solution, it)
+                                        schedule.forEach { course ->
+
+                                            th {
+                                                +"Class: ${
+                                                    database.coursesQueries.selectNameForCourseID(
+                                                        course.course,
+                                                        school
+                                                    ).executeAsOne()
+                                                }"
+                                                br()
+                                                +"Teacher: ${
+                                                    database.teachersQueries.selectNameForID(
+                                                        course.teacher,
+                                                        school
+                                                    ).executeAsOne()
+                                                }"
+                                                br()
+                                                +"Semester: ${course.semester}"
+                                                br()
+                                                +"Period: ${course.period}"
+                                            }
                                         }
                                     }
                                 }
@@ -152,31 +202,20 @@ data class CourseSet(
     var t1: String, var t2: String, var t3: String, var t4: String
 )
 
-fun getStudentScheduleFromSolution(solution: List<Classroom>, target: String): CourseSet {
-    val result = CourseSet("", "", "", "", "", "", "", "")
+data class ClassSet(
+    var course: String, var teacher: String, val semester: Int, val period: Int
+)
+
+fun getStudentScheduleFromSolution(solution: List<Classroom>, target: String): List<ClassSet> {
+    val result = arrayListOf<ClassSet>()
     solution.forEach {
         if (it.students.contains(target)) {
-            if (it.period == 1) {
-                result.c1 = it.courseID
-                result.t1 = it.teacherID
-            }
-            if (it.period == 2) {
-                result.c2 = it.courseID
-                result.t2 = it.teacherID
-            }
-            if (it.period == 3) {
-                result.c3 = it.courseID
-                result.t3 = it.teacherID
-            }
-            if (it.period == 4) {
-                result.c4 = it.courseID
-                result.t4 = it.teacherID
-            }
-
+            result.add(ClassSet(it.courseID, it.teacherID, it.semester, it.period))
         }
     }
-    return result
+    return result.sortedBy { it.semester }.sortedBy { it.period }
 }
+
 
 fun convertStudentToCourseView(schedule: List<data.Schedule>): List<Classroom> {
     val result = arrayListOf<Classroom>()
@@ -185,7 +224,7 @@ fun convertStudentToCourseView(schedule: List<data.Schedule>): List<Classroom> {
         var i = 1
         val indexOfClass = findClass(result, it.course, it.teacher)
         if (indexOfClass == -1) {
-            result.add(Classroom(it.course, it.teacher, 1, i, arrayListOf(student)))
+            result.add(Classroom(it.course, it.teacher, it.semester.toInt(), it.period.toInt(), arrayListOf(student)))
         } else {
             result[indexOfClass].students.add(student)
         }

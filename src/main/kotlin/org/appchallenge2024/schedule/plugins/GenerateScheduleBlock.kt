@@ -154,7 +154,7 @@ fun getAllPossibleNextAssignmentsBlock(
                     val studentsCopy = arrayListOf<String>()
                     studentsCopy.addAll(classroom.students)
                     val classroomCopy =
-                        Classroom(classroom.courseID, classroom.teacherID, 1, classroom.period, studentsCopy)
+                        Classroom(classroom.courseID, classroom.teacherID, classroom.semester, classroom.period, studentsCopy)
                     temp.add(classroomCopy)
                 }
                 temp[i].students.add(request.student)

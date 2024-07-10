@@ -44,7 +44,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             paddingRight = LinearDimension("3%")
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.spaceBetween
+            justifyContent = JustifyContent.center
         }
 
         rule (".schedwiz-header-dark") {
