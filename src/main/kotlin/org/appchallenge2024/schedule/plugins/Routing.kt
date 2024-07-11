@@ -61,9 +61,6 @@ fun Application.mainRouting() {
         get("/verifyNewSchool") {
             verifyNewSchool(database)
         }
-//        get("/studentPage") {
-//            studentPage(database)
-//        }
         get("/addSchedToDB") {
             addSchedToDB(database)
         }

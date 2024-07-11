@@ -4,6 +4,8 @@ import data.Course
 import data.Teacher
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
+// gets all possible next assignments for a traditional schedule layout
+
 fun getAllPossibleNextAssignmentsTraditional(
     hashMapData: HashMapData,
     school: String,
@@ -14,26 +16,26 @@ fun getAllPossibleNextAssignmentsTraditional(
     periods: Int
 ): List<List<Classroom>> {
     val result = arrayListOf<List<Classroom>>()
-    // check if we can create a new change for every single request
     val remainingRequests = getRemainingRequestsTraditional(currentCombination, requests)
     for (request in remainingRequests) {
         // check if we can add the student to an existing class
-        val time0 = System.nanoTime()
         for (i in currentCombination.indices) {
-//                val roomCapacity = database.teachersQueries.selectCapacityForTeacher(currentCombination[i].teacherID, school).executeAsOne()
-            val time3 = System.nanoTime()
             val capacityEfficient = hashMapData.teachers[currentCombination[i].teacherID]!!.room_capacity
-            val time4 = System.nanoTime()
             val periodsAssignedForStudent = getPeriodsForStudentTraditional(currentCombination, request.student)
-            val time5 = System.nanoTime()
-            if (request.course == currentCombination[i].courseID && currentCombination[i].students.size < capacityEfficient.toInt() &&
+            // creates a new possible assignment if
+            // 1. The current classroom course matches the course of the request
+            // 2. The current classroom is not full
+            // 3. The student does not have a class already assigned to this period
+            // 4. The current student request has not already been filled
+             if (request.course == currentCombination[i].courseID && currentCombination[i].students.size < capacityEfficient.toInt() &&
                 !periodsAssignedForStudent.contains(currentCombination[i].period) && !alreadyAssigned(
                     request.student,
                     currentCombination,
                     request.course
                 )
             ) {
-                val temp = arrayListOf<Classroom>()
+                 // creates a deep copy of the current schedule branch
+                 val temp = arrayListOf<Classroom>()
                 for (classroom in currentCombination) {
                     val studentsCopy = arrayListOf<String>()
                     studentsCopy.addAll(classroom.students)
@@ -45,26 +47,19 @@ fun getAllPossibleNextAssignmentsTraditional(
                 result.add(temp)
 
             }
-//                println("1: " + (time4 - time3))
-//                println("2: " + (time5 - time4))
         }
-        val time1 = System.nanoTime()
 
         // check if we can create a new class with the student
         for (period in 1..periods) {
-            val time0 = System.currentTimeMillis()
 
             val availableTeachersForClass = getAvailableTeachersTraditional(
                 hashMapData,
-                school,
                 currentCombination,
-                teachers,
                 request.course,
                 period,
-                database
             )
-            val time1 = System.currentTimeMillis()
             for (teacher in availableTeachersForClass) {
+                // if the student has not already been assigned to the course, a new class is created  as a possible assignment
                 if (!alreadyAssigned(request.student, currentCombination, request.course)) {
                     val temp = arrayListOf<Classroom>()
                     for (classroom in currentCombination) {
@@ -81,15 +76,13 @@ fun getAllPossibleNextAssignmentsTraditional(
                         result.add(temp)
                 }
             }
-            val time2 = System.currentTimeMillis()
 
         }
-        val time2 = System.nanoTime()
-//        println("Part 1: " + (time1 - time0) / 1000000.0)
-//        println("Part 2: " + (time2 - time1) / 1000000.0)
     }
     return result
 }
+
+// gets the remaining requests that have not been filled yet
 
 fun getRemainingRequestsTraditional(currentCombination: List<Classroom>, requests: List<RequestCompressed>): List<SingleRequest> {
     for (request in requests) {
@@ -110,6 +103,8 @@ fun getRemainingRequestsTraditional(currentCombination: List<Classroom>, request
     return emptyList()
 }
 
+// checks if a student has a class assigned for a given period
+
 fun alreadyAssignedToPeriodTraditional(student: String, classrooms: List<Classroom>, period: Int): Boolean {
     classrooms.forEach {
         if (it.students.contains(student) && it.period == period) {
@@ -119,44 +114,27 @@ fun alreadyAssignedToPeriodTraditional(student: String, classrooms: List<Classro
     return false
 }
 
-fun alreadyAssignedTraditional(student: String, classrooms: List<Classroom>, course: String): Boolean {
-    classrooms.forEach {
-        if (it.courseID == course && it.students.contains(student)) {
-            return true
-        }
-    }
-    return false
-}
+// given a period, checks for all teachers available (not teaching a class at the time)
 
 fun getAvailableTeachersTraditional(
     hashMapData: HashMapData,
-    school: String,
     classrooms: List<Classroom>,
-    teachers: List<Teacher>,
     course: String,
     period: Int,
-    database: Database
 ): List<Teacher> {
-    val time0 = System.currentTimeMillis()
-//    val type = database.coursesQueries.selectTypeForCourse(course, school).executeAsOne()
-    val typeEfficient = hashMapData.courses[course]!!.type
-    val time1 = System.currentTimeMillis()
+    val type = hashMapData.courses[course]!!.type
     val result = arrayListOf<Teacher>()
-//    val teachersForType = database.teachersQueries.selectTeachersForType(typeEfficient, school).executeAsList()
-    val teachersForTypeEfficient = getTeachersForTypeTraditional(hashMapData.teachers, typeEfficient)
-    val time2 = System.currentTimeMillis()
-    for (teacher in teachersForTypeEfficient) {
+    val teachersForType = getTeachersForTypeTraditional(hashMapData.teachers, type)
+    for (teacher in teachersForType) {
         val occupied = isOccupiedForPeriodTraditional(teacher.id, classrooms, period)
         if (!occupied) {
             result.add(teacher)
         }
     }
-    val time3 = System.currentTimeMillis()
-//    println("       P1: ${((time1 - time0))}")
-//    println("       P2: ${((time2 - time1))}")
-//    println("       P3: ${((time3 - time2))}")
     return result
 }
+
+// gets a list of teachers that teach a certain type of class
 
 fun getTeachersForTypeTraditional(teachers: HashMap<String, Teacher>, type: String): List<Teacher> {
     val result = arrayListOf<Teacher>()
@@ -167,6 +145,8 @@ fun getTeachersForTypeTraditional(teachers: HashMap<String, Teacher>, type: Stri
     }
     return result
 }
+
+// checks if a teacher is occupied in a given block
 
 fun isOccupiedForPeriodTraditional(teacher: String, classrooms: List<Classroom>, period: Int): Boolean {
     val result = arrayListOf<Int>()
@@ -187,6 +167,8 @@ fun getPeriodsForStudentTraditional(classrooms: List<Classroom>, target: String)
     }
     return result
 }
+
+// checks if a complete schedule fulfills all the requirements for a valid schedule
 
 fun isValidScheduleTraditional(
     classrooms: List<Classroom>,
