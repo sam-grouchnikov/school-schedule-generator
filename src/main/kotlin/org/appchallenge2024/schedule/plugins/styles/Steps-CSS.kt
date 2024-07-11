@@ -49,9 +49,14 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             paddingRight = LinearDimension("3%")
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.spaceBetween
+            justifyContent = JustifyContent.spaceEvenly
         }
-
+        tr {
+            nthChild("even") {
+                backgroundColor = Color("rgba(35, 35, 155, 0.5)")
+            }
+            paddingTop = LinearDimension("2%")
+        }
         rule(".schedwiz-header-dark") {
             marginLeft = LinearDimension("4%")
             color = Color.white

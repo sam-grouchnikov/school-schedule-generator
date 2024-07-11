@@ -39,6 +39,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                         +"Schedwiz"
                     }
                 }
+                h1 {
+                    +school
+                }
             }
             div(classes = "textbox-container-steps") {
                 div(classes = "textbox-step1-1") {
@@ -169,10 +172,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
         val school = call.parameters["school"]!!
         body(classes = "steps-background-dark steps-font") {
             div(classes = "topbar-dark") {
-                h2(classes = "headercontainer") {
+                h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader-dark") {
                         +"Schedwiz"
                     }
+                }
+                h1 {
+                    +school
                 }
             }
             div(classes = "textbox-container-steps") {
@@ -371,6 +377,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         +"Schedwiz"
                     }
                 }
+                h1 {
+                    +school
+                }
             }
             div(classes = "textbox-container-steps") {
                 div(classes = "textbox-step1-1") {
@@ -531,6 +540,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                     div(classes = "textaligncenter shedwizheader") {
                         +"Schedwiz"
                     }
+                }
+                h1 {
+                    +school
                 }
             }
             div(classes = "textbox-container-steps") {
