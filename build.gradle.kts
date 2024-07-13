@@ -33,8 +33,6 @@ sqldelight {
 dependencies {
     testImplementation(kotlin("test"))
     implementation("app.cash.sqldelight:sqlite-driver:2.0.0")
-
-    implementation("com.google.ortools:ortools-java:9.10.4067")
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
