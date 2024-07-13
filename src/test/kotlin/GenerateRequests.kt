@@ -1,17 +1,39 @@
+import data.Course
+import data.Request
+import data.Teacher
 import java.io.File
 import java.util.*
 
 fun main() {
     // Course data
+}
+
+fun getRequests(): List<Request> {
+
     val courses = listOf(
-        listOf("ALG2-OL", "On Level Algebra 2", "Math"),
-        listOf("ALG2-H", "Honors Algebra 2", "Math"),
-        listOf("PHY-OL", "On Level Physics", "Science"),
-        listOf("PHY-AP1", "AP Physics 1", "Science"),
-        listOf("WORLD-OL", "On Level World History", "History"),
+        // Math
+        listOf("ALG1-OL", "On Level Algebra 1", "Math"),
+        listOf("ALG1-H", "Honors Algebra 1", "Math"),
+        listOf("GEOM-OL", "On Level Geometry", "Math"),
+        listOf("GEOM-H", "Honors Geometry", "Math"),
+
+        // Science
+        // chem
+        listOf("CHEM-OL", "On Level Chemistry", "Science"),
+        listOf("CHEM-H", "Honors Chemistry", "Science"),
+        listOf("CHEM-AP", "AP Chemistry", "Science"),
+
+        //  History
+        listOf("HUMAN-AP", "AP Human Geography", "History"),
         listOf("WORLD-AP", "AP World History", "History"),
-        listOf("10LIT-OL", "On Level 10th Lit", "ELA"),
-        listOf("10LIT-H", "Honors 10th Lit", "ELA")
+        listOf("USH-AP", "AP US History", "History"),
+        listOf("GOV-AP", "AP Government", "History"),
+
+        // Lit
+        listOf("9LIT", "9th Lit", "ELA"),
+        listOf("10LIT", "10th Lit", "ELA"),
+        listOf("11LIT", "11th Lit", "ELA"),
+        listOf("12LIT", "12th Lit", "ELA"),
     )
 
     // Lists of first and last names
@@ -46,33 +68,49 @@ fun main() {
         "Mendoza", "Ruiz", "Hughes", "Price", "Alvarez", "Castillo", "Sanders", "Patel",
         "Myers", "Long", "Ross", "Foster", "Jimenez"
     )
-
     // Generate 400 student names and IDs
     val randomNames = mutableListOf<String>()
-    val studentIds = (0..99).map { it.toString() }
+    val studentIds = (0..79).map { it.toString() }
 
     val random = Random()
-    for (i in 0..99) {
+    for (i in 0..79) {
         val firstName = firstNames[random.nextInt(firstNames.size)]
         val lastName = lastNames[random.nextInt(lastNames.size)]
-        randomNames.add("\"$firstName $lastName\"")
+        randomNames.add("$firstName $lastName")
     }
 
     // Generate student requests
-    val studentRequests = mutableListOf<String>()
+    val studentRequests = mutableListOf<Request>()
 
-    for (i in 0..99) {
+    for (i in 0..79) {
         val requests = mutableListOf<String>()
         // Randomly select one course from each type
         for (courseType in listOf("Math", "Science", "History", "ELA")) {
             val typeCourses = courses.filter { it[2] == courseType }
             val selectedCourse = typeCourses[random.nextInt(typeCourses.size)]
-            requests.add("\"${selectedCourse[0]}\"")
+            requests.add("${selectedCourse[0]}")
         }
-        studentRequests.add("Request(\"\", \"${studentIds[i]}\", ${randomNames[i]}, ${requests[0]}, ${requests[1]}, ${requests[2]}, ${requests[3]}, \"\", \"\", \"\", \"\"),")
+        requests.forEach {
+            studentRequests.add(Request("", studentIds[i], randomNames[i], it))
+        }
     }
-    studentRequests.forEach {
-        println(it)
-    }
+    return studentRequests
+}
 
+fun convertToWebViewCourses(courses: List<Course>) {
+    courses.forEach {
+        println(it.id + "," + it.name + "," + it.type)
+    }
+}
+
+fun convertToWebViewRequests(requests: List<Request>) {
+    requests.forEach {
+        println(it.student_id + "," + it.student_name + "," +  it.course)
+    }
+}
+
+fun convertToWebViewTeachers(teachers: List<Teacher>) {
+    teachers.forEach {
+        println(it.id + "," + it.name + "," + it.room + "," + it.room_capacity + "," + it.type)
+    }
 }

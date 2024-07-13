@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.8.0"
+    kotlin("jvm") version "2.0.0"
     id("app.cash.sqldelight") version "2.0.0"
     application
 }
@@ -37,10 +37,10 @@ dependencies {
     implementation("com.google.ortools:ortools-java:9.10.4067")
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
-            implementation("ch.qos.logback:logback-classic:$logback_version")
-            implementation("io.ktor:ktor-server-html-builder:$ktor_version")
-            implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.473")
-            testImplementation("junit:junit:4.13.2")
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
+    implementation("org.jetbrains.kotlin-wrappers:kotlin-css:1.0.0-pre.473")
+    testImplementation("junit:junit:4.13.2")
 
 }
 

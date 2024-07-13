@@ -64,6 +64,12 @@ fun Application.mainRouting() {
         get("/addSchedToDB") {
             addSchedToDB(database)
         }
+        get("/addRequestsToDB") {
+            addRequestsToDB(database)
+        }
+        post("/addRequestsToDB") {
+            addRequestsToDB(database)
+        }
         staticFiles("/images", File("C:\\Users\\Sam\\IdeaProjects\\school-schedule-generator\\src\\main\\kotlin\\org\\appchallenge2024\\schedule\\images\\logo.png"))
 
     }

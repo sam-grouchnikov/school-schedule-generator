@@ -44,7 +44,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         br()
                         input(type = InputType.password, name = "psw")
                         br()
-                        button(type = ButtonType.submit) {
+                        br()
+                        button(type = ButtonType.submit, classes = "signin-button") {
                             +"Sign Up"
                         }
                     }
@@ -68,12 +69,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             br()
                             input(type = InputType.password, name = "psw")
                             br()
+                            br()
                             unsafe {
                                 raw(
                                     "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
                                 )
                             }
-                            button(type = ButtonType.submit) {
+                            button(type = ButtonType.submit, classes = "signin-button") {
                                 +"Login"
                             }
                         }

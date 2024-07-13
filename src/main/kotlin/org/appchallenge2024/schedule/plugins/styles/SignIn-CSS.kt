@@ -39,6 +39,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
         h2 {
             fontSize = LinearDimension("35px")
         }
+        rule(".signin-button") {
+            paddingLeft = LinearDimension("10px")
+            paddingRight = LinearDimension("10px")
+            fontSize = LinearDimension("15px")
+        }
         rule(".topbar-dark") {
             background = "#2d2d2d"
             width = LinearDimension("-webkit-fill-available")

@@ -243,23 +243,19 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         }
         rule(".steps-td-th") {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
-            borderRadius = LinearDimension("10px")
             textAlign = TextAlign.left
             padding = "0.2%"
             color = Color.white
 
             hover {
                 transitionDuration = Time("0.3s")
-                border = "5px rgb(25, 25, 112)"
                 boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
                     blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
-                padding = "0.5%"
             }
         }
         rule(".steps-table") {
             width = LinearDimension("100%")
             fontSize = LinearDimension("20px")
-            fontWeight = FontWeight.bold
         }
         rule(".font-25px") {
             fontSize = LinearDimension("25px")

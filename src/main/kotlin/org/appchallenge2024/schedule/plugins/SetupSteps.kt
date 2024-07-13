@@ -32,7 +32,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
             )
         }
         val school = call.parameters["school"]!!
-        body(classes = "steps-background-dark steps-font") {
+        body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader-dark") {
@@ -40,7 +40,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                     }
                 }
                 h1 {
-                    +school
+                    +"$school - Courses"
                 }
             }
             div(classes = "textbox-container-steps") {
@@ -52,12 +52,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                         +"The first step in creating a schedule is to upload course data. This includes"
                         +" the course id, course name, and course type. These values on each line must be"
                         +" separated by a comma (no spaces), and each course must be on a new line."
-                        +" Any formatting errors will cause the program to fail. If you need help with uploading "
-                        +"text, click "
-                        a(href = "/help") {
-                            +"here"
-                        }
-                        +"."
+                        +" Any formatting errors will cause the program to fail."
                     }
                 }
                 div(classes = "textbox-step1-2") {
@@ -170,7 +165,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
             )
         }
         val school = call.parameters["school"]!!
-        body(classes = "steps-background-dark steps-font") {
+        body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader-dark") {
@@ -178,7 +173,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     }
                 }
                 h1 {
-                    +school
+                    +"$school - Students"
                 }
             }
             div(classes = "textbox-container-steps") {
@@ -190,12 +185,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                         +"The second step in creating a schedule is to upload student request data. This includes"
                         +" the student id, student name, and course requests (exactly 4). These values on each line must be"
                         +" separated by a comma (no spaces), and each request must be on a new line."
-                        +" Any formatting errors will cause the program to fail. If you need help with uploading "
-                        +"text, click "
-                        a(href = "/help") {
-                            +"here"
-                        }
-                        +"."
+                        +" Any formatting errors will cause the program to fail."
                     }
                 }
                 div(classes = "textbox-step2-2") {
@@ -241,13 +231,14 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     }
 
                     form(action = "/step2", method = FormMethod.get, classes = "steps-form-height") {
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                            )
+                        textArea(classes = "steps-textarea") {
+                            name = "requests"; placeholder = "Enter student requests here"
                         }
-                        textArea(classes = "steps-textarea") { name = "requests"; placeholder = "Enter student requests here" }
-                        br()
+                        br
+                        hiddenInput {
+                            name = "school"
+                            value = school
+                        }
                         submitInput { value = "Submit" }
                     }
 
@@ -356,6 +347,21 @@ fun getMostAmountOfRequests(requests: List<RequestCompressed>): Int {
     return longest.courses.size
 }
 
+public suspend fun PipelineContext<Unit, ApplicationCall>.addRequestsToDB(
+    database: Database
+) {
+    val requests = call.parameters["requests"]!!
+    val school = call.parameters["school"]!!
+    database.requestsQueries.deletAllFromSchool(school)
+    requests?.split("\r\n")?.forEach { request ->
+        val info = request.split(",")
+        info.subList(2, info.size).forEach {
+            database.requestsQueries.insertRequestObject(Request(school, info[0], info[1], it))
+        }
+    }
+    call.respondRedirect("/step2?school=$school")
+}
+
 public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
     database: Database
 ) {
@@ -370,7 +376,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
             )
         }
         val school = call.parameters["school"]!!
-        body(classes = "steps-background-dark steps-font") {
+        body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader") {
@@ -378,7 +384,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                     }
                 }
                 h1 {
-                    +school
+                    +"$school - Teachers"
                 }
             }
             div(classes = "textbox-container-steps") {
@@ -391,12 +397,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         +" the teacher id, room number, room capacity, and room type."
                         +" These values on each line must be"
                         +" separated by a comma (no spaces), and each teacher must be on a new line."
-                        +" Any formatting errors will cause the program to fail. If you need help with uploading "
-                        +"text, click "
-                        a(href = "/help") {
-                            +"here"
-                        }
-                        +"."
+                        +" Any formatting errors will cause the program to fail."
                     }
                 }
                 div(classes = "textbox-step1-1") {
@@ -404,31 +405,31 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         +"Example"
                     }
                     div("steps-fontsize") {
-                        +"1, John Smith,101,30,Math"
+                        +"1,John Smith,101,30,Math"
                         br()
-                        +"2, Mary Johnson,102,25,Math"
+                        +"2,Mary Johnson,102,25,Math"
                         br()
-                        +"3, James Williams,103,20,Math"
+                        +"3,James Williams,103,20,Math"
                         br()
-                        +"4, John Williams,104,20,Math"
+                        +"4,John Williams,104,20,Math"
                         br()
-                        +"5, Ron Donald,113,20,Science"
+                        +"5,Ron Donald,113,20,Science"
                         br()
-                        +"6, Susan Thomas,114,35,Science"
+                        +"6,Susan Thomas,114,35,Science"
                         br()
-                        +"7, Charles Taylor,115,40,Science"
+                        +"7,Charles Taylor,115,40,Science"
                         br()
-                        +"8, Daniel Clark,123,20,History"
+                        +"8,Daniel Clark,123,20,History"
                         br()
-                        +"9, Margaret Lewis,124,35,History"
+                        +"9,Margaret Lewis,124,35,History"
                         br()
-                        +"10, Matthew Robinson,125,40,History"
+                        +"10,Matthew Robinson,125,40,History"
                         br()
-                        +"11, Emily Green,132,25,ELA"
+                        +"11,Emily Green,132,25,ELA"
                         br()
-                        +"12, Mark Adams,133,20,ELA"
+                        +"12,Mark Adams,133,20,ELA"
                         br()
-                        +"13, Amanda Baker,134,35,ELA"
+                        +"13,Amanda Baker,134,35,ELA"
 
                     }
 
@@ -443,7 +444,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                                 "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
                             )
                         }
-                        textArea(classes = "steps-textarea") { name = "teachers"; placeholder = "Enter teacher information" }
+                        textArea(classes = "steps-textarea") {
+                            name = "teachers"; placeholder = "Enter teacher information"
+                        }
                         br()
                         submitInput { value = "Submit" }
                     }
@@ -534,7 +537,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
             )
         }
         val school = call.parameters["school"]!!
-        body(classes = "steps-background-dark steps-font") {
+        body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "headercontainer") {
                     div(classes = "textaligncenter shedwizheader") {
@@ -542,7 +545,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                     }
                 }
                 h1 {
-                    +school
+                    +"$school - Configuration"
                 }
             }
             div(classes = "textbox-container-steps") {

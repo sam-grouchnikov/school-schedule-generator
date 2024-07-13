@@ -22,6 +22,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
         }
         val school = call.parameters["school"]!!
         val solution = convertStudentToCourseView(database.schedulesQueries.selectAllFromSchool(school).executeAsList())
+        val view = call.parameters["courseView"]!!
 
 
         body(classes = "adminpage-background-dark poppinsfont") {
@@ -62,7 +63,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                             )
                         }
                         button(type = ButtonType.submit, classes = "adminpage-button") {
-                            +"Switch View"
+                            if (view == "yes") {
+                                +"Sort By Student"
+                            } else {
+                                +"Sort By Teacher"
+                            }
                         }
                     }
                     form(
