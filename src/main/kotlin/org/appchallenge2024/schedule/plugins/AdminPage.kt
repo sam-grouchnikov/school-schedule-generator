@@ -1,11 +1,23 @@
 package org.appchallenge2024.schedule.plugins
 
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import data.School
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.util.pipeline.*
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
+
+fun main() {
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
+    Database.Schema.create(driver)
+    val database = Database(driver)
+    database.requestsQueries.deleteAll()
+    database.coursesQueries.deleteAll()
+    database.teachersQueries.deleteAll()
+    database.schedulesQueries.deleteAll()
+}
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
     database: Database
