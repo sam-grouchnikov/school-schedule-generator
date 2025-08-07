@@ -98,8 +98,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
             marginRight = LinearDimension("10px")
             padding = "10px"
             color = Color.white
-            width = LinearDimension("30%")
-            height = LinearDimension("500px")
+            width = LinearDimension("27%")
+            height = LinearDimension("600px")
             backgroundColor = Color("#2F2F3D")
             borderRadius = LinearDimension("15px")
             lineHeight = LineHeight("2.4")

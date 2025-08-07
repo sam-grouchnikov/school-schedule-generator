@@ -64,13 +64,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
             div(classes = "textbox-container-signin-dark") {
                 div(classes = "textbox-signin-dark") {
 
-                    div(classes = "extrapadding textaligncenter") {
+                    div(classes = "textaligncenter") {
                         div(classes = "textaligncenter bigtext") {
                             +"Welcome Back"
                         }
                         +"Please enter your school name and password"
                         br()
-                        form(action = "/verifyCredentials", method = FormMethod.get, classes = "extralinespacing") {
+                        form(action = "/verifyNewSchool", method = FormMethod.get, classes = "extralinespacing") {
                             input(type = InputType.text, name = "school", classes = "inputbox") {
                                 placeholder = "School Name"
                             }

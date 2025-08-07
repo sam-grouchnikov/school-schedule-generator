@@ -24,29 +24,65 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
 
         body(classes = "signin-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
-                h1(classes = "headercontainer") {
-                    div(classes = "textaligncenter shedwizheader-dark") {
+                h1(classes = "schedwiz-header") {
+                    div() {
                         +"Schedwiz"
                     }
                 }
+                div (classes = "topbar-buttons") {
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/about", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"About"
+                            }
+                        }
+                    }
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/guide", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Guide"
+                            }
+                        }
+                    }
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/blank", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"GitHub"
+                            }
+                        }
+                    }
+                    div {
+                        form(action = "/ladingPage", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Home"
+                            }
+                        }
+                    }
+                }
+
             }
             div(classes = "textbox-container-signin-dark") {
-                div(classes = "textbox-signin-dark") {
-                    h2(classes = "textaligncenter") {
-                        +"Sign Up"
+                div(classes = "extrapadding textbox-signin-dark textaligncenter") {
+                    div(classes = "textaligncenter bigtext") {
+                        +"Welcome"
                     }
-                    form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter") {
-                        +"School Name"
+                    +"Please enter a school name and password"
+                    form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter extralinespacing") {
+                        input(type = InputType.text, name = "school", classes = "inputbox") {
+                            placeholder = "School Name"
+                        }
                         br()
-                        input(type = InputType.text, name = "school")
-                        br()
-                        +"Password"
-                        br()
-                        input(type = InputType.password, name = "psw")
-                        br()
+                        input(type = InputType.password, name = "psw", classes = "inputbox") {
+                            placeholder = "Password"
+                        }
                         br()
                         button(type = ButtonType.submit, classes = "signin-button") {
                             +"Sign Up"
+                        }
+                        br()
+                        +"Already have an account? "
+                        a(href = "/signInLanding") {
+                            +"Sign In"
                         }
                     }
                     div (classes = "textaligncenter") {
