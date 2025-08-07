@@ -7,6 +7,8 @@ import kotlinx.css.properties.LinearGradientBuilder
 import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.Time
 import org.appchallenge2024.schedule.respondCss
+import kotlinx.css.properties.LineHeight
+
 
 suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
     call.respondCss {
@@ -25,15 +27,34 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
         }
         h1{
             fontSize = LinearDimension("55px")
+            fontWeight = FontWeight.normal
         }
         h2{
-            fontSize = LinearDimension("35px")
+            fontSize = LinearDimension("38px")
+            fontWeight = FontWeight.normal
+
+        }
+        rule(".bigtext") {
+            fontSize = LinearDimension("60px")
+            fontWeight = FontWeight.normal
         }
         rule(".lptextbox-dark") {
-            fontSize = LinearDimension("20px")
+            fontSize = LinearDimension("30px")
+        }
+        rule(".schedwiz-header") {
+            color = Color.white
+            marginLeft = LinearDimension("15%")
+        }
+        rule(".topbar-buttons") {
+            display = Display.flex
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+            marginLeft = LinearDimension("30%")
+            height = LinearDimension("50%")
+            padding = "0"
         }
         rule(".topbar-dark") {
-            background = "#2d2d2d"
+            background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
             color = Color.white
@@ -44,8 +65,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             paddingRight = LinearDimension("3%")
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.center
+            justifyContent = JustifyContent.left
         }
+
 
         rule (".schedwiz-header-dark") {
             marginLeft = LinearDimension("4%")
@@ -53,11 +75,8 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
         }
 
         rule (".landingpage-background-dark") {
-            background = "#000000"
-            val builder3 = RadialGradientBuilder()
-            builder3.colorStop(Color.midnightBlue)
-            builder3.colorStop(Color.black)
-            background = builder3.build(false).value
+            background = "#1A1B27"
+
         }
         rule(".textbox-container-sp") {
             display = Display.flex
@@ -69,47 +88,59 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
 
         rule(".textbox-container-lp-dark") {
             display = Display.flex
-            marginTop = LinearDimension("13%")
-            justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("0.5%")
+            marginTop = LinearDimension("14%")
+            justifyContent = JustifyContent.left
+            marginLeft = LinearDimension("17%")
         }
         rule(".textbox-lp-dark") {
-            marginRight = LinearDimension("10px")
-            padding = "10px"
             color = Color.white
-            width = LinearDimension("30%")
+            width = LinearDimension("35%")
+            textAlign = TextAlign.left
             val builder = LinearGradientBuilder()
-            backgroundColor = Color.midnightBlue
-            border = "10px solid"
-            borderColor = Color.midnightBlue
             borderRadius = LinearDimension("15px")
-            transitionDuration = Time("0.3s")
-            hover {
-                val builder2 = RadialGradientBuilder()
-                builder2.colorStop(Color.magenta)
-                builder2.colorStop(Color.blue)
-                background = builder2.build(false).value
-                border = "20px solid rgba(255, 255, 255, 0.0)"
-            }
-
+            lineHeight = LineHeight("1.6")
+//            backgroundColor = Color.black
         }
         rule (".lp-getstarted-container-dark") {
             display = Display.flex
             justifyContent = JustifyContent.center
             alignItems = Align.center
         }
-        rule (".lp-getstarted-button-dark") {
-            backgroundColor = Color.white
-            color = Color.black
+        rule (".lp-signin-button-dark") {
+            backgroundColor = Color("#2962FF")
+            color = Color.white
             fontSize = LinearDimension("20px")
-            border = "10 px solid #ffffff"
-            borderRadius = LinearDimension("15%")
-            padding = "1%"
-            hover {
-                backgroundColor = Color.gainsboro
-                padding = "2%"
-            }
+            borderRadius = LinearDimension("8%")
+            border= "none";
+            width = LinearDimension("150%")
+            height = LinearDimension("18%")
+            cursor = Cursor.pointer
 
+        }
+        rule (".lp-signup-button-dark") {
+            backgroundColor = Color("#2962FF")
+            color = Color.white
+            fontSize = LinearDimension("20px")
+            borderRadius = LinearDimension("8%")
+            padding = "2%"
+            border= "none";
+            width = LinearDimension("22%")
+            height = LinearDimension("10%")
+            cursor = Cursor.pointer
+            marginTop = LinearDimension("2%")
+        }
+
+        rule (".lp-general-button-dark") {
+            background= "none";
+            border= "none";
+            padding = "0"
+            margin = "0"
+            cursor = Cursor.pointer
+            outline = Outline.none
+            color = Color.white
+            fontSize = LinearDimension("20px")
+            borderRadius = LinearDimension("15%")
+            padding = "25px"
         }
         rule(".lp-modeswitch-dark") {
             border = "10px solid"

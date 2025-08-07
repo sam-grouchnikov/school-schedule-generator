@@ -24,59 +24,73 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
 
         body(classes = "signin-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
-                h1(classes = "headercontainer") {
-                    div(classes = "textaligncenter shedwizheader-dark") {
+                h1(classes = "schedwiz-header") {
+                    div() {
                         +"Schedwiz"
                     }
                 }
-            }
-            div(classes = "textbox-container-signin-dark") {
-                div(classes = "textbox-signin-dark") {
-                    h2(classes = "textaligncenter") {
-                        +"Sign Up"
-                    }
-                    form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter") {
-                        +"School Name"
-                        br()
-                        input(type = InputType.text, name = "school")
-                        br()
-                        +"Password"
-                        br()
-                        input(type = InputType.password, name = "psw")
-                        br()
-                        br()
-                        button(type = ButtonType.submit, classes = "signin-button") {
-                            +"Sign Up"
+                div (classes = "topbar-buttons") {
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/about", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"About"
+                            }
                         }
                     }
-                    div (classes = "textaligncenter") {
-                        if (call.parameters["error"] == "schoolExists") {
-                            +"That School Name Already Exists"
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/guide", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Guide"
+                            }
+                        }
+                    }
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/blank", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"GitHub"
+                            }
+                        }
+                    }
+                    div {
+                        form(action = "/ladingPage", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Home"
+                            }
                         }
                     }
                 }
+
+            }
+            div(classes = "textbox-container-signin-dark") {
                 div(classes = "textbox-signin-dark") {
-                    h2(classes = "textaligncenter") {
-                        +"Sign In"
-                    }
-                    div(classes = "lptextbox textaligncenter") {
-                        form(action = "/verifyCredentials", method = FormMethod.get) {
-                            +"School Name"
+
+                    div(classes = "extrapadding textaligncenter") {
+                        div(classes = "textaligncenter bigtext") {
+                            +"Welcome Back"
+                        }
+                        +"Please enter your school name and password"
+                        br()
+                        form(action = "/verifyCredentials", method = FormMethod.get, classes = "extralinespacing") {
+                            input(type = InputType.text, name = "school", classes = "inputbox") {
+                                placeholder = "School Name"
+                            }
                             br()
-                            input(type = InputType.text, name = "school")
-                            br()
-                            +"Password"
-                            br()
-                            input(type = InputType.password, name = "psw")
-                            br()
-                            br()
+                            input(type = InputType.password, name = "psw", classes = "inputbox") {
+                                placeholder = "Password"
+                            }
                             unsafe {
                                 raw(
                                     "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
                                 )
                             }
+                            br()
                             button(type = ButtonType.submit, classes = "signin-button") {
                                 +"Login"
+                            }
+                            br()
+                            +"Don't have an account? "
+                            a(href = "/signUpLanding") {
+                                +"Sign Up"
                             }
                         }
                     }
@@ -94,17 +108,6 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
     }
 }
 
-public suspend fun PipelineContext<Unit, ApplicationCall>.verifyNewSchool(
-    database: Database
-) {
-    val school = call.parameters["school"]!!
-    val psw = call.parameters["psw"]!!
-    if (database.schoolsQueries.selectAllSchools().executeAsList().contains(school)) {
-        call.respondRedirect("/signInLanding?error=schoolExists")
-    } else {
-        call.respondRedirect("/addSchoolToDB?school=$school&psw=$psw&courseView=yes&toExpand=none")
-    }
-}
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.verifyCredentials(
     database: Database
@@ -124,11 +127,3 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.verifyCredentials(
     call.respondRedirect("/adminPage?school=$school&courseView=yes&toExpand=none")
 }
 
-public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
-    database: Database
-) {
-    val school = call.parameters["school"]!!
-    val psw = call.parameters["psw"]!!
-    database.schoolsQueries.insertSchoolObject(School(school, psw))
-    call.respondRedirect("/adminPage?school=${school}&courseView=true")
-}

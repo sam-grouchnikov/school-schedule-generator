@@ -52,6 +52,9 @@ fun Application.mainRouting() {
         get("/signInLanding") {
             signInLanding(database)
         }
+        get("/signUpLanding") {
+            signUpLanding(database)
+        }
         get("/adminPage") {
             adminPage(database)
         }
@@ -70,7 +73,5 @@ fun Application.mainRouting() {
         post("/addRequestsToDB") {
             addRequestsToDB(database)
         }
-        staticFiles("/images", File("C:\\Users\\Sam\\IdeaProjects\\school-schedule-generator\\src\\main\\kotlin\\org\\appchallenge2024\\schedule\\images\\logo.png"))
-
     }
 }

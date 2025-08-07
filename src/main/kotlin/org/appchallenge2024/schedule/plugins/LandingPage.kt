@@ -22,49 +22,63 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
         }
             body(classes = "landingpage-background-dark poppinsfont") {
                 div(classes = "topbar-dark") {
-                    h1(classes = "headercontainer") {
-                        div(classes = "textaligncenter shedwizheader-dark") {
+                    h1(classes = "schedwiz-header") {
+                        div() {
                             +"Schedwiz"
                         }
                     }
+                    div (classes = "topbar-buttons") {
+                        div (classes = "lp-getstarted-container-dark") {
+                            form(action = "/about", method = FormMethod.get) {
+                                button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                    +"About"
+                                }
+                            }
+                        }
+                        div (classes = "lp-getstarted-container-dark") {
+                            form(action = "/guide", method = FormMethod.get) {
+                                button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                    +"Guide"
+                                }
+                            }
+                        }
+                        div (classes = "lp-getstarted-container-dark") {
+                            form(action = "/blank", method = FormMethod.get) {
+                                button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                    +"GitHub"
+                                }
+                            }
+                        }
+                        div {
+                            form(action = "/signInLanding", method = FormMethod.get) {
+                                button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                    +"Sign In"
+                                }
+                            }
+                        }
+                    }
+
                 }
                 div(classes = "textbox-container-lp-dark") {
                     div(classes = "textbox-lp-dark") {
-                        h2(classes = "textaligncenter") {
-                            +"About"
-                        }
+
                         div(classes = "lptextbox-dark") {
-                            +"Schedwiz is a schoolwide scheduling solution for school administrators."
-                            +" Schedwiz uses teacher information,"
-                            +" course information, and student requests to make a schedule for everybody in seconds."
-                        }
-                    }
-                    div(classes = "textbox-lp-dark") {
-                        h2(classes = "textaligncenter") {
-                            +"Why?"
-                        }
-                        div(classes = "lptextbox-dark") {
-                            +"At many schools, administrators and counselors spend hours upon hours creating schedules,"
-                            +" taking away from time they could be completing all other tasks or taking a vacation. Schedwiz is a solution to this,"
-                            +" allowing for hours of manual labor to be replaced by seconds of computer work."
-                        }
-                    }
-                    div(classes = "textbox-lp-dark") {
-                        h2(classes = "textaligncenter") {
-                            +"Get Started"
-                        }
-                        div(classes = "lptextbox-dark") {
-                            +"Creating a schedule is easy with Schedwiz, to get started click the button below!"
-                            br()
-                            br()
-                            div (classes = "lp-getstarted-container-dark") {
+                            div(classes = "bigtext") {
+                                +"Quick Scheduling."
+                                br()
+                                +"Made Easy."
+                            }
+                            +"click below to get started"
+                            div {
                                 form(action = "/signInLanding", method = FormMethod.get) {
-                                    button(type = ButtonType.submit, classes = "lp-getstarted-button-dark") {
-                                        +"Get Started"
+                                    button(type = ButtonType.submit, classes = "lp-signup-button-dark") {
+                                        +"Sign Up"
                                     }
                                 }
                             }
                         }
+                    }
+                    div(classes = "textbox-lp-dark") {
                     }
             }
         }
