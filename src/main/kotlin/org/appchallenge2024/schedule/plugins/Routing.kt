@@ -6,6 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 import io.ktor.server.http.content.*
+import org.appchallenge2024.schedule.plugins.styles.cssAbout
 import org.appchallenge2024.schedule.plugins.styles.cssAdminPage
 import org.appchallenge2024.schedule.plugins.styles.cssSignIn
 import org.appchallenge2024.schedule.plugins.styles.cssSteps
@@ -16,6 +17,9 @@ fun Application.mainRouting() {
     Database.Schema.create(driver)
     val database = Database(driver)
     routing {
+        get("/about") {
+            about(database)
+        }
         get("/") {
             landingPage(database)
         }
@@ -24,6 +28,9 @@ fun Application.mainRouting() {
         }
         get("/cssLanding") {
             cssLanding()
+        }
+        get("/cssAbout") {
+            cssAbout()
         }
         get("/cssSignIn") {
             cssSignIn()
@@ -34,8 +41,14 @@ fun Application.mainRouting() {
         get("/cssSteps") {
             cssSteps()
         }
+        get("/guide") {
+            guide(database)
+        }
         get("/addSchoolToDB") {
             addSchoolToDB(database)
+        }
+        static("/static") {
+            resources("static")  // Serves files from resources/static
         }
         get("/step1") {
             step1(database)
