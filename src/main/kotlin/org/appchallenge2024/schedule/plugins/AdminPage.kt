@@ -38,17 +38,50 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
 
 
         body(classes = "adminpage-background-dark poppinsfont") {
-            div(classes = "topbar-dark yellowredpurplegradient") {
-                h1(classes = "headercontainer") {
-                    div(classes = "textaligncenter shedwizheader-dark") {
+            div(classes = "topbar-dark") {
+                h1(classes = "schedwiz-header") {
+                    div() {
                         +"Schedwiz"
                     }
                 }
-                h1 {
-                    +school
+                div (classes = "topbar-buttons") {
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/about", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"About"
+                            }
+                        }
+                    }
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/guide", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Guide"
+                            }
+                        }
+                    }
+                    div (classes = "lp-getstarted-container-dark") {
+                        form(action = "/blank", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"GitHub"
+                            }
+                        }
+                    }
+                    div {
+                        form(action = "/", method = FormMethod.get) {
+                            button(type = ButtonType.submit, classes = "lp-general-button-dark") {
+                                +"Home"
+                            }
+                        }
+                    }
                 }
+
+            }
+            val school = call.parameters["school"]!!
+            div(classes = "font32") {
+                +school
             }
             div(classes = "flex-outer-1") {
+
                 div(classes = "table-container white") {
                     form(action = "/adminPage", classes = "textaligncenter", method = FormMethod.get) {
                         unsafe {
@@ -92,17 +125,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                 "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
                             )
                         }
-                        button(type = ButtonType.submit, classes = "adminpage-button") {
+                        button(type = ButtonType.submit, classes = "adminpage-button2") {
                             +"Create New Schedule"
-                        }
-                    }
-                    form(
-                        action = "/signInLanding",
-                        classes = "textaligncenter",
-                        method = FormMethod.get
-                    ) {
-                        button(type = ButtonType.submit, classes = "adminpage-button") {
-                            +"Sign Out"
                         }
                     }
                 }

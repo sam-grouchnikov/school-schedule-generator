@@ -33,14 +33,44 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         rule(".flex2") {
             display = Display.flex
         }
+        rule(".font32") {
+            marginTop = LinearDimension("12%")
+            color = Color.white
+            textAlign = TextAlign.center
+            fontSize = LinearDimension("32px")
+        }
         h2 {
             fontSize = LinearDimension("35px")
         }
         rule(".lptextbox-dark") {
             fontSize = LinearDimension("20px")
         }
+        rule(".schedwiz-header") {
+            color = Color.white
+            marginLeft = LinearDimension("15%")
+        }
+        rule(".topbar-buttons") {
+            display = Display.flex
+            alignItems = Align.center
+            justifyContent = JustifyContent.center
+            marginLeft = LinearDimension("30%")
+            height = LinearDimension("50%")
+            padding = "0"
+        }
+        rule (".lp-general-button-dark") {
+            background= "none";
+            border= "none";
+            padding = "0"
+            margin = "0"
+            cursor = Cursor.pointer
+            outline = Outline.none
+            color = Color.white
+            fontSize = LinearDimension("20px")
+            borderRadius = LinearDimension("15%")
+            padding = "25px"
+        }
         rule(".topbar-dark") {
-            background = "#2d2d2d"
+            background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
             color = Color.white
@@ -51,7 +81,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             paddingRight = LinearDimension("3%")
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.spaceEvenly
+            justifyContent = JustifyContent.left
         }
 
         rule(".adminpage-td-th") {
@@ -76,11 +106,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         }
 
         rule(".adminpage-background-dark") {
-            background = "#000000"
-            val builder3 = RadialGradientBuilder()
-            builder3.colorStop(Color("rgba(18, 18, 84) 15%"))
-            builder3.colorStop(Color("rgba(0, 0, 0) 85%"))
-            background = builder3.build(false).value
+            background = "#1A1B27"
         }
         td {
             paddingTop = LinearDimension("1.5%")
@@ -89,7 +115,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         rule(".flex-outer-1") {
             display = Display.flex
             justifyContent = JustifyContent.spaceEvenly
-            marginTop = LinearDimension("13%")
+            marginTop = LinearDimension("2%")
         }
         rule(".bold") {
             fontWeight = FontWeight.bold
@@ -107,20 +133,15 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             height = LinearDimension("100%")
             borderRadius = LinearDimension("15px")
             justifyContent = JustifyContent.center
-            backgroundColor = Color("rgba(25, 25, 112, 0.5)")
+            backgroundColor = Color("#2F2F3D")
             display = Display.flex
             justifyContent = JustifyContent.spaceAround
-            hover {
-                transitionDuration = Time("0.3s")
-                border = "10px rgb(25, 25, 112)"
-                boxShadow = boxShadow.apply { boxShadow(color = Color("#191970"), offsetX = LinearDimension("0px"), offsetY = LinearDimension("0px"),
-                    blurRadius = LinearDimension("15px"), spreadRadius = LinearDimension("15px"))}
-            }
+
             padding = "2%"
         }
         tr {
             nthChild("even") {
-                backgroundColor = Color("rgba(27, 27, 120, 0.5)")
+                backgroundColor = Color("#39394A")
             }
             paddingTop = LinearDimension("2%")
         }
@@ -132,19 +153,22 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             color = Color.white
         }
         rule(".adminpage-button") {
-            border = "10px solid"
-            borderColor = Color.midnightBlue
-            backgroundColor = Color.midnightBlue
+            border = "none"
+            padding = "15px"
+            backgroundColor = Color("#282933")
             borderRadius = LinearDimension("15px")
             fontSize = LinearDimension("23px")
             color = Color.white
-            hover {
-                val builder2 = RadialGradientBuilder()
-                builder2.colorStop(Color.magenta)
-                builder2.colorStop(Color.blue)
-                background = builder2.build(false).value
-                border = "10px solid rgba(255, 255, 255, 0.0)"
-            }
+            cursor = Cursor.pointer
+        }
+        rule(".adminpage-button2") {
+            border = "none"
+            padding = "15px"
+            backgroundColor = Color("#8436AC")
+            borderRadius = LinearDimension("15px")
+            fontSize = LinearDimension("23px")
+            color = Color.white
+            cursor = Cursor.pointer
         }
         rule(".students-column") {
             width = LinearDimension("30%")
