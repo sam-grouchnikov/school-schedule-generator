@@ -52,7 +52,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
                         }
                     }
                     div {
-                        form(action = "/ladingPage", method = FormMethod.get) {
+                        form(action = "/", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"Home"
                             }

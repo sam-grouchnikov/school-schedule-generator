@@ -52,7 +52,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         }
                     }
                     div {
-                        form(action = "/ladingPage", method = FormMethod.get) {
+                        form(action = "/", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"Home"
                             }
@@ -70,7 +70,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                         }
                         +"Please enter your school name and password"
                         br()
-                        form(action = "/verifyNewSchool", method = FormMethod.get, classes = "extralinespacing") {
+                        form(action = "/verifyCredentials", method = FormMethod.get, classes = "extralinespacing") {
                             input(type = InputType.text, name = "school", classes = "inputbox") {
                                 placeholder = "School Name"
                             }

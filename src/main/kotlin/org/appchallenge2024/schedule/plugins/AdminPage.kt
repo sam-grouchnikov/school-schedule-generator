@@ -67,9 +67,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                         }
                     }
                     div {
-                        form(action = "/", method = FormMethod.get) {
+                        form(action = "/signInLanding", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
-                                +"Home"
+                                +"Sign Out"
                             }
                         }
                     }
