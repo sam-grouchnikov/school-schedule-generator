@@ -45,7 +45,7 @@ fun convertSingleToMultipleRequests(single: List<Request>): List<RequestCompress
         single.forEach { request ->
             if (student == request.student_id) {
                 requestsForStudent.add(request.course)
-                name = request.school_name
+                name = request.student_name
             }
         }
         result.add(RequestCompressed(single[0].school_name, student, name, requestsForStudent))

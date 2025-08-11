@@ -79,6 +79,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                         }
                     }
                     div(classes = "textbox-lp-dark") {
+                        img(src = "static/images/white calendar.png", alt = "clock", classes = "iconsize")
                     }
             }
         }

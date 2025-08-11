@@ -8,6 +8,7 @@ import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.Time
 import org.appchallenge2024.schedule.respondCss
 import kotlinx.css.properties.LineHeight
+import javax.sound.sampled.Line
 
 
 suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
@@ -67,6 +68,10 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             alignItems = Align.center
             justifyContent = JustifyContent.left
         }
+        rule(".iconsize") {
+            width = LinearDimension("250px")
+            height = LinearDimension("auto")
+        }
 
 
         rule (".schedwiz-header-dark") {
@@ -80,6 +85,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
         }
         rule(".textbox-container-sp") {
             display = Display.flex
+            justifyContent = JustifyContent.spaceEvenly
             marginTop = LinearDimension("1%")
             marginLeft = LinearDimension("0.5%")
         }
@@ -91,10 +97,11 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             marginTop = LinearDimension("14%")
             justifyContent = JustifyContent.left
             marginLeft = LinearDimension("17%")
+            gap = LinearDimension("9%")
         }
         rule(".textbox-lp-dark") {
             color = Color.white
-            width = LinearDimension("35%")
+            width = LinearDimension("75%")
             textAlign = TextAlign.left
             val builder = LinearGradientBuilder()
             borderRadius = LinearDimension("15px")
