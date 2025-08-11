@@ -126,7 +126,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             color = Color.white
             fontSize = LinearDimension("30px")
             justifyContent = JustifyContent.center
-            gap = LinearDimension("24.5%")
+            gap = LinearDimension("16%")
         }
 
         rule(".steps-navigator-container2") {
@@ -140,7 +140,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             color = Color.white
             fontSize = LinearDimension("30px")
             justifyContent = JustifyContent.center
-            gap = LinearDimension("14%")
+            gap = LinearDimension("8%")
         }
         rule(".steps-navigator-container3") {
             textAlign = TextAlign.center
@@ -153,7 +153,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             color = Color.white
             fontSize = LinearDimension("30px")
             justifyContent = JustifyContent.center
-            gap = LinearDimension("14%")
+            gap = LinearDimension("9%")
         }
         rule(".customcolwidth") {
             gridTemplateColumns = GridTemplateColumns("10% 60% 20%")
