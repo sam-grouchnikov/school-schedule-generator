@@ -66,7 +66,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         }
                     }
                     div (classes = "lp-getstarted-container-dark") {
-                        form(action = "/blank", method = FormMethod.get) {
+                        form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -90,7 +90,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                         }
                     }
                 }
-                div(classes = "steps-navigator-padding button-margin") {
+                div(classes = "steps-navigator-padding button-margin schoolcontainer") {
                     +school
                 }
                 a(href = "/step4?school=${school}") {
@@ -204,7 +204,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                         }
                     }
                     div (classes = "lp-getstarted-container-dark") {
-                        form(action = "/blank", method = FormMethod.get) {
+                        form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -220,7 +220,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                 }
 
             }
-            div(classes = "steps-navigator-container2 steps-button-fontsize") {
+            div(classes = "steps-navigator-container3 steps-button-fontsize") {
                 div {
                     a(href = "/step3?school=${school}") {
                         button(classes = "steps-navigator-button") {
@@ -231,7 +231,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                 div(classes = "steps-navigator-padding schoolcontainer") {
                     +school
                 }
-                div{}
+                div(classes = "darkgrey"){
+                    +"nextttt"
+                }
             }
             div(classes = "textbox-container-steps2") {
 

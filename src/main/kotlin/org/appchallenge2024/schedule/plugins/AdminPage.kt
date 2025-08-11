@@ -60,7 +60,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                         }
                     }
                     div (classes = "lp-getstarted-container-dark") {
-                        form(action = "/blank", method = FormMethod.get) {
+                        form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -136,8 +136,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                 {
                     if (solution.isEmpty()) {
                         div(classes = "whitetext") {
-                            h1(classes = "textaligncenter") {
-                                +"Click Above To Create Schedule"
+                            div(classes = "textaligncenter font25") {
+                                +"No schedule created"
                             }
                         }
                     } else {

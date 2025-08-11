@@ -39,6 +39,11 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             textAlign = TextAlign.center
             fontSize = LinearDimension("32px")
         }
+        rule(".font25") {
+            color = Color.white
+            textAlign = TextAlign.center
+            fontSize = LinearDimension("25px")
+        }
         h2 {
             fontSize = LinearDimension("35px")
         }

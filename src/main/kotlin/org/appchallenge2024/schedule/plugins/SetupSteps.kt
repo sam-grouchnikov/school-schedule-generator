@@ -56,7 +56,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                         }
                     }
                     div (classes = "lp-getstarted-container-dark") {
-                        form(action = "/blank", method = FormMethod.get) {
+                        form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -74,7 +74,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
             }
             div(classes = "steps-navigator-container3 steps-button-fontsize") {
                 div(classes = "darkgrey"){
-                    +"darkgrey"
+                    +"Previous"
                 }
                 div(classes = "steps-navigator-padding schoolcontainer") {
                     +school

@@ -63,7 +63,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAbout() {
             padding = "25px"
         }
         rule(".topbar-dark") {
-            background = "#2d2d2d"
+            background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
             color = Color.white
