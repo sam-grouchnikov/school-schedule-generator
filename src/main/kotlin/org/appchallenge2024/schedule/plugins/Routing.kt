@@ -88,3 +88,10 @@ fun Application.mainRouting() {
         }
     }
 }
+
+fun main() {
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:schedule.db")
+    Database.Schema.create(driver)
+    val database = Database(driver)
+    database.schoolsQueries.deleteAll()
+}

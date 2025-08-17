@@ -23,7 +23,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
             body(classes = "landingpage-background-dark poppinsfont") {
                 div(classes = "topbar-dark") {
                     h1(classes = "schedwiz-header") {
-                        div() {
+                        a(href = "/", classes = "nodec") {
                             +"Schedwiz"
                         }
                     }
@@ -68,9 +68,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                                 br()
                                 +"Made Easy."
                             }
-                            +"click below to get started"
+                            +"Click below to get started"
                             div {
-                                form(action = "/signInLanding", method = FormMethod.get) {
+                                form(action = "/signUpLanding", method = FormMethod.get) {
                                     button(type = ButtonType.submit, classes = "lp-signup-button-dark") {
                                         +"Sign Up"
                                     }
@@ -78,9 +78,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                             }
                         }
                     }
-                    div(classes = "textbox-lp-dark") {
-                        img(src = "static/images/white calendar.png", alt = "clock", classes = "iconsize")
-                    }
+//                    div(classes = "textbox-lp-dark") {
+//                        img(src = "static/images/white calendar.png", alt = "clock", classes = "iconsize")
+//                    }
             }
         }
     }

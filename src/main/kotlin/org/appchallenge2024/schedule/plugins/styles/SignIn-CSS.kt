@@ -6,6 +6,7 @@ import kotlinx.css.*
 import kotlinx.css.properties.LineHeight
 import kotlinx.css.properties.LinearGradientBuilder
 import kotlinx.css.properties.RadialGradientBuilder
+import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.Time
 import org.appchallenge2024.schedule.respondCss
 
@@ -40,28 +41,44 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
             fontWeight = FontWeight.normal
         }
         rule(".signin-button") {
-            width = LinearDimension("130px")
-            height = LinearDimension("45px")
+
             border = "none"
             borderRadius = LinearDimension("10px")
             color = Color.white
             backgroundColor = Color("#2962FF")
-            paddingLeft = LinearDimension("10px")
-            paddingRight = LinearDimension("10px")
-            fontSize = LinearDimension("15px")
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
+            fontSize = LinearDimension("20px")
+            cursor = Cursor.pointer
+            hover {
+                backgroundColor = Color("#2A5CE8")
+            }
         }
         a {
             color = Color("#2962FF")
         }
+        rule(".nodec") {
+            textDecoration = TextDecoration.none
+            color = Color.white
+        }
         rule(".schedwiz-header") {
             color = Color.white
-            marginLeft = LinearDimension("15%")
+            marginLeft = LinearDimension("240px")
+            textDecoration = TextDecoration.none
+
+        }
+        rule(".red") {
+            fontWeight = FontWeight.bold
+            fontSize = LinearDimension("20px")
+            color = Color("#F44336")
         }
         rule(".topbar-buttons") {
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("30%")
+            marginLeft = LinearDimension("480px")
             height = LinearDimension("50%")
             padding = "0"
         }
@@ -69,12 +86,13 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
             background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
+            marginLeft = LinearDimension("-63px")
             color = Color.white
             position = Position.fixed
             top = LinearDimension("0")
             left = LinearDimension("0")
-            paddingLeft = LinearDimension("3%")
-            paddingRight = LinearDimension("3%")
+            paddingLeft = LinearDimension("45px")
+            paddingRight = LinearDimension("33px")
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.left
@@ -114,6 +132,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
             verticalAlign = VerticalAlign.middle
             paddingLeft = LinearDimension("10px")
             paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("8px")
+
             paddingLeft = LinearDimension("10px")
             border = "none"
 

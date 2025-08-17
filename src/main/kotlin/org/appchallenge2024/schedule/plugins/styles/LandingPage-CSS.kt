@@ -8,6 +8,7 @@ import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.Time
 import org.appchallenge2024.schedule.respondCss
 import kotlinx.css.properties.LineHeight
+import kotlinx.css.properties.TextDecoration
 import javax.sound.sampled.Line
 
 
@@ -44,13 +45,19 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
         }
         rule(".schedwiz-header") {
             color = Color.white
-            marginLeft = LinearDimension("15%")
+            marginLeft = LinearDimension("240px")
+            textDecoration = TextDecoration.none
+
+        }
+        rule(".nodec") {
+            textDecoration = TextDecoration.none
+            color = Color.white
         }
         rule(".topbar-buttons") {
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("30%")
+            marginLeft = LinearDimension("480px")
             height = LinearDimension("50%")
             padding = "0"
         }
@@ -58,12 +65,13 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
+            marginLeft = LinearDimension("-63px")
             color = Color.white
             position = Position.fixed
             top = LinearDimension("0")
             left = LinearDimension("0")
-            paddingLeft = LinearDimension("3%")
-            paddingRight = LinearDimension("3%")
+            paddingLeft = LinearDimension("45px")
+            paddingRight = LinearDimension("33px")
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.left
@@ -96,7 +104,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
             display = Display.flex
             marginTop = LinearDimension("14%")
             justifyContent = JustifyContent.left
-            marginLeft = LinearDimension("17%")
+            marginLeft = LinearDimension("13.5%")
             gap = LinearDimension("9%")
         }
         rule(".textbox-lp-dark") {
@@ -116,25 +124,31 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssLanding() {
         rule (".lp-signin-button-dark") {
             backgroundColor = Color("#2962FF")
             color = Color.white
-            fontSize = LinearDimension("20px")
-            borderRadius = LinearDimension("8%")
+            borderRadius = LinearDimension("10px")
             border= "none";
-            width = LinearDimension("150%")
-            height = LinearDimension("18%")
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
+            fontSize = LinearDimension("20px")
             cursor = Cursor.pointer
 
         }
         rule (".lp-signup-button-dark") {
             backgroundColor = Color("#2962FF")
             color = Color.white
+            borderRadius = LinearDimension("10px")
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
             fontSize = LinearDimension("20px")
-            borderRadius = LinearDimension("8%")
-            padding = "2%"
-            border= "none";
-            width = LinearDimension("22%")
-            height = LinearDimension("10%")
+            border= "none"
             cursor = Cursor.pointer
             marginTop = LinearDimension("2%")
+            hover {
+                backgroundColor = Color("#2A5CE8")
+            }
         }
 
         rule (".lp-general-button-dark") {

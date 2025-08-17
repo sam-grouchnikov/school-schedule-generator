@@ -22,11 +22,15 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.guide(
                 rel = "stylesheet",
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
+            link(
+                rel = "stylesheet",
+                href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap"
+            )
         }
         body(classes = "landingpage-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -79,8 +83,10 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.guide(
                     div(classes = "col2font") {
                         +"The first step in creating a schedule is to upload course data. This includes the course id, course name, and course type. These values on each line must be separated by a comma (no spaces), and each course must be on a new line. Any formatting errors will cause the program to fail."
                     }
-                    div(classes = "col2font") {
-                        +"ALG2-OL,On Level Algebra 2,Math\u2028ALG2-H,Honors Algebra 2,Math\u2028PHY-OL,On Level Physics,Science\u2028PHY-AP1,AP Physics 1,Science\u2028WORLD-OL,OL World History,History\u2028WORLD-AP,AP World History,History\u202810LIT-OL,On Level 10th Lit,ELA\u202810LIT-H,Honors 10th Lit,ELA"
+                    div(classes = "col2font monospace") {
+                        +"ALG2-OL,On Level Algebra 2,Math"
+                        br()
+                        +"ALG2-H,Honors Algebra 2,Math\u2028PHY-OL,On Level Physics,Science\u2028PHY-AP1,AP Physics 1,Science\u2028WORLD-OL,OL World History,History\u2028WORLD-AP,AP World History,History\u202810LIT-OL,On Level 10th Lit,ELA\u202810LIT-H,Honors 10th Lit,ELA"
                     }
 
                     div(classes = "col1font") {
@@ -89,9 +95,20 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.guide(
                     div(classes = "col2font") {
                         +"The second step in creating a schedule is to upload student request data. This includes the student id, student name, and course requests (exactly 4). These values on each line must be separated by a comma (no spaces), and each request must be on a new line. Any formatting errors will cause the program to fail."
                     }
-                    div(classes = "col2font") {
-                        +"0,Amanda,ALG2-OL,PHY-AP1,WORLD-AP,10LIT-H\u20281,Donna,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL\u20282,Alexander,ALG2-H,PHY-OL,WORLD-OL,10LIT-H\u20283,Dennis,ALG2-OL,PHY-OL,WORLD-OL,10LIT-H\u20284,Stephen,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-H\u20285,Jessica,ALG2-H,PHY-OL,WORLD-AP,10LIT-H\u20286,Helen,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-OL\u2028"
-                    }
+                    div(classes = "col2font2 monospace") {
+                        +"0,Amanda,ALG2-OL,PHY-AP1,WORLD-AP,10LIT-H"
+                        br()
+                        +"1,Donna,ALG2-H,PHY-AP1,WORLD-AP,10LIT-OL"
+                        br()
+                        +"2,Alexander,ALG2-H,PHY-OL,WORLD-OL,10LIT-H"
+                        br()
+                        +"3,Dennis,ALG2-OL,PHY-OL,WORLD-OL,10LIT-H"
+                        br()
+                        +"4,Stephen,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-H"
+                        br()
+                        +"5,Jessica,ALG2-H,PHY-OL,WORLD-AP,10LIT-H"
+                        br()
+                        +"6,Helen,ALG2-OL,PHY-AP1,WORLD-OL,10LIT-OL"                    }
 
                     div(classes = "col1font") {
                         +"Step 3: Teachers"
@@ -99,8 +116,18 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.guide(
                     div(classes = "col2font") {
                         +"The third step in creating a schedule is to upload teacher data. This includes the teacher id, room number, room capacity, and room type. These values on each line must be separated by a comma (no spaces), and each teacher must be on a new line. Any formatting errors will cause the program to fail."
                     }
-                    div(classes = "col2font") {
-                        +"1,John Smith,101,30,Math\u20282,Mary Johnson,102,25,Math\u20283,James Williams,103,20,Math\u20284,John Williams,104,20,Math\u20285,Ron Donald,113,20,Science\u20286,Susan Thomas,114,35,Science\u2028"
+                    div(classes = "col2font monospace") {
+                        +"1,John Smith,101,30,Math"
+                        br()
+                        +"2,Mary Johnson,102,25,Math"
+                        br()
+                        +"3,James Williams,103,20,Math"
+                        br()
+                        +"4,John Williams,104,20,Math"
+                        br()
+                        +"5,Ron Donald,113,20,Science"
+                        br()
+                        +"6,Susan Thomas,114,35,Science"
                     }
 
                     div(classes = "col1font") {
@@ -112,11 +139,15 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.guide(
                     div(classes = "col2font") {
                         +"Seven year-long courses per student:"
                         br()
-                        +"Type: Traditional, Periods: 7"
+                        div(classes = "monospace") {
+                            +"Type: Traditional, Periods: 7"
+                        }
                         br()
+                        +"Four semester-long courses per student: "
                         br()
-                        +"Four semester-long courses per student:"
-                        +"Type: Block, Periods: 4"
+                        div(classes = "monospace") {
+                            +"Type: Block, Periods: 4"
+                        }
                     }
 
                 }

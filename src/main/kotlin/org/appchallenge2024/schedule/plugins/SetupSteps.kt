@@ -31,12 +31,16 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                 rel = "stylesheet",
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
+            link(
+                rel = "stylesheet",
+                href = "https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap"
+            )
         }
         val school = call.parameters["school"]!!
         body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -72,62 +76,67 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step1(
                 }
 
             }
-            div(classes = "steps-navigator-container3 steps-button-fontsize") {
-                div(classes = "darkgrey"){
-                    +"Previous"
+            div("leftmargin") {
+                div(classes = "steps-navigator-container3 steps-button-fontsize") {
+                    a(href = "/step1?school=${school}") {
+                        button(classes = "steps-navigator-button-invisible-dark") {
+                            +"Previous"
+                        }
+                    }
+                    div(classes = "steps-navigator-padding schoolcontainer") {
+                        +school
+                    }
+                    a(href = "/step2?school=${school}") {
+                        button(classes = "steps-navigator-button-gray") {
+                            +"Next"
+                        }
+                    }
                 }
-                div(classes = "steps-navigator-padding schoolcontainer") {
-                    +school
-                }
-                a(href = "/step2?school=${school}") {
-                    button(classes = "steps-navigator-button") {
-                        +"Next"
+                div(classes = "textbox-container-steps") {
+                    div(classes = "textbox-step1-3") {
+                        div(classes = "textaligncenter font20px") {
+                            +"Course Information"
+                        }
+                        form(action = "/step1", method = FormMethod.get, classes = "steps-form-height") {
+                            textArea(classes = "steps-textarea") { name = "courses"; placeholder = "Enter courses here" }
+                            unsafe {
+                                raw(
+                                    "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                )
+                            }
+                            br()
+                            submitInput(classes = "steps-submit-button-gray") { value = "Submit" }
+                        }
+                    }
+                    div(classes = "listContainer paddingleft") {
+                        div(classes = "steps-table3") {
+                            div(classes = "steps-cell header font-25px") { +"Course ID" }
+                            div(classes = "steps-cell header font-25px") { +"Course Name" }
+                            div(classes = "steps-cell header font-25px") { +"Course Type" }
+
+                            val courses = call.parameters["courses"]
+                            if (courses != null) {
+                                database.coursesQueries.deleteAllFromSchool(school)
+                            }
+                            val existing = database.coursesQueries.selectAllFromSchool(school).executeAsList()
+                            existing.forEach {
+                                div(classes = "steps-cell monospace") { +it.id }
+                                div(classes = "steps-cell monospace") { +it.name }
+                                div(classes = "steps-cell monospace") { +it.type }
+                            }
+                            courses?.split("\r\n")?.forEach {
+                                val info = it.split(",")
+                                database.coursesQueries.insertCourseObject(Course(school, info[0], info[1], info[2]))
+                                div(classes = "steps-cell monospace") { +info[0] }
+                                div(classes = "steps-cell monospace") { +info[1] }
+                                div(classes = "steps-cell monospace") { +info[2] }
+                            }
+
+                        }
                     }
                 }
             }
-            div(classes = "textbox-container-steps") {
-                div(classes = "textbox-step1-3") {
-                    div(classes = "textaligncenter font20px") {
-                        +"Course Information"
-                    }
-                    form(action = "/step1", method = FormMethod.get, classes = "steps-form-height") {
-                        textArea(classes = "steps-textarea") { name = "courses"; placeholder = "Enter courses here" }
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                            )
-                        }
-                        br()
-                        submitInput { value = "Submit" }
-                    }
-                }
-                div(classes = "listContainer paddingleft") {
-                    div(classes = "steps-table3") {
-                        div(classes = "steps-cell header font-25px") { +"Course ID" }
-                        div(classes = "steps-cell header font-25px") { +"Course Name" }
-                        div(classes = "steps-cell header font-25px") { +"Course Type" }
 
-                        val courses = call.parameters["courses"]
-                        if (courses != null) {
-                            database.coursesQueries.deleteAllFromSchool(school)
-                        }
-                        val existing = database.coursesQueries.selectAllFromSchool(school).executeAsList()
-                        existing.forEach {
-                            div(classes = "steps-cell") { +it.id }
-                            div(classes = "steps-cell") { +it.name }
-                            div(classes = "steps-cell") { +it.type }
-                        }
-                        courses?.split("\r\n")?.forEach {
-                            val info = it.split(",")
-                            database.coursesQueries.insertCourseObject(Course(school, info[0], info[1], info[2]))
-                            div(classes = "steps-cell") { +info[0] }
-                            div(classes = "steps-cell") { +info[1] }
-                            div(classes = "steps-cell") { +info[2] }
-                        }
-
-                    }
-                }
-            }
             br()
 
 

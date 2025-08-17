@@ -25,7 +25,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
         body(classes = "signin-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -94,7 +94,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             }
                         }
                     }
-                    div (classes = "textaligncenter") {
+                    div (classes = "textaligncenter red") {
                         if (call.parameters["error"] == "wrongPsw") {
                             +"Incorrect Password"
                         }

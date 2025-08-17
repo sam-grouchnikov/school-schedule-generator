@@ -5,6 +5,7 @@ import io.ktor.util.pipeline.*
 import kotlinx.css.*
 import kotlinx.css.properties.LinearGradientBuilder
 import kotlinx.css.properties.RadialGradientBuilder
+import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.Time
 import kotlinx.css.properties.boxShadow
 import org.appchallenge2024.schedule.respondCss
@@ -14,6 +15,10 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
     call.respondCss {
         rule(".poppinsfont") {
             fontFamily = "Poppins, sans-serif"
+            fontStyle = FontStyle.normal
+        }
+        rule(".monospace") {
+            fontFamily = "Google Sans Code, sans-serif"
             fontStyle = FontStyle.normal
         }
         rule(".textalignleft") {
@@ -36,6 +41,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         }
         h1 {
             fontSize = LinearDimension("55px")
+            fontWeight = FontWeight.normal
         }
         h2 {
             fontSize = LinearDimension("35px")
@@ -45,13 +51,19 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         }
         rule(".schedwiz-header") {
             color = Color.white
-            marginLeft = LinearDimension("15%")
+            marginLeft = LinearDimension("240px")
+            textDecoration = TextDecoration.none
+
+        }
+        rule(".nodec") {
+            textDecoration = TextDecoration.none
+            color = Color.white
         }
         rule(".topbar-buttons") {
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("30%")
+            marginLeft = LinearDimension("480px")
             height = LinearDimension("50%")
             padding = "0"
         }
@@ -67,16 +79,24 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             borderRadius = LinearDimension("15%")
             padding = "25px"
         }
+        rule(".leftmargin") {
+            marginLeft = LinearDimension("-3.5%")
+        }
+        rule(".leftmargin2") {
+            marginLeft = LinearDimension("-3.9%")
+            marginTop = LinearDimension("-0.1%")
+        }
         rule(".topbar-dark") {
             background = "#2F2F3D"
             width = LinearDimension("-webkit-fill-available")
             margin = "0%"
+            marginLeft = LinearDimension("-63px")
             color = Color.white
             position = Position.fixed
             top = LinearDimension("0")
             left = LinearDimension("0")
-            paddingLeft = LinearDimension("3%")
-            paddingRight = LinearDimension("3%")
+            paddingLeft = LinearDimension("45px")
+            paddingRight = LinearDimension("33px")
             display = Display.flex
             alignItems = Align.center
             justifyContent = JustifyContent.left
@@ -92,22 +112,41 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             height = LinearDimension("fit-content")
             gap = LinearDimension("6%")
         }
+        rule(".textbox-container-steps") {
+            display = Display.flex
+            justifyContent = JustifyContent.center
+            marginLeft = LinearDimension("107px")
+            height = LinearDimension("fit-content")
+            gap = LinearDimension("6%")
+        }
+        rule(".textbox-container-steps3") {
+            display = Display.flex
+            justifyContent = JustifyContent.center
+            marginLeft = LinearDimension("4%")
+            height = LinearDimension("fit-content")
+            gap = LinearDimension("6%")
+        }
+
         rule(".textbox-container-steps2") {
             display = Display.flex
             justifyContent = JustifyContent.center
             height = LinearDimension("fit-content")
             gap = LinearDimension("6%")
         }
+        rule(".step4input") {
+            verticalAlign = VerticalAlign.middle
+        }
         rule(".listContainer") {
-            width = LinearDimension("48%")
+            width = LinearDimension("717px")
             height = LinearDimension("fit-content")
             padding = "10px"
+            paddingLeft = LinearDimension("15px")
             marginRight = LinearDimension("28px")
             borderRadius = LinearDimension("10px")
             backgroundColor = Color("#2F2F3D")
         }
         rule(".listContainer2") {
-            width = LinearDimension("60%")
+            width = LinearDimension("720px")
             height = LinearDimension("fit-content")
             padding = "10px"
             marginRight = LinearDimension("28px")
@@ -120,7 +159,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             alignItems = Align.center
             marginTop = LinearDimension("8%")
             padding = "2%"
-            marginLeft = LinearDimension("10%")
+            marginLeft = LinearDimension("9%")
             display = Display.flex
             width = LinearDimension("-webkit-fill-available")
             color = Color.white
@@ -145,15 +184,19 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         rule(".steps-navigator-container3") {
             textAlign = TextAlign.center
             alignItems = Align.center
-            marginTop = LinearDimension("8%")
-            padding = "2%"
-            marginLeft = LinearDimension("-1%")
+            marginTop = LinearDimension("130.5px")
+            padding = "23px"
+            marginLeft = LinearDimension("227px")
             display = Display.flex
-            width = LinearDimension("-webkit-fill-available")
+            height = LinearDimension("100px")
+            width = LinearDimension("1200px")
             color = Color.white
             fontSize = LinearDimension("30px")
             justifyContent = JustifyContent.center
-            gap = LinearDimension("9%")
+            gap = LinearDimension("220px")
+        }
+        rule(".horalign") {
+            textAlign = TextAlign.center
         }
         rule(".customcolwidth") {
             gridTemplateColumns = GridTemplateColumns("10% 60% 20%")
@@ -172,12 +215,59 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             borderColor = Color.midnightBlue
             backgroundColor = Color("#2962FF")
             borderRadius = LinearDimension("10px")
-            fontSize = LinearDimension("20px")
             color = Color.white
-            padding = "10px"
-            paddingLeft = LinearDimension("30px")
-            paddingRight = LinearDimension("30px")
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
+            fontSize = LinearDimension("20px")
             cursor = Cursor.pointer
+            hover {
+                backgroundColor = Color("#2A5CE8")
+            }
+        }
+        rule(".steps-submit-button-gray") {
+            border = "none"
+            backgroundColor = Color("#2962FF")
+            borderRadius = LinearDimension("8px")
+            color = Color("#FFFFFF")
+            paddingLeft = LinearDimension("20px")
+            paddingRight = LinearDimension("20px")
+            paddingTop = LinearDimension("4px")
+            paddingBottom = LinearDimension("4px")
+            fontSize = LinearDimension("15px")
+            cursor = Cursor.pointer
+            hover {
+                backgroundColor = Color("#2A5CE8")
+            }
+        }
+        rule(".steps-navigator-button-invisible-dark") {
+            border = "none"
+            backgroundColor = Color("#1A1B27")
+            borderRadius = LinearDimension("10px")
+            color = Color("#1A1B27")
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
+            fontSize = LinearDimension("20px")
+        }
+
+        rule(".steps-navigator-button-gray") {
+            border = "none"
+            borderColor = Color.midnightBlue
+            backgroundColor = Color("#2F2F3D")
+            borderRadius = LinearDimension("10px")
+            color = Color.white
+            paddingLeft = LinearDimension("50px")
+            paddingRight = LinearDimension("50px")
+            paddingTop = LinearDimension("10px")
+            paddingBottom = LinearDimension("10px")
+            fontSize = LinearDimension("20px")
+            cursor = Cursor.pointer
+            hover {
+                backgroundColor = Color("#2A2A37")
+            }
         }
 
         rule(".steps-navigator-button-purple") {
@@ -191,6 +281,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             paddingLeft = LinearDimension("30px")
             paddingRight = LinearDimension("30px")
             cursor = Cursor.pointer
+            hover {
+                backgroundColor = Color("#9100D9")
+            }
         }
         rule(".steps-fontsize") {
             fontSize = LinearDimension("20px")
@@ -249,8 +342,10 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         rule(".steps-textarea") {
             width = LinearDimension("-webkit-fill-available")
             height = LinearDimension("250px")
-            color = Color.black
-            backgroundColor = Color("#DFDBFF")
+            color = Color.white
+//            backgroundColor = Color("#DFDBFF")
+             backgroundColor = Color("#202130")
+            border = "none"
         }
         rule(".textbox-step2-1") {
             backgroundColor = Color("rgba(25, 25, 112, 0.5)")
@@ -313,14 +408,15 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             display = Display.grid
             width = LinearDimension("100%")
             fontSize = LinearDimension("20px")
-            rowGap = LinearDimension("10px")
+            gap = LinearDimension("10px")
+            gridTemplateColumns = GridTemplateColumns("repeat(3, minmax(max-content, 1fr))")
         }
         rule(".steps-table3") {
             display = Display.grid
             width = LinearDimension("100%")
             fontSize = LinearDimension("20px")
             gap = LinearDimension("10px")
-            gridTemplateColumns = GridTemplateColumns("repeat(3, minmax(max-content, 1fr))")
+            gridTemplateColumns = GridTemplateColumns("max-content 1fr 1fr")
             // ID = 1fr, Name = 1fr, Courses = 2fr (wider)
         }
 
@@ -340,7 +436,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             width = LinearDimension("100%")
             fontSize = LinearDimension("20px")
             gap = LinearDimension("5px") // works for both row + column spacing
-            gridTemplateColumns = GridTemplateColumns("repeat(5, minmax(max-content, 1fr))")
+            gridTemplateColumns = GridTemplateColumns("max-content max-content max-content max-content 1fr")
         }
 
         rule(".font-25px") {

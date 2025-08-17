@@ -40,7 +40,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
         body(classes = "adminpage-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -76,189 +76,224 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                 }
 
             }
-            val school = call.parameters["school"]!!
-            div(classes = "font32") {
-                +school
-            }
-            div(classes = "flex-outer-1") {
-
-                div(classes = "table-container white") {
-                    form(action = "/adminPage", classes = "textaligncenter", method = FormMethod.get) {
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                            )
-                        }
-                        if (call.parameters["courseView"]!! == "yes") {
-                            unsafe {
-                                raw(
-                                    "<input type=\"hidden\" name=\"courseView\" value=\"no\">"
-                                )
-                            }
-                        } else {
-                            unsafe {
-                                raw(
-                                    "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
-                                )
-                            }
-                        }
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
-                            )
-                        }
-                        button(type = ButtonType.submit, classes = "adminpage-button") {
-                            if (view == "yes") {
-                                +"Sort By Student"
-                            } else {
-                                +"Sort By Teacher"
-                            }
-                        }
-                    }
-                    form(
-                        action = "/step1?school=${school}",
-                        classes = "textaligncenter",
-                        method = FormMethod.get
-                    ) {
-                        unsafe {
-                            raw(
-                                "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
-                            )
-                        }
-                        button(type = ButtonType.submit, classes = "adminpage-button2") {
-                            +"Create New Schedule"
-                        }
-                    }
+            div(classes = "bodymargin") {
+                val school = call.parameters["school"]!!
+                div(classes = "font32") {
+                    +school
                 }
-            }
-            div(classes = "flex-outer-2") {
-                div(classes = "table-container white")
-                {
-                    if (solution.isEmpty()) {
-                        div(classes = "whitetext") {
-                            div(classes = "textaligncenter font25") {
-                                +"No schedule created"
+                div(classes = "flex-outer-1") {
+                    if (solution.isNotEmpty()) {
+                        div(classes = "table-container white") {
+                            form(action = "/adminPage", classes = "textaligncenter", method = FormMethod.get) {
+                                unsafe {
+                                    raw(
+                                        "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                    )
+                                }
+                                if (call.parameters["courseView"]!! == "yes") {
+                                    unsafe {
+                                        raw(
+                                            "<input type=\"hidden\" name=\"courseView\" value=\"no\">"
+                                        )
+                                    }
+                                } else {
+                                    unsafe {
+                                        raw(
+                                            "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
+                                        )
+                                    }
+                                }
+                                unsafe {
+                                    raw(
+                                        "<input type=\"hidden\" name=\"toExpand\" value=\"none\">"
+                                    )
+                                }
+                                button(type = ButtonType.submit, classes = "adminpage-button") {
+                                    if (view == "yes") {
+                                        +"Sort By Student"
+                                    } else {
+                                        +"Sort By Teacher"
+                                    }
+                                }
+                            }
+                            form(
+                                action = "/step1?school=${school}",
+                                classes = "textaligncenter",
+                                method = FormMethod.get
+                            ) {
+                                unsafe {
+                                    raw(
+                                        "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                    )
+                                }
+                                button(type = ButtonType.submit, classes = "adminpage-button2") {
+                                    +"Create New Schedule"
+                                }
                             }
                         }
                     } else {
-
-                        val courseView = call.parameters["courseView"]
-                        val studentToExpand = call.parameters["toExpand"]
-                        if (courseView == null || courseView == "yes") {
-                            table(classes = "sp-table") {
-                                tr(classes = "schedulepage-td-th") {
-                                    th { +"Course Name" }
-                                    th { +"Teacher Name" }
-                                    th { +"Semester" }
-                                    th { +"Period" }
-                                    th(classes = "students-column") { +"Students (Click to expand)" }
-                                }
-                                for (i in solution.indices) {
-                                    tr(classes = "schedulepage-td-th") {
-                                        td {
-                                            +database.coursesQueries.selectNameForCourseID(solution[i].courseID, school)
-                                                .executeAsOne()
-                                        }
-                                        td {
-                                            +database.teachersQueries.selectNameForID(solution[i].teacherID, school)
-                                                .executeAsOne()
-                                        }
-                                        td { +"${solution[i].semester}" }
-                                        td { +"${solution[i].period}" }
-                                        if (studentToExpand != null && studentToExpand != i.toString()) {
-                                            td {
-                                                a(
-                                                    href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}",
-                                                    classes = "white"
-                                                ) {
-                                                    +"Expand Students"
-                                                }
-                                            }
-                                        } else {
-
-                                            td {
-                                                a(
-                                                    href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
-                                                    classes = "white"
-                                                ) {
-                                                    +"Collapse Students"
-                                                }
-                                                br()
-//                                                +solution[i].students.joinToString()
-                                                val names = arrayListOf<String>()
-                                                solution[i].students.forEach { id ->
-                                                    names.add(
-                                                        database.requestsQueries.selectNameForID(id, school)
-                                                            .executeAsOne()
-                                                    )
-                                                }
-                                                +names.joinToString()
-                                            }
-                                        }
-                                    }
-                                }
+                        div(classes = "textbox-step1-3") {
+                            div(classes = "font45") {
+                                +"Welcome!"
                             }
-                        } else if (courseView == "no") {
-                            table(classes = "sp-table") {
-                                tr(classes = "adminpage-td-th") {
-                                    th { +"Student ID" }
-                                    th { +"Student Name" }
-                                    th { +"Courses" }
+                            div(classes = "font20") {
+                                +"Click below to create a schedule"
+                            }
+                            br()
+                            form(
+                                action = "/step1?school=${school}",
+                                classes = "textaligncenter",
+                                method = FormMethod.get
+                            ) {
+                                unsafe {
+                                    raw(
+                                        "<input type=\"hidden\" name=\"school\" value=\"${school}\">"
+                                    )
                                 }
-
-                                val ids = database.requestsQueries.selectAllIDsForSchool(school).executeAsList().toSet()
-                                    .toList()
-                                ids.forEach {
-                                    tr(classes = "adminpage-td-th") {
-
-                                        td(classes = "bold") { +it }
-                                        td(classes = "bold") { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
-                                        val schedule = getStudentScheduleFromSolution(solution, it)
-                                        schedule.forEach { course ->
-
-                                            td {
-                                                div(classes = "flex2") {
-                                                    div(classes = "bold") {
-                                                        +"Class: "
-                                                    }
-                                                    +" "
-                                                    +database.coursesQueries.selectNameForCourseID(course.course, school)
-                                                        .executeAsOne()
-                                                }
-                                                br()
-                                                div(classes = "flex2") {
-                                                    div(classes = "bold") {
-                                                        +"Teacher: "
-                                                    }
-
-                                                    +database.teachersQueries.selectNameForID(
-                                                        course.teacher,
-                                                        school
-                                                    ).executeAsOne()
-                                                }
-                                                br()
-                                                div(classes = "flex2") {
-                                                    div(classes = "bold") {
-                                                        +"Semester: "
-                                                    }
-                                                    +"${course.semester}"
-                                                }
-                                                br()
-                                                div(classes = "flex2") {
-                                                    div(classes = "bold") {
-                                                        +"Period: "
-                                                    }
-                                                    +"${course.period}"
-                                                }
-                                            }
-                                        }
-                                    }
+                                button(type = ButtonType.submit, classes = "adminpage-button2") {
+                                    +"Create New Schedule"
                                 }
                             }
                         }
                     }
+
                 }
+                if(solution.isNotEmpty()) {
+                    div(classes = "flex-outer-2") {
+                        div(classes = "table-container white") {
+                                val courseView = call.parameters["courseView"]
+                                val studentToExpand = call.parameters["toExpand"]
+
+                                if (courseView == null || courseView == "yes") {
+                                    // Course view grid
+
+                                    div(classes = "sp-table-grid") {
+                                        // Header row (5 columns)
+                                        div(classes = "sp-cell header") { +"Course Name" }
+                                        div(classes = "sp-cell header") { +"Teacher Name" }
+                                        div(classes = "sp-cell header") { +"Semester" }
+                                        div(classes = "sp-cell header") { +"Period" }
+                                        div(classes = "sp-cell header students-column") { +"Students" }
+
+                                        // Data rows
+
+                                        solution.forEachIndexed { i, entry ->
+                                            var expandedHighlight = ""
+                                            if (studentToExpand != null && studentToExpand == i.toString()) {
+                                                expandedHighlight = "expandedHighlight"
+                                            }
+                                            div(classes = "sp-row") {
+                                                div(classes = "sp-cell $expandedHighlight") {
+                                                    +database.coursesQueries.selectNameForCourseID(entry.courseID, school).executeAsOne()
+                                                }
+                                                div(classes = "sp-cell $expandedHighlight") {
+                                                    +database.teachersQueries.selectNameForID(entry.teacherID, school).executeAsOne()
+                                                }
+                                                div(classes = "sp-cell $expandedHighlight") { +"${entry.semester}" }
+                                                div(classes = "sp-cell $expandedHighlight") { +"${entry.period}" }
+                                                div(classes = "sp-cell $expandedHighlight") {
+                                                    if (studentToExpand != null && studentToExpand != i.toString()) {
+                                                        a(
+                                                            href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}",
+                                                            classes = "white"
+                                                        ) {
+                                                            +"Expand Students"
+                                                        }
+                                                    } else {
+                                                        a(
+                                                            href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
+                                                            classes = "white"
+                                                        ) {
+                                                            +"Collapse Students"
+                                                        }
+                                                        br()
+                                                        val names = entry.students.map { id ->
+                                                            database.requestsQueries.selectNameForID(id, school).executeAsOne()
+                                                        }
+                                                        +names.joinToString()
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                } else if (courseView == "no") {
+                                    // Student view grid
+                                    table(classes = "sp-table") {
+                                        tr(classes = "adminpage-td-th") {
+                                            th(classes = "font25") { +"Student ID" }
+                                            th(classes = "font25") { +"Student Name" }
+                                            th(classes = "font25") { +"Courses" }
+                                        }
+
+                                        val ids = database.requestsQueries.selectAllIDsForSchool(school).executeAsList().toSet()
+                                            .toList()
+                                        ids.forEach {
+                                            tr(classes = "adminpage-td-th") {
+
+                                                td(classes = "bold topvertalign extrapadding") { +it }
+                                                td(classes = "bold topvertalign extrapadding2") { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
+                                                val schedule = getStudentScheduleFromSolution(solution, it)
+                                                schedule.forEachIndexed { index, course ->
+                                                    var pad = ""
+                                                    if (index == 0) {
+                                                        pad = "extrapadding3"
+                                                    }
+                                                    td(classes = pad) {
+                                                        div() {
+                                                            div(classes = "bold") {
+                                                                +"Course: "
+                                                                br()
+
+                                                            }
+                                                            div {+database.coursesQueries.selectNameForCourseID(course.course, school)
+                                                                .executeAsOne()}
+
+
+                                                        }
+                                                        br()
+                                                        div() {
+                                                            div(classes = "bold") {
+                                                                +"Teacher: "
+                                                                br()
+
+                                                            }
+                                                            div{
+                                                                +database.teachersQueries.selectNameForID(
+                                                                    course.teacher,
+                                                                    school
+                                                                ).executeAsOne()
+                                                            }
+
+                                                        }
+                                                        br()
+                                                        div(classes = "flex2") {
+                                                            div(classes = "bold2") {
+                                                                +"Semester: "
+                                                            }
+                                                            +"${course.semester}"
+                                                        }
+                                                        br()
+                                                        div(classes = "flex2") {
+                                                            div(classes = "bold2") {
+                                                                +"Period: "
+                                                            }
+                                                            +"${course.period}"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                            }
+                        }
+                    }
+                }
+
             }
+
+
         }
     }
 }

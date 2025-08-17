@@ -39,12 +39,16 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                 rel = "stylesheet",
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
+            link(
+                rel = "stylesheet",
+                href = "https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap"
+            )
         }
         val school = call.parameters["school"]!!
         body(classes = "steps-background-dark steps-font poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -80,98 +84,101 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                 }
 
             }
-            div(classes = "steps-navigator-container3 steps-button-fontsize") {
-                a(href = "/step1?school=${school}") {
-                    button(classes = "steps-navigator-button") {
-                        +"Previous"
-                    }
-                }
-                div(classes = "steps-navigator-padding schoolcontainer") {
-                    +school
-                }
-                a(href = "/step3?school=${school}") {
-                    button(classes = "steps-navigator-button button-margin") {
-                        +"Next"
-                    }
-                }
-            }
-            div(classes = "textbox-container-steps") {
-
-                div(classes = "textbox-step1-3") {
-                    h2(classes = "textaligncenter font20px") {
-                        +"Student Requests"
-                    }
-
-                    form(action = "/step2", method = FormMethod.get, classes = "steps-form-height") {
-                        textArea(classes = "steps-textarea") {
-                            name = "requests"; placeholder = "Enter student requests here"
+            div("classes = leftmargin") {
+                div(classes = "steps-navigator-container3 steps-button-fontsize") {
+                    a(href = "/step1?school=${school}") {
+                        button(classes = "steps-navigator-button-gray") {
+                            +"Previous"
                         }
-                        br
-                        hiddenInput {
-                            name = "school"
-                            value = school
-                        }
-                        submitInput { value = "Submit" }
                     }
-
+                    div(classes = "steps-navigator-padding schoolcontainer") {
+                        +school
+                    }
+                    a(href = "/step3?school=${school}") {
+                        button(classes = "steps-navigator-button-gray button-margin") {
+                            +"Next"
+                        }
+                    }
                 }
-                div(classes = "listContainer") {
-                    val requests = call.parameters["requests"]
-                    val existing = database.requestsQueries.selectAllFromSchool(school).executeAsList()
-                    val compressed = convertSingleToMultipleRequests(existing)
-                    val most = getMostAmountOfRequests(compressed)
-                    div {
-                        div(classes = "steps-table3 customcolwidth") {
-                            div(classes = "steps-cell header font-25px") { +"ID" }
-                            div(classes = "steps-cell header font-25px") { +"Student Name" }
-                            div(classes = "steps-cell header font-25px") { +"Courses" }
+                div(classes = "textbox-container-steps") {
 
-                            if (requests != null) {
-                                database.requestsQueries.deletAllFromSchool(school)
-                            } else {
-                                compressed.forEach {
-                                    div(classes = "steps-cell") { +it.studentID }
-                                    println(it.studentName)
-                                    div(classes = "steps-cell") { +it.studentName }
-                                    div(classes = "steps-cell") {
-                                        (0 until most).forEach { course ->
-                                            if (course < it.courses.size) {
-                                                +it.courses[course]
-                                                if (course != it.courses.size - 1) {
-                                                    +", "
+                    div(classes = "textbox-step1-3") {
+                        div(classes = "textaligncenter font20px") {
+                            +"Student Information"
+                        }
+
+                        form(action = "/step2", method = FormMethod.get, classes = "steps-form-height") {
+                            textArea(classes = "steps-textarea") {
+                                name = "requests"; placeholder = "Enter student requests here"
+                            }
+                            br
+                            hiddenInput {
+                                name = "school"
+                                value = school
+                            }
+                            submitInput(classes = "steps-submit-button-gray") { value = "Submit" }
+                        }
+
+                    }
+                    div(classes = "listContainer") {
+                        val requests = call.parameters["requests"]
+                        val existing = database.requestsQueries.selectAllFromSchool(school).executeAsList()
+                        val compressed = convertSingleToMultipleRequests(existing)
+                        val most = getMostAmountOfRequests(compressed)
+                        div {
+                            div(classes = "steps-table customcolwidth") {
+                                div(classes = "steps-cell header font-25px") { +"ID" }
+                                div(classes = "steps-cell header font-25px") { +"Student Name" }
+                                div(classes = "steps-cell header font-25px") { +"Courses" }
+
+                                if (requests != null) {
+                                    database.requestsQueries.deletAllFromSchool(school)
+                                } else {
+                                    compressed.forEach {
+                                        div(classes = "steps-cell monospace") { +it.studentID }
+                                        println(it.studentName)
+                                        div(classes = "steps-cell monospace") { +it.studentName }
+                                        div(classes = "steps-cell monospace") {
+                                            (0 until most).forEach { course ->
+                                                if (course < it.courses.size) {
+                                                    +it.courses[course]
+                                                    if (course != it.courses.size - 1) {
+                                                        +", "
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            requests?.split("\r\n")?.forEach {
-                                val info = it.split(",")
-                                div(classes = "steps-cell") { +info[0] }
-                                div(classes = "steps-cell") { +info[1] }
-                                div(classes = "steps-cell") {
-                                    for (i in 2 until info.size) {
-                                        database.requestsQueries.insertRequestObject(
-                                            Request(
-                                                school,
-                                                info[0],
-                                                info[1],
-                                                info[i]
+                                requests?.split("\r\n")?.forEach {
+                                    val info = it.split(",")
+                                    div(classes = "steps-cell monospace") { +info[0] }
+                                    div(classes = "steps-cell monospace") { +info[1] }
+                                    div(classes = "steps-cell monospace") {
+                                        for (i in 2 until info.size) {
+                                            database.requestsQueries.insertRequestObject(
+                                                Request(
+                                                    school,
+                                                    info[0],
+                                                    info[1],
+                                                    info[i]
+                                                )
                                             )
-                                        )
-                                        +info[i]
-                                        if (i != info.size - 1) {
-                                            +", "
+                                            +info[i]
+                                            if (i != info.size - 1) {
+                                                +", "
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
+
+
                 }
-
-
             }
+
             br()
 
             br()

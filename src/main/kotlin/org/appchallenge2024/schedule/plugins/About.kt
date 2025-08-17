@@ -22,11 +22,15 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.about(
                 rel = "stylesheet",
                 href = "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet"
             )
+            link(
+                rel = "stylesheet",
+                href = "https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap"
+            )
         }
         body(classes = "landingpage-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -62,26 +66,29 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.about(
                 }
 
             }
-            div(classes = "grid") {
-                div(classes = "col1font") {
-                    +"About"
+//            div(classes = "center") {
+                div(classes = "grid") {
+                    div(classes = "col1font") {
+                        +"About"
+                    }
+                    div(classes = "col2font") {
+                        +"Schedwiz is a schoolwide scheduling solution for school administrators. Schedwiz uses teacher information, course information, and student requests to make a schedule for everybody in seconds."
+                    }
+                    div(classes = "abouticons-dark topiconnegmargin") {
+                        img(src = "static/images/whiteclock.png", alt = "clock")
+                    }
+                    div(classes = "col1font") {
+                        +"Why?"
+                    }
+                    div(classes = "col2font") {
+                        +"At many schools, administrators and counselors spend hours upon hours creating schedules, taking away from time they could be completing all other tasks or taking a vacation. Schedwiz is a solution to this, allowing for hours of manual labor to be replaced by seconds of computer work."
+                    }
+                    div {
+                        img(src = "static/images/whitelightning.png", alt = "clock", classes = "abouticons-dark")
+                    }
                 }
-                div(classes = "col2font") {
-                    +"Schedwiz is a schoolwide scheduling solution for school administrators. Schedwiz uses teacher information, course information, and student requests to make a schedule for everybody in seconds."
-                }
-                div(classes = "abouticons-dark topiconnegmargin") {
-                    img(src = "static/images/whiteclock.png", alt = "clock")
-                }
-                div(classes = "col1font") {
-                    +"Why?"
-                }
-                div(classes = "col2font") {
-                    +"At many schools, administrators and counselors spend hours upon hours creating schedules, taking away from time they could be completing all other tasks or taking a vacation. Schedwiz is a solution to this, allowing for hours of manual labor to be replaced by seconds of computer work."
-                }
-                div {
-                    img(src = "static/images/whitelightning.png", alt = "clock")
-                }
-            }
+//            }
+
         }
     }
 }

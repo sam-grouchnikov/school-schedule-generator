@@ -25,7 +25,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
         body(classes = "signin-background-dark poppinsfont") {
             div(classes = "topbar-dark") {
                 h1(classes = "schedwiz-header") {
-                    div() {
+                    a(href = "/", classes = "nodec") {
                         +"Schedwiz"
                     }
                 }
@@ -66,7 +66,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
                     div(classes = "textaligncenter bigtext") {
                         +"Welcome"
                     }
-                    +"Please enter a school name and password"
+                    +"Please enter your school name and password"
                     form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter extralinespacing") {
                         input(type = InputType.text, name = "school", classes = "inputbox") {
                             placeholder = "School Name"
@@ -85,9 +85,15 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
                             +"Sign In"
                         }
                     }
-                    div (classes = "textaligncenter") {
+                    div (classes = "textaligncenter red") {
                         if (call.parameters["error"] == "schoolExists") {
                             +"That School Name Already Exists"
+                        }
+                        if (call.parameters["error"] == "invalidSchool") {
+                            +"School name cannot be empty"
+                        }
+                        if (call.parameters["error"] == "invalidPsw") {
+                            +"Password cannot be empty"
                         }
                     }
                 }
@@ -102,7 +108,12 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.verifyNewSchool(
     val school = call.parameters["school"]!!
     val psw = call.parameters["psw"]!!
     if (database.schoolsQueries.selectAllSchools().executeAsList().contains(school)) {
-        call.respondRedirect("/signInLanding?error=schoolExists")
+        call.respondRedirect("/signUpLanding?error=schoolExists")
+    } else if (school == "") {
+        call.respondRedirect("/signUpLanding?error=invalidSchool")
+    } else if (psw == "") {
+        call.respondRedirect("/signUpLanding?error=invalidPsw")
+
     } else {
         call.respondRedirect("/addSchoolToDB?school=$school&psw=$psw&courseView=yes&toExpand=none")
     }
