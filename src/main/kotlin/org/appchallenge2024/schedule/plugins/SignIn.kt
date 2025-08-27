@@ -44,8 +44,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
                             }
                         }
                     }
-                    div (classes = "lp-getstarted-container-dark") {
+                    div(classes = "lp-getstarted-container-dark") {
                         form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
+                            attributes["target"] = "_blank"
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }

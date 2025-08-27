@@ -79,7 +79,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                     div {
                         form(action = "/signInLanding", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
-                                +"Sign Out"
+                                div(classes = "red") {+"Sign Out"}
                             }
                         }
                     }
@@ -140,7 +140,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                             }
                             val existing = database.teachersQueries.selectAllFromSchool(school).executeAsList()
                             existing.forEach {
-                                div(classes = "steps-cell monospace") { +it.id }
+                                div(classes = "steps-cell monospace horalign") {
+                                    div(classes = "horalign") { +it.id }
+                                }
                                 div(classes = "steps-cell monospace") { +it.name }
                                 div(classes = "steps-cell monospace horalign") {
                                     div(classes = "horalign") { +it.room }
@@ -151,30 +153,38 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step3(
                                 div(classes = "steps-cell monospace") { +it.type }
                             }
                             teachers?.split("\r\n")?.forEach {
-                                val info = it.split(",")
-                                database.teachersQueries.insertTeacherObject(
-                                    Teacher(
-                                        school,
-                                        info[0],
-                                        info[1],
-                                        info[2],
-                                        info[3],
-                                        info[4]
+                                if (it != "") {
+                                    val info = it.split(",")
+                                    database.teachersQueries.insertTeacherObject(
+                                        Teacher(
+                                            school,
+                                            info[0],
+                                            info[1],
+                                            info[2],
+                                            info[3],
+                                            info[4]
+                                        )
                                     )
-                                )
-                                div(classes = "steps-cell monospace") { +info[0] }
-                                div(classes = "steps-cell monospace") { +info[1] }
-                                div(classes = "steps-cell monospace horalign") {
-                                    div(classes = "horalign") {
-                                        +info[2]
+                                    div(classes = "steps-cell monospace horalign") {
+                                        div(classes = "horalign") {
+                                            +info[0]
+                                        }
                                     }
-                                }
-                                div(classes = "steps-cell monospace horalign") {
-                                    div(classes = "horalign") {
-                                        +info[3]
+                                    div(classes = "steps-cell monospace") { +info[1] }
+                                    div(classes = "steps-cell monospace horalign") {
+                                        div(classes = "horalign") {
+                                            +info[2]
+                                        }
                                     }
+                                    div(classes = "steps-cell monospace horalign") {
+                                        div(classes = "horalign") {
+                                            +info[3]
+                                        }
+                                    }
+                                    div(classes = "steps-cell monospace") { +info[4] }
                                 }
-                                div(classes = "steps-cell monospace") { +info[4] }
+
+
                             }
                         }
                     }
@@ -226,8 +236,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                             }
                         }
                     }
-                    div (classes = "lp-getstarted-container-dark") {
+                    div(classes = "lp-getstarted-container-dark") {
                         form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
+                            attributes["target"] = "_blank"
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -236,7 +247,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step4(
                     div {
                         form(action = "/signInLanding", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
-                                +"Sign Out"
+                                div(classes = "red") {+"Sign Out"}
                             }
                         }
                     }

@@ -23,6 +23,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             textAlign = TextAlign.right
         }
         rule(".textaligncenter") {
+            justifyContent = JustifyContent.center
             textAlign = TextAlign.center
         }
         h1 {
@@ -47,6 +48,12 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
         }
         rule(".font20") {
             fontSize = LinearDimension("20px")
+        }
+        rule(".w1") {
+            width = LinearDimension("150px")
+        }
+        rule(".w2") {
+            width = LinearDimension("250px")
         }
         rule(".font25") {
             color = Color.white
@@ -186,10 +193,10 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             paddingLeft = LinearDimension("14px")
         }
         rule(".extrapadding2") {
-            paddingLeft = LinearDimension("18px")
+            paddingLeft = LinearDimension("35px")
         }
         rule(".extrapadding3") {
-            paddingLeft = LinearDimension("60px")
+            paddingLeft = LinearDimension("50px")
         }
 
         rule(".table-container") {
@@ -203,6 +210,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             justifyContent = JustifyContent.spaceAround
 
             padding = "2%"
+        }
+        rule(".red") {
+            color = Color("#EF5350")
         }
         rule(".textbox-step1-3") {
             marginRight = LinearDimension("1px")
@@ -233,7 +243,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssAdminPage() {
             width = LinearDimension("100%")
             gap = LinearDimension("0")
             rowGap = LinearDimension("10px")
-            gridTemplateColumns = GridTemplateColumns("220px 220px 120px 120px 400px")
+            gridTemplateColumns = GridTemplateColumns("220px 220px 135px 120px 400px")
         }
         rule(".sp-table-grid2") {
             display = Display.grid

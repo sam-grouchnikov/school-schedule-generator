@@ -6,6 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 import io.ktor.server.http.content.*
+import kotlinx.css.data
 import org.appchallenge2024.schedule.plugins.styles.cssAbout
 import org.appchallenge2024.schedule.plugins.styles.cssAdminPage
 import org.appchallenge2024.schedule.plugins.styles.cssSignIn
@@ -94,4 +95,9 @@ fun main() {
     Database.Schema.create(driver)
     val database = Database(driver)
     database.schoolsQueries.deleteAll()
+    database.coursesQueries.deleteAll()
+    database.studentsQueries.deleteAll()
+    database.teachersQueries.deleteAll()
+    database.schedulesQueries.deleteAll()
+    database.requestsQueries.deleteAll()
 }

@@ -59,8 +59,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                             }
                         }
                     }
-                    div (classes = "lp-getstarted-container-dark") {
+                    div(classes = "lp-getstarted-container-dark") {
                         form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
+                            attributes["target"] = "_blank"
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -69,7 +70,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                     div {
                         form(action = "/signInLanding", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
-                                +"Sign Out"
+
+                                div(classes = "red") {+"Sign Out"}
                             }
                         }
                     }
@@ -176,53 +178,59 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                         div(classes = "sp-cell header students-column") { +"Students" }
 
                                         // Data rows
-
-                                        solution.forEachIndexed { i, entry ->
-                                            var expandedHighlight = ""
-                                            if (studentToExpand != null && studentToExpand == i.toString()) {
-                                                expandedHighlight = "expandedHighlight"
-                                            }
-                                            div(classes = "sp-row") {
-                                                div(classes = "sp-cell $expandedHighlight") {
-                                                    +database.coursesQueries.selectNameForCourseID(entry.courseID, school).executeAsOne()
+                                        if (solution.isNotEmpty()) {
+                                            solution.forEachIndexed { i, entry ->
+                                                var expandedHighlight = ""
+                                                if (studentToExpand != null && studentToExpand == i.toString()) {
+                                                    expandedHighlight = "expandedHighlight"
                                                 }
-                                                div(classes = "sp-cell $expandedHighlight") {
-                                                    +database.teachersQueries.selectNameForID(entry.teacherID, school).executeAsOne()
-                                                }
-                                                div(classes = "sp-cell $expandedHighlight") { +"${entry.semester}" }
-                                                div(classes = "sp-cell $expandedHighlight") { +"${entry.period}" }
-                                                div(classes = "sp-cell $expandedHighlight") {
-                                                    if (studentToExpand != null && studentToExpand != i.toString()) {
-                                                        a(
-                                                            href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}",
-                                                            classes = "white"
-                                                        ) {
-                                                            +"Expand Students"
+                                                div(classes = "sp-row") {
+                                                    div(classes = "sp-cell $expandedHighlight") {
+                                                        +database.coursesQueries.selectNameForCourseID(entry.courseID, school).executeAsOne()
+                                                    }
+                                                    div(classes = "sp-cell $expandedHighlight") {
+                                                        +database.teachersQueries.selectNameForID(entry.teacherID, school).executeAsOne()
+                                                    }
+                                                    div(classes = "sp-cell $expandedHighlight") {
+                                                        div(classes = "textaligncenter") {+"${entry.semester}"}
+                                                    }
+                                                    div(classes = "sp-cell $expandedHighlight") {
+                                                        div(classes = "textaligncenter") {+"${entry.period}"}
+                                                    }
+                                                    div(classes = "sp-cell $expandedHighlight") {
+                                                        if (studentToExpand != null && studentToExpand != i.toString()) {
+                                                            a(
+                                                                href = "/adminPage?courseView=yes&toExpand=${i}&school=${school}",
+                                                                classes = "white"
+                                                            ) {
+                                                                +"Expand Students"
+                                                            }
+                                                        } else {
+                                                            a(
+                                                                href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
+                                                                classes = "white"
+                                                            ) {
+                                                                +"Collapse Students"
+                                                            }
+                                                            br()
+                                                            val names = entry.students.map { id ->
+                                                                database.requestsQueries.selectNameForID(id, school).executeAsOne()
+                                                            }
+                                                            +names.joinToString()
                                                         }
-                                                    } else {
-                                                        a(
-                                                            href = "/adminPage?courseView=yes&toExpand=none&school=${school}",
-                                                            classes = "white"
-                                                        ) {
-                                                            +"Collapse Students"
-                                                        }
-                                                        br()
-                                                        val names = entry.students.map { id ->
-                                                            database.requestsQueries.selectNameForID(id, school).executeAsOne()
-                                                        }
-                                                        +names.joinToString()
                                                     }
                                                 }
-                                            }
 
+                                            }
                                         }
+
                                     }
                                 } else if (courseView == "no") {
                                     // Student view grid
                                     table(classes = "sp-table") {
                                         tr(classes = "adminpage-td-th") {
-                                            th(classes = "font25") { +"Student ID" }
-                                            th(classes = "font25") { +"Student Name" }
+                                            th(classes = "font25 w1") { +"Student ID" }
+                                            th(classes = "font25 w2") { +"Student Name" }
                                             th(classes = "font25") { +"Courses" }
                                         }
 
@@ -231,8 +239,8 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.adminPage(
                                         ids.forEach {
                                             tr(classes = "adminpage-td-th") {
 
-                                                td(classes = "bold topvertalign extrapadding") { +it }
-                                                td(classes = "bold topvertalign extrapadding2") { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
+                                                td(classes = "font20 topvertalign extrapadding") { +it }
+                                                td(classes = "font20 topvertalign extrapadding2") { +database.requestsQueries.selectNameForID(it, school).executeAsOne() }
                                                 val schedule = getStudentScheduleFromSolution(solution, it)
                                                 schedule.forEachIndexed { index, course ->
                                                     var pad = ""

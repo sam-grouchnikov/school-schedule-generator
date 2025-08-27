@@ -67,8 +67,9 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                             }
                         }
                     }
-                    div (classes = "lp-getstarted-container-dark") {
+                    div(classes = "lp-getstarted-container-dark") {
                         form(action = "https://github.com/sam-grouchnikov/school-schedule-generator", method = FormMethod.get) {
+                            attributes["target"] = "_blank"
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
                                 +"GitHub"
                             }
@@ -77,7 +78,7 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                     div {
                         form(action = "/signInLanding", method = FormMethod.get) {
                             button(type = ButtonType.submit, classes = "lp-general-button-dark") {
-                                +"Sign Out"
+                                div(classes = "red") {+"Sign Out"}
                             }
                         }
                     }
@@ -135,7 +136,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                                     database.requestsQueries.deletAllFromSchool(school)
                                 } else {
                                     compressed.forEach {
-                                        div(classes = "steps-cell monospace") { +it.studentID }
+                                        div(classes = "steps-cell monospace") {
+                                            div(classes = "horalign") {
+                                                +it.studentID
+                                            }
+                                        }
                                         println(it.studentName)
                                         div(classes = "steps-cell monospace") { +it.studentName }
                                         div(classes = "steps-cell monospace") {
@@ -152,7 +157,11 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.step2(
                                 }
                                 requests?.split("\r\n")?.forEach {
                                     val info = it.split(",")
-                                    div(classes = "steps-cell monospace") { +info[0] }
+                                    div(classes = "steps-cell monospace") {
+                                        div(classes = "horalign") {
+                                            +info[0]
+                                        }
+                                    }
                                     div(classes = "steps-cell monospace") { +info[1] }
                                     div(classes = "steps-cell monospace") {
                                         for (i in 2 until info.size) {

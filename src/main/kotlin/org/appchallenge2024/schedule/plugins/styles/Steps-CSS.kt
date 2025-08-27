@@ -115,9 +115,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         rule(".textbox-container-steps") {
             display = Display.flex
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("107px")
+            marginLeft = LinearDimension("92px")
             height = LinearDimension("fit-content")
-            gap = LinearDimension("6%")
+            gap = LinearDimension("92px")
         }
         rule(".textbox-container-steps3") {
             display = Display.flex
@@ -131,13 +131,16 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             display = Display.flex
             justifyContent = JustifyContent.center
             height = LinearDimension("fit-content")
-            gap = LinearDimension("6%")
+            marginLeft = LinearDimension("100px")
+
         }
         rule(".step4input") {
             verticalAlign = VerticalAlign.middle
+            marginBottom = LinearDimension("3px")
+            fontSize = LinearDimension("15px")
         }
         rule(".listContainer") {
-            width = LinearDimension("717px")
+            width = LinearDimension("706px")
             height = LinearDimension("fit-content")
             padding = "10px"
             paddingLeft = LinearDimension("15px")
@@ -200,6 +203,9 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         }
         rule(".customcolwidth") {
             gridTemplateColumns = GridTemplateColumns("10% 60% 20%")
+        }
+        rule(".red") {
+            color = Color("#EF5350")
         }
         rule(".darkgrey") {
             color = Color("#1A1B27")
@@ -331,7 +337,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             marginRight = LinearDimension("1px")
             backgroundColor = Color("#2F2F3D")
             padding = "10px"
-            width = LinearDimension("20%")
+            width = LinearDimension("306px")
             color = Color.white
             height = LinearDimension("fit-content")
             borderRadius = LinearDimension("10px")
@@ -409,11 +415,11 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
             width = LinearDimension("100%")
             fontSize = LinearDimension("20px")
             gap = LinearDimension("10px")
-            gridTemplateColumns = GridTemplateColumns("repeat(3, minmax(max-content, 1fr))")
+            gridTemplateColumns = GridTemplateColumns("max-content max-content max-content")
         }
         rule(".steps-table3") {
             display = Display.grid
-            width = LinearDimension("100%")
+            width = LinearDimension("706px")
             fontSize = LinearDimension("20px")
             gap = LinearDimension("10px")
             gridTemplateColumns = GridTemplateColumns("max-content 1fr 1fr")
