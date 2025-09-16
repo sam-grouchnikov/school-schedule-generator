@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins
+package org.appchallenge2025.schedule.plugins
 
 import io.ktor.server.application.*
 import io.ktor.util.pipeline.*

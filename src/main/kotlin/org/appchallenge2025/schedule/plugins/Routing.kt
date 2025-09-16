@@ -1,16 +1,16 @@
-package org.appchallenge2024.schedule.plugins
+package org.appchallenge2025.schedule.plugins
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
-import org.appchallenge2024.schedule.sqldelight.data.Database
+import org.appchallenge2025.schedule.sqldelight.data.Database
 import io.ktor.server.http.content.*
 import kotlinx.css.data
-import org.appchallenge2024.schedule.plugins.styles.cssAbout
-import org.appchallenge2024.schedule.plugins.styles.cssAdminPage
-import org.appchallenge2024.schedule.plugins.styles.cssSignIn
-import org.appchallenge2024.schedule.plugins.styles.cssSteps
+import org.appchallenge2025.schedule.plugins.styles.cssAbout
+import org.appchallenge2025.schedule.plugins.styles.cssAdminPage
+import org.appchallenge2025.schedule.plugins.styles.cssSignIn
+import org.appchallenge2025.schedule.plugins.styles.cssSteps
 import java.io.File
 
 fun Application.mainRouting() {

@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins.styles
+package org.appchallenge2025.schedule.plugins.styles
 
 import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
@@ -8,7 +8,7 @@ import kotlinx.css.properties.LinearGradientBuilder
 import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.Time
-import org.appchallenge2024.schedule.respondCss
+import org.appchallenge2025.schedule.respondCss
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
     call.respondCss {

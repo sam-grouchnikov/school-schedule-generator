@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins
+package org.appchallenge2025.schedule.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.html.*
@@ -6,12 +6,12 @@ import io.ktor.util.pipeline.*
 import kotlinx.html.body
 import kotlinx.html.head
 import kotlinx.html.link
-import org.appchallenge2024.schedule.sqldelight.data.Database
+import org.appchallenge2025.schedule.sqldelight.data.Database
 import kotlinx.html.*
 
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.about(
-    database: Database
+    database: org.appchallenge2025.schedule.sqldelight.data.Database
 ) {
     call.respondHtml {
         head {

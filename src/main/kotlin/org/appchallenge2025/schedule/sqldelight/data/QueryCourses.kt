@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.sqldelight.data
+package org.appchallenge2025.schedule.sqldelight.data
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver

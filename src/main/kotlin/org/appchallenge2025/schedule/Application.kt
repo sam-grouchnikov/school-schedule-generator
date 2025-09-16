@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule
+package org.appchallenge2025.schedule
 
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -6,7 +6,8 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
 import kotlinx.css.CssBuilder
-import org.appchallenge2024.schedule.plugins.mainRouting
+import org.appchallenge2025.schedule.module
+import org.appchallenge2025.schedule.plugins.mainRouting
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module, configure = {

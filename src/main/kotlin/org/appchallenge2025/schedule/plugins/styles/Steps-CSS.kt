@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins.styles
+package org.appchallenge2025.schedule.plugins.styles
 
 import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
@@ -8,7 +8,7 @@ import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.TextDecoration
 import kotlinx.css.properties.Time
 import kotlinx.css.properties.boxShadow
-import org.appchallenge2024.schedule.respondCss
+import org.appchallenge2025.schedule.respondCss
 import javax.sound.sampled.Line
 
 suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
@@ -115,7 +115,7 @@ suspend fun PipelineContext<Unit, ApplicationCall>.cssSteps() {
         rule(".textbox-container-steps") {
             display = Display.flex
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("92px")
+            marginLeft = LinearDimension("105px")
             height = LinearDimension("fit-content")
             gap = LinearDimension("92px")
         }

@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins
+package org.appchallenge2025.schedule.plugins
 
 import data.School
 import io.ktor.server.application.*
@@ -8,7 +8,7 @@ import io.ktor.util.pipeline.*
 import kotlinx.html.*
 import org.appchallenge2024.schedule.sqldelight.data.Database
 
-public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
+public suspend fun PipelineContext<Unit, ApplicationCall>.signUpLanding(
     database: Database
 ) {
     call.respondHtml {
@@ -63,44 +63,38 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
 
             }
             div(classes = "textbox-container-signin-dark") {
-                div(classes = "textbox-signin-dark") {
-
-                    div(classes = "textaligncenter") {
-                        div(classes = "textaligncenter bigtext") {
-                            +"Welcome Back"
+                div(classes = "extrapadding textbox-signin-dark textaligncenter") {
+                    div(classes = "textaligncenter bigtext") {
+                        +"Welcome"
+                    }
+                    +"Please enter your school name and password"
+                    form(action = "/verifyNewSchool", method = FormMethod.get, classes = "textaligncenter extralinespacing") {
+                        input(type = InputType.text, name = "school", classes = "inputbox") {
+                            placeholder = "School Name"
                         }
-                        +"Please enter your school name and password"
                         br()
-                        form(action = "/verifyCredentials", method = FormMethod.get, classes = "extralinespacing") {
-                            input(type = InputType.text, name = "school", classes = "inputbox") {
-                                placeholder = "School Name"
-                            }
-                            br()
-                            input(type = InputType.password, name = "psw", classes = "inputbox") {
-                                placeholder = "Password"
-                            }
-                            unsafe {
-                                raw(
-                                    "<input type=\"hidden\" name=\"courseView\" value=\"yes\">"
-                                )
-                            }
-                            br()
-                            button(type = ButtonType.submit, classes = "signin-button") {
-                                +"Login"
-                            }
-                            br()
-                            +"Don't have an account? "
-                            a(href = "/signUpLanding") {
-                                +"Sign Up"
-                            }
+                        input(type = InputType.password, name = "psw", classes = "inputbox") {
+                            placeholder = "Password"
+                        }
+                        br()
+                        button(type = ButtonType.submit, classes = "signin-button") {
+                            +"Sign Up"
+                        }
+                        br()
+                        +"Already have an account? "
+                        a(href = "/signInLanding") {
+                            +"Sign In"
                         }
                     }
                     div (classes = "textaligncenter red") {
-                        if (call.parameters["error"] == "wrongPsw") {
-                            +"Incorrect Password"
+                        if (call.parameters["error"] == "schoolExists") {
+                            +"That School Name Already Exists"
                         }
                         if (call.parameters["error"] == "invalidSchool") {
-                            +"That School Does Not Exist"
+                            +"School name cannot be empty"
+                        }
+                        if (call.parameters["error"] == "invalidPsw") {
+                            +"Password cannot be empty"
                         }
                     }
                 }
@@ -109,22 +103,28 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.signInLanding(
     }
 }
 
-
-public suspend fun PipelineContext<Unit, ApplicationCall>.verifyCredentials(
+public suspend fun PipelineContext<Unit, ApplicationCall>.verifyNewSchool(
     database: Database
 ) {
-    var error: String? = null
     val school = call.parameters["school"]!!
     val psw = call.parameters["psw"]!!
-    val allSchools = database.schoolsQueries.selectAllSchools().executeAsList() as List<*>
-    if (!allSchools.contains(school)) {
-        call.respondRedirect("/signInLanding?error=invalidSchool")
+    if (database.schoolsQueries.selectAllSchools().executeAsList().contains(school)) {
+        call.respondRedirect("/signUpLanding?error=schoolExists")
+    } else if (school == "") {
+        call.respondRedirect("/signUpLanding?error=invalidSchool")
+    } else if (psw == "") {
+        call.respondRedirect("/signUpLanding?error=invalidPsw")
+
     } else {
-        val actualPsw = database.schoolsQueries.selectPSWForSchool(school).executeAsOne()
-        if (psw != actualPsw) {
-            call.respondRedirect("/signInLanding?error=wrongPsw")
-        }
+        call.respondRedirect("/addSchoolToDB?school=$school&psw=$psw&courseView=yes&toExpand=none")
     }
-    call.respondRedirect("/adminPage?school=$school&courseView=yes&toExpand=none")
 }
 
+public suspend fun PipelineContext<Unit, ApplicationCall>.addSchoolToDB(
+    database: Database
+) {
+    val school = call.parameters["school"]!!
+    val psw = call.parameters["psw"]!!
+    database.schoolsQueries.insertSchoolObject(School(school, psw))
+    call.respondRedirect("/adminPage?school=${school}&courseView=true")
+}
