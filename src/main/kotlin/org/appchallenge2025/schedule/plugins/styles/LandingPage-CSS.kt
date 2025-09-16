@@ -1,4 +1,4 @@
-package org.appchallenge2024.schedule.plugins
+package org.appchallenge2025.schedule.plugins
 
 import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
@@ -6,7 +6,7 @@ import kotlinx.css.*
 import kotlinx.css.properties.LinearGradientBuilder
 import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.Time
-import org.appchallenge2024.schedule.respondCss
+import org.appchallenge2025.schedule.respondCss
 import kotlinx.css.properties.LineHeight
 import kotlinx.css.properties.TextDecoration
 import javax.sound.sampled.Line
