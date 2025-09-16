@@ -15,7 +15,7 @@ available courses, student requests, and available teachers.
 2. Open the project in any IDE, preferably Intellij IDEA.
 
 ## How to Interact With the Web App
-1. Open the ```src/main/kotlin/org/appchallenge2024/schedule/Application.kt``` file
+1. Open the ```src/main/kotlin/org/appchallenge2025/schedule/Application.kt``` file
 2. Run the ```main()``` function by clicking the green arrow next to it
 3. Open any browser and navigate to [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
 
