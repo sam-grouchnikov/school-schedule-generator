@@ -3,146 +3,126 @@ package org.appchallenge2025.schedule.plugins.styles
 import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
 import kotlinx.css.*
-import kotlinx.css.properties.LinearGradientBuilder
-import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.TextDecoration
-import kotlinx.css.properties.Time
-import kotlinx.css.properties.boxShadow
 import org.appchallenge2025.schedule.respondCss
 
 suspend fun PipelineContext<Unit, ApplicationCall>.cssAbout() {
     call.respondCss {
+        body {
+            margin = "0"
+        }
+
         rule(".poppinsfont") {
             fontFamily = "Poppins, sans-serif"
             fontStyle = FontStyle.normal
         }
-        rule(".monospace") {
-            fontFamily = "Google Sans Code, sans-serif"
-            fontStyle = FontStyle.normal
-        }
+
         rule(".textalignleft") {
             textAlign = TextAlign.left
         }
-        rule(".textalignright") {
-            textAlign = TextAlign.right
-        }
-        rule(".textaligncenter") {
-            textAlign = TextAlign.center
-        }
+
         h1 {
-            fontSize = LinearDimension("55px")
-            fontWeight = FontWeight.normal
+            fontSize = LinearDimension("42px")
+            fontWeight = FontWeight.w600
         }
-        rule(".flex") {
-            display = Display.flex
+
+        rule(".landingpage-background-dark") {
+            minHeight = LinearDimension("100vh")
+            background = "radial-gradient(circle at 20% 20%, #2B3A67 0%, #1A1B27 45%, #111320 100%)"
         }
-        rule(".flex2") {
-            display = Display.flex
-        }
-        h2 {
-            fontSize = LinearDimension("35px")
-        }
-        rule (".landingpage-background-dark") {
-            background = "#1A1B27"
-            justifyContent = JustifyContent.center
-            alignItems = Align.center
-            display = Display.flex
-        }
+
         rule(".schedwiz-header") {
-            color = Color.white
-            marginLeft = LinearDimension("240px")
+            margin = "0"
+            textDecoration = TextDecoration.none
+            fontSize = LinearDimension("32px")
+            letterSpacing = LinearDimension("0.8px")
         }
+
         rule(".nodec") {
             textDecoration = TextDecoration.none
             color = Color.white
-            fontWeight = FontWeight.normal
+            fontWeight = FontWeight.w600
         }
-        rule("exstudents") {
-            fontSize = LinearDimension("12px")
-        }
+
         rule(".topbar-buttons") {
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("480px")
-            height = LinearDimension("50%")
-            padding = "0"
+            gap = Gap("4px")
+            marginLeft = LinearDimension("auto")
         }
-        rule (".lp-general-button-dark") {
-            background= "none";
-            border= "none";
-            padding = "0"
-            margin = "0"
+
+        rule(".lp-general-button-dark") {
+            background = "none"
+            border = "none"
             cursor = Cursor.pointer
             outline = Outline.none
-            color = Color.white
-            fontSize = LinearDimension("20px")
-            borderRadius = LinearDimension("15%")
-            padding = "25px"
+            color = Color("#DFE6FF")
+            fontSize = LinearDimension("18px")
+            borderRadius = LinearDimension("10px")
+            padding = "10px 14px"
+            transition = "background-color 0.2s ease"
+            hover {
+                backgroundColor = Color("rgba(255, 255, 255, 0.09)")
+            }
         }
+
         rule(".topbar-dark") {
-            background = "#2F2F3D"
-            width = LinearDimension("-webkit-fill-available")
-            margin = "0%"
-            marginLeft = LinearDimension("-63px")
+            backgroundColor = Color("rgba(20, 23, 40, 0.76)")
+            property("backdrop-filter", "blur(12px)")
+            width = LinearDimension("100%")
             color = Color.white
             position = Position.fixed
             top = LinearDimension("0")
             left = LinearDimension("0")
-            paddingLeft = LinearDimension("45px")
-            paddingRight = LinearDimension("33px")
+            padding = "18px 56px"
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.left
-        }
-        rule(".grid") {
-            width = LinearDimension("1250px")
-            marginTop = LinearDimension("15%")
-            marginLeft = LinearDimension("0")
-            display = Display.grid
-            gridTemplateColumns = GridTemplateColumns("15% 50% 15%")
-            gap = LinearDimension("30px")
-            color = Color.white
-            textAlign = TextAlign.left
+            borderBottom = "1px solid rgba(255, 255, 255, 0.08)"
+            boxShadow(Color("rgba(0, 0, 0, 0.18)"), offsetX = 0.px, offsetY = 8.px, blurRadius = 30.px)
+            zIndex = 100
         }
 
-        rule(".gridcontainer") {
-            display = Display.flex
-            justifyContent = JustifyContent.center
-            alignItems = Align.center
-        }
-        rule(".grid2") {
-            width = LinearDimension("1250px")
-            marginTop = LinearDimension("15%")
+        rule(".grid") {
+            width = LinearDimension("min(1120px, 90vw)")
+            margin = "0 auto"
+            paddingTop = LinearDimension("170px")
+            paddingBottom = LinearDimension("50px")
             display = Display.grid
-            gridTemplateColumns = GridTemplateColumns("30% 30% 30%")
-            gap = LinearDimension("30px")
+            gridTemplateColumns = GridTemplateColumns("180px 1fr 120px")
+            gap = Gap("28px")
             color = Color.white
             textAlign = TextAlign.left
+            alignItems = Align.center
         }
+
         rule(".col1font") {
-            fontSize = LinearDimension("30px")
-            textAlign = TextAlign.center
+            fontSize = LinearDimension("34px")
+            fontWeight = FontWeight.w600
+            color = Color("#FFFFFF")
         }
+
         rule(".col2font") {
             fontSize = LinearDimension("20px")
+            lineHeight = kotlinx.css.properties.LineHeight("1.8")
+            color = Color("#D4DEFF")
+            padding = "22px 24px"
+            borderRadius = LinearDimension("14px")
+            backgroundColor = Color("rgba(27, 34, 58, 0.72)")
+            border = "1px solid rgba(255, 255, 255, 0.08)"
         }
-        rule(".col2font2") {
-            fontSize = LinearDimension("20px")
-        }
-        rule(".abouticons-dark") {
-            color = Color.white
 
+        rule(".abouticons-dark") {
+            justifySelf = JustifyContent.center
         }
+
         rule(".topiconnegmargin") {
-            marginTop = LinearDimension("-5%")
+            marginTop = LinearDimension("0")
         }
+
         img {
-            width = LinearDimension("100px")
+            width = LinearDimension("88px")
             height = LinearDimension("auto")
-        }
-        rule(".center") {
-            alignItems = Align.center
+            filter = "drop-shadow(0 12px 20px rgba(0, 0, 0, 0.35))"
         }
     }
 }

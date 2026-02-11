@@ -4,153 +4,160 @@ import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
 import kotlinx.css.*
 import kotlinx.css.properties.LineHeight
-import kotlinx.css.properties.LinearGradientBuilder
-import kotlinx.css.properties.RadialGradientBuilder
 import kotlinx.css.properties.TextDecoration
-import kotlinx.css.properties.Time
 import org.appchallenge2025.schedule.respondCss
 
 public suspend fun PipelineContext<Unit, ApplicationCall>.cssSignIn() {
     call.respondCss {
+        body {
+            margin = "0"
+        }
 
-        // fonts and backgrounds
         rule(".poppinsfont") {
             fontFamily = "Poppins, sans-serif"
             fontStyle = FontStyle.normal
         }
-        rule(".textalignleft") {
-            textAlign = TextAlign.left
-        }
-        rule(".textalignright") {
-            textAlign = TextAlign.right
-        }
-        rule(".textaligncenter") {
-            textAlign = TextAlign.center
-        }
-        h1{
-            fontSize = LinearDimension("55px")
-            fontWeight = FontWeight.normal
-        }
-        h2{
-            fontSize = LinearDimension("38px")
-            fontWeight = FontWeight.normal
 
+        h1 {
+            fontSize = LinearDimension("42px")
+            fontWeight = FontWeight.w600
         }
+
+        h2 {
+            fontSize = LinearDimension("34px")
+            fontWeight = FontWeight.w500
+        }
+
         rule(".bigtext") {
-            fontSize = LinearDimension("40px")
-            fontWeight = FontWeight.normal
-        }
-        rule(".signin-button") {
-
-            border = "none"
-            borderRadius = LinearDimension("10px")
+            fontSize = LinearDimension("44px")
+            fontWeight = FontWeight.w700
             color = Color.white
-            backgroundColor = Color("#2962FF")
-            paddingLeft = LinearDimension("50px")
-            paddingRight = LinearDimension("50px")
-            paddingTop = LinearDimension("10px")
-            paddingBottom = LinearDimension("10px")
-            fontSize = LinearDimension("20px")
+            marginBottom = LinearDimension("8px")
+        }
+
+        rule(".signin-button") {
+            border = "none"
+            borderRadius = LinearDimension("12px")
+            color = Color.white
+            backgroundColor = Color("#4D7CFE")
+            padding = "12px 34px"
+            fontSize = LinearDimension("18px")
             cursor = Cursor.pointer
+            transition = "all 0.2s ease"
             hover {
-                backgroundColor = Color("#2A5CE8")
+                backgroundColor = Color("#3D6BEB")
+                transform {
+                    translateY((-1).px)
+                }
             }
         }
+
         a {
-            color = Color("#2962FF")
+            color = Color("#85A8FF")
+            textDecoration = TextDecoration.none
         }
+
         rule(".nodec") {
             textDecoration = TextDecoration.none
             color = Color.white
+            fontWeight = FontWeight.w600
         }
-        rule(".schedwiz-header") {
-            color = Color.white
-            marginLeft = LinearDimension("240px")
-            textDecoration = TextDecoration.none
 
+        rule(".schedwiz-header") {
+            margin = "0"
+            textDecoration = TextDecoration.none
+            fontSize = LinearDimension("32px")
+            letterSpacing = LinearDimension("0.8px")
         }
+
         rule(".red") {
-            fontWeight = FontWeight.bold
-            fontSize = LinearDimension("20px")
-            color = Color("#F44336")
+            fontWeight = FontWeight.w600
+            fontSize = LinearDimension("16px")
+            color = Color("#FF7B93")
+            marginTop = LinearDimension("20px")
         }
+
         rule(".topbar-buttons") {
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("480px")
-            height = LinearDimension("50%")
-            padding = "0"
+            gap = Gap("4px")
+            marginLeft = LinearDimension("auto")
         }
+
         rule(".topbar-dark") {
-            background = "#2F2F3D"
-            width = LinearDimension("-webkit-fill-available")
-            margin = "0%"
-            marginLeft = LinearDimension("-63px")
+            backgroundColor = Color("rgba(20, 23, 40, 0.76)")
+            property("backdrop-filter", "blur(12px)")
+            width = LinearDimension("100%")
             color = Color.white
             position = Position.fixed
             top = LinearDimension("0")
             left = LinearDimension("0")
-            paddingLeft = LinearDimension("45px")
-            paddingRight = LinearDimension("33px")
+            padding = "18px 56px"
             display = Display.flex
             alignItems = Align.center
-            justifyContent = JustifyContent.left
+            borderBottom = "1px solid rgba(255, 255, 255, 0.08)"
+            boxShadow(Color("rgba(0, 0, 0, 0.18)"), offsetX = 0.px, offsetY = 8.px, blurRadius = 30.px)
+            zIndex = 100
         }
-        rule (".lp-general-button-dark") {
-            background= "none";
-            border= "none";
-            padding = "0"
-            margin = "0"
+
+        rule(".lp-general-button-dark") {
+            background = "none"
+            border = "none"
             cursor = Cursor.pointer
             outline = Outline.none
-            color = Color.white
-            fontSize = LinearDimension("20px")
-            borderRadius = LinearDimension("15%")
-            padding = "25px"
-        }
-        rule(".extrapadding") {
-            paddingTop = LinearDimension("15px")
-        }
-        rule(".textbox-signin-dark") {
-            marginRight = LinearDimension("10px")
-            padding = "10px"
-            color = Color.white
-            width = LinearDimension("27%")
-            height = LinearDimension("600px")
-            backgroundColor = Color("#2F2F3D")
-            borderRadius = LinearDimension("15px")
-            lineHeight = LineHeight("2.4")
-
-        }
-        rule(".inputbox") {
-            width = LinearDimension("330px")
-            height = LinearDimension("14px")
-            borderRadius = LinearDimension("5px")
-            backgroundColor = Color("#F4F3FF")
+            color = Color("#DFE6FF")
             fontSize = LinearDimension("18px")
-            verticalAlign = VerticalAlign.middle
-            paddingLeft = LinearDimension("10px")
-            paddingTop = LinearDimension("10px")
-            paddingBottom = LinearDimension("8px")
-
-            paddingLeft = LinearDimension("10px")
-            border = "none"
-
+            borderRadius = LinearDimension("10px")
+            padding = "10px 14px"
+            transition = "background-color 0.2s ease"
+            hover {
+                backgroundColor = Color("rgba(255, 255, 255, 0.09)")
+            }
         }
+
+        rule(".extrapadding") {
+            paddingTop = LinearDimension("20px")
+        }
+
+        rule(".textbox-signin-dark") {
+            padding = "42px"
+            color = Color("#D4DEFF")
+            width = LinearDimension("430px")
+            maxWidth = LinearDimension("88vw")
+            backgroundColor = Color("rgba(27, 34, 58, 0.88)")
+            borderRadius = LinearDimension("20px")
+            lineHeight = LineHeight("2.1")
+            border = "1px solid rgba(255, 255, 255, 0.10)"
+            boxShadow(Color("rgba(0, 0, 0, 0.35)"), offsetX = 0.px, offsetY = 30.px, blurRadius = 60.px)
+        }
+
+        rule(".inputbox") {
+            width = LinearDimension("100%")
+            height = LinearDimension("48px")
+            borderRadius = LinearDimension("10px")
+            backgroundColor = Color("#F3F6FF")
+            fontSize = LinearDimension("16px")
+            padding = "0 14px"
+            border = "1px solid rgba(0, 0, 0, 0.08)"
+            boxSizing = BoxSizing.borderBox
+        }
+
         rule(".extralinespacing") {
-            lineHeight = LineHeight("4.0")
+            lineHeight = LineHeight("3.1")
+            marginTop = LinearDimension("12px")
         }
+
         rule(".textbox-container-signin-dark") {
             display = Display.flex
-            marginTop = LinearDimension("13%")
+            minHeight = LinearDimension("100vh")
             justifyContent = JustifyContent.center
-            marginLeft = LinearDimension("0.5%")
-
+            alignItems = Align.center
+            paddingTop = LinearDimension("80px")
         }
-        rule (".signin-background-dark") {
-            background = "#1A1B27"
 
+        rule(".signin-background-dark") {
+            minHeight = LinearDimension("100vh")
+            background = "radial-gradient(circle at 20% 20%, #2B3A67 0%, #1A1B27 45%, #111320 100%)"
         }
     }
 }
