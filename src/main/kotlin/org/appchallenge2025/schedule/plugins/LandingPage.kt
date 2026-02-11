@@ -64,16 +64,26 @@ public suspend fun PipelineContext<Unit, ApplicationCall>.landingPage(
                     div(classes = "textbox-lp-dark") {
 
                         div(classes = "lptextbox-dark") {
+                            div(classes = "hero-badge") {
+                                +"Built for school administrators"
+                            }
                             div(classes = "bigtext") {
                                 +"Quick Scheduling."
                                 br()
                                 +"Made Easy."
                             }
-                            +"Click below to get started"
-                            div {
+                            div(classes = "hero-subtext") {
+                                +"Create schedules in minutes with a clean workflow for managing courses, teachers, and student requests."
+                            }
+                            div(classes = "hero-actions") {
                                 form(action = "/signUpLanding", method = FormMethod.get) {
                                     button(type = ButtonType.submit, classes = "lp-signup-button-dark") {
-                                        +"Sign Up"
+                                        +"Get Started"
+                                    }
+                                }
+                                form(action = "/guide", method = FormMethod.get) {
+                                    button(type = ButtonType.submit, classes = "hero-secondary-button") {
+                                        +"View Guide"
                                     }
                                 }
                             }
